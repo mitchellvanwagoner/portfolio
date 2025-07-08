@@ -1,0 +1,360 @@
+<style>
+    .bio-container {
+        display: flex;
+        padding: 2em;
+        gap: 30px;
+        flex-wrap: wrap;
+        overflow-y: scroll;
+    }
+    
+    .main-content {
+        flex: 2;
+        min-width: 300px;
+    }
+
+    .bio-content {
+        max-width: 100%;
+    }
+
+    .intro p {
+        text-align: justify;
+        margin-bottom: 15px;
+    }
+
+    .philosophy {
+        background-color: #f8f9fa;
+        border: #2c3e50 solid 2px;
+        padding: 20px;
+        margin-top: 30px;
+    }
+
+    .skills-sidebar {
+        flex: 1;
+        min-width: 280px;
+        padding: 1em;
+        padding-bottom: 0;
+        border: 2px solid #e74c3c;
+        height: fit-content;
+        position: sticky;
+        top: 1rem;
+        overflow-y: auto;
+    }
+
+    .skill-item {
+        margin-bottom: 1em;
+    }
+
+    .skill-name {
+        font-weight: bold;
+        margin-bottom: 2px;
+        color: #2c3e50;
+    }
+
+    .skill-bar {
+        background-color: #ecf0f1;
+        border-radius: 0.5em;
+        height: 1.375em;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .skill-fill {
+        background: linear-gradient(to right, #3498db, #2ecc71);
+        height: 100%;
+        border-radius: 0.5em;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 8px;
+        width: 0;
+        transition: width 1s ease-out;
+    }
+
+    .skill-rating {
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .skill-categories {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1em;
+        margin-top: 1em;
+    }
+
+    .skill-group {
+        background-color: rgba(240, 240, 240, 0.5);
+        padding: 1em;
+    }
+
+    .skill-group h4 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .skill-category {
+        margin-bottom: 1.5em;
+    }
+    
+    .skill-category h4 {
+        margin-bottom: 0.75em;
+        color: #2c3e50;
+    }
+
+    h2 {
+        margin-top: 0em;
+    }
+    
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+        .bio-container {
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .skills-sidebar {
+            position: static;
+            margin-top: 2em;
+            padding: 1.5em;
+            padding-bottom: 0;
+        }
+        
+        .intro p {
+            text-align: left;
+        }
+        
+        .philosophy {
+            padding: 15px;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+        }
+        
+        h3 {
+            font-size: 1.25rem;
+        }
+        
+        h4 {
+            font-size: 1.1rem;
+        }
+    }
+    
+    /* Tablet styles */
+    @media (max-width: 1024px) {
+        .bio-container {
+            gap: 20px;
+        }
+        
+        .skills-sidebar {
+            padding: 1.5em;
+            padding-bottom: 0;
+        }
+    }
+</style>
+
+
+<script>
+    // Set max rating and calculate widths
+    const maxRating = 10;
+    
+    // Function to initialize skill bars
+    function initializeSkillBars() {
+        const skillFills = document.querySelectorAll('.skill-fill');
+        
+        skillFills.forEach(fill => {
+            const rating = parseInt(fill.getAttribute('data-rating'));
+            const percentage = (rating / maxRating) * 100;
+            
+            // Set the rating text
+            const ratingSpan = fill.querySelector('.skill-rating');
+            if (ratingSpan) {
+                ratingSpan.textContent = rating + '/' + maxRating;
+            }
+            
+            // Trigger the animation after a small delay
+            setTimeout(() => {
+                fill.style.width = percentage + '%';
+            }, 500);
+        });
+    }
+    
+    // Run when DOM is loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeSkillBars);
+    } else {
+        // DOM is already loaded
+        initializeSkillBars();
+    }
+</script>
+
+
+<div class="bio-container">
+    <div class="main-content">
+        <h2>Bio</h2>
+        <div class="bio-content">
+            <div class="intro">
+                <p>
+                    Hello! I'm Mitchell Van Wagoner, a recent Mechanical Engineering grad from Oregon State University with over 10 years of professional experience in technical design and engineering. I'm passionate about bridging the gap between innovative engineering solutions and practical applications, with a special focus on robotics, automation, and creating technologies that make a real difference in people's lives.
+                </p>
+                <p>
+                    Currently working as a CAD Technician and Software Developer at Sunrun, I combine my engineering expertise with programming skills to develop efficient solutions and quality assurance tools. My journey from mechanical design to software development has given me a unique perspective on solving complex technical challenges.
+                </p>
+            </div>
+            
+            <div class="education">
+                <h3>Education</h3>
+                <p>
+                    <strong>Bachelor of Science in Mechanical Engineering</strong><br>
+                    Oregon State University<br>
+                    Expected Graduation: June 2025<br>
+                    GPA: 3.15<br>
+                    <em>Focus: Robotic Control - SLAM/Kinematics</em><br>
+                    <em>Robotics Lab - OVH Group: Human-Robot Interactions</em><br>
+                    <em>Capstone Project: Robot Comedy (Audience Interaction with AI Feedback)</em>
+                </p>
+            </div>
+            
+            <div class="interests">
+                <h3>Areas of Interest</h3>
+                <ul>
+                    <li>Robotics and Industrial Automation</li>
+                    <li>Human-Robot Interactions</li>
+                    <li>3D Printing and Rapid Prototyping (6+ years experience)</li>
+                    <li>Prosthetic Design and Biomedical Applications</li>
+                    <li>Motion Control Systems and PLCs</li>
+                    <li>Sustainable Technology and Home Automation</li>
+                </ul>
+            </div>
+            
+            <div class="philosophy">
+                <h3>Engineering Philosophy</h3>
+                <p>
+                    I believe in creating innovative solutions that are not just technically sound but also practical and user-friendly. My experience spans from designing weather-proof enclosures at Virticus Corp to leading teams at Vivint Solar and developing automated QA tools at Sunrun. This diverse background, combined with my studies in robotics and control systems, drives my ambition to contribute to the future of industrial automation and human-technology interaction.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="skills-sidebar">
+        <h2>Technical Skills</h2>
+        
+        <div class="skill-category">
+            <h4>Programming</h4>
+            <div class="skill-item">
+                <div class="skill-name">Python</div>
+                <div class="skill-bar">
+                    <div class="skill-fill" data-rating="5">
+                        <span class="skill-rating"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">JavaScript</div>
+                <div class="skill-bar">
+                    <div class="skill-fill" data-rating="4">
+                        <span class="skill-rating"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">MATLAB</div>
+                <div class="skill-bar">
+                    <div class="skill-fill" data-rating="5">
+                        <span class="skill-rating"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">Salesforce</div>
+                <div class="skill-bar">
+                    <div class="skill-fill" data-rating="7">
+                        <span class="skill-rating"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="skill-category">
+            <h4>Design & CAD</h4>
+            <div class="skill-item">
+                <div class="skill-name">AutoCAD</div>
+                <div class="skill-bar">
+                    <div class="skill-fill" data-rating="8">
+                        <span class="skill-rating"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">SolidWorks</div>
+                <div class="skill-bar">
+                    <div class="skill-fill" data-rating="8">
+                        <span class="skill-rating"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">Rhino 3D</div>
+                <div class="skill-bar">
+                    <div class="skill-fill" data-rating="5">
+                        <span class="skill-rating"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">Creo</div>
+                <div class="skill-bar">
+                    <div class="skill-fill" data-rating="5">
+                        <span class="skill-rating"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">Blender</div>
+                <div class="skill-bar">
+                    <div class="skill-fill" data-rating="3">
+                        <span class="skill-rating"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="skill-category">
+            <h4>Manufacturing</h4>
+            <div class="skill-item">
+                <div class="skill-name">3D Printing</div>
+                <div class="skill-bar">
+                    <div class="skill-fill" data-rating="9">
+                        <span class="skill-rating"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">Sheet Metal Design</div>
+                <div class="skill-bar">
+                    <div class="skill-fill" data-rating="6">
+                        <span class="skill-rating"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">PCB Design</div>
+                <div class="skill-bar">
+                    <div class="skill-fill" data-rating="2">
+                        <span class="skill-rating"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">Quality Assurance</div>
+                <div class="skill-bar">
+                    <div class="skill-fill" data-rating="7">
+                        <span class="skill-rating"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

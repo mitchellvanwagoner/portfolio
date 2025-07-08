@@ -1,0 +1,471 @@
+:root {
+    --background-color: rgba(255, 243, 219, 1);
+    --highlight-color: #1e3b8a5d;
+
+    /* Application-specific color assignments */
+    --sidebar-background: var(--cream);
+    --sidebar-border: var(--blueprint-ink);
+    --text-primary: var(--blueprint-ink);
+    --text-secondary: var(--blueprint-charcoal);
+    --text-muted: var(--blueprint-silver);
+    --border-color: var(--blueprint-ink);
+
+    /*  Primary colors */
+    --blueprint-dark: #0f172a;
+    --blueprint-navy: #1e3a8a;
+    --blueprint-royal: #1d4ed8;
+    --blueprint-medium: #3b82f6;
+    --blueprint-light: #60a5fa;
+    --blueprint-pale: #dbeafe;
+    --blueprint-ghost: #eff6ff;
+
+    /* Accent colors */
+    --orange-dark: #c2410c;
+    --orange-medium: #ea580c;
+    --orange-bright: #f97316;
+    --orange-light: #fb923c;
+    --orange-pale: #fed7aa;
+    --orange-whisper: #fff7ed;
+
+    /* Alternate Primary colors */
+    --steel-blue: #1e40af;
+    --prussian-blue: #1e3a8a;
+    --slate-blue: #334155;
+    --powder-blue: #bae6fd;
+    --ice-blue: #f0f9ff;
+
+    /* Alternate Accent colors */
+    --amber-dark: #d97706;
+    --amber-medium: #f59e0b;
+    --amber-light: #fbbf24;
+    --peach: #fdba74;
+    --cream: #fef3c7;
+
+    /* Blueprint Colors */
+    --blueprint-white: #ffffff;
+    --blueprint-cream: #fefbf3;
+    --blueprint-silver: #e2e8f0;
+    --blueprint-charcoal: #374151;
+    --blueprint-ink: #111827;
+
+    /* Blueprint Pattern Colors */
+    --blueprint-grid-primary: rgba(255, 255, 255, 0.1);
+    --blueprint-grid-secondary: rgba(255, 255, 255, 0.05);
+    --blueprint-dots: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+* {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-color);
+    overflow: hidden;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 12vh;
+    padding: 1.5em;
+    text-align: center;
+    border-radius: 0px;
+    border-top: 0.125em solid var(--border-color);
+    border-bottom: 0.125em solid var(--border-color);
+    background-color: var(--blueprint-navy);
+    background-image: 
+        linear-gradient(var(--blueprint-grid-primary) 1px, transparent 1px),
+        linear-gradient(90deg, var(--blueprint-grid-primary) 1px, transparent 1px),
+        linear-gradient(var(--blueprint-grid-secondary) 1px, transparent 1px),
+        linear-gradient(90deg, var(--blueprint-grid-secondary) 1px, transparent 1px),
+        radial-gradient(circle at 20% 30%, var(--blueprint-dots) 2px, transparent 2px),
+        radial-gradient(circle at 80% 70%, var(--blueprint-dots) 2px, transparent 2px);
+    background-size: 
+        40px 40px,
+        40px 40px,
+        10px 10px,
+        10px 10px,
+        80px 80px,
+        80px 80px;
+    color: var(--blueprint-white);
+    position: relative;
+}
+
+header h1 {
+    padding: 0;
+    margin: 0;
+    font-size: clamp(1.5rem, 5vw, 3rem); /* Responsive font size */
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    height: 100vh;
+}
+
+main {
+    flex: 1;
+    overflow-y: scroll;
+    z-index: 1;
+}
+
+/* Mobile menu button */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1000;
+    background-color: var(--sidebar-background);
+    border: 2px solid var(--sidebar-border);
+    color: var(--text-primary);
+    padding: 0.5rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+    width: 3rem;
+    height: 3rem;
+}
+
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.5); /* Using blueprint-dark with opacity */
+    z-index: 998;
+}
+
+.menu-overlay.show {
+    display: block;
+}
+
+.cover-bar {
+    width: 2em;
+    height: 100vh;
+    border-radius: 0px;
+    background-color: var(--background-color);
+    z-index: 10;
+}
+
+.sidebar {
+    width: 8em;
+    padding-top: 2em;
+    border-radius: 0px;
+    background-color: var(--sidebar-background);
+    border-left: 0.125em solid var(--sidebar-border);
+    border-right: 0.125em solid var(--sidebar-border);
+    z-index: 3;
+    height: 100%;
+    overflow-y: scroll;
+    transition: transform 0.3s ease;
+}
+
+.sidebar nav a {
+    display: flex;
+    text-decoration: none;
+    color: var(--text-primary);
+    justify-content: center;
+    font-family: 'Architects Daughter', cursive;
+    transition: all 0.5s;
+}
+
+.project-sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10em;
+    height: 100%;
+    padding-top: 2em;
+    border-radius: 0px;
+    background-color: var(--sidebar-background);
+    border-right: 0.125em solid var(--sidebar-border);
+    transition: left 0.5s ease;
+    z-index: 2;
+    font-family: 'Architects Daughter', cursive;
+    overflow-y: scroll;
+}
+
+.project-sidebar.show {
+    left: 10em;
+}
+
+nav {
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none;
+    width: 100%;
+}
+
+nav a {
+    display: block;
+    margin: 0;
+    padding: 0.75em;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: var(--highlight-color);
+}
+
+/* Project Content Styling */
+.project-header {
+    border-bottom: 2px solid var(--blueprint-charcoal);
+    padding-bottom: 1em;
+    margin-bottom: 2em;
+}
+
+.project-date {
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.project-content section {
+    margin-bottom: 2em;
+}
+
+.project-content h4 {
+    color: var(--blueprint-charcoal);
+    margin-bottom: 0.5em;
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-top: 1em;
+}
+
+.tech-badge {
+    background-color: var(--slate-blue);
+    color: var(--blueprint-white);
+    padding: 0.3em 0.8em;
+    font-size: 0.9em;
+}
+
+.image-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1em;
+    margin-top: 1em;
+}
+
+.image-gallery img {
+    width: 100%;
+    height: auto;
+    border: 2px solid var(--blueprint-charcoal);
+    transition: transform 0.3s;
+}
+
+.image-gallery img:hover {
+    transform: scale(1.05);
+}
+
+.project-links {
+    margin-top: 2em;
+}
+
+.links {
+    display: flex;
+    gap: 1em;
+    margin-top: 1em;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+}
+
+.project-btn {
+    background-color: var(--blueprint-medium);
+    color: var(--blueprint-white);
+    padding: 0.5em 1.5em;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.project-btn:hover {
+    background-color: var(--blueprint-royal);
+}
+
+/* Tab sections */
+.tab-section {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+
+
+/* ========== MOBILE STYLES ========== */
+@media (max-width: 768px) {
+    /* Show mobile menu button */
+    .menu-toggle {
+        display: block;
+    }
+    
+    /* Adjust header */
+    header {
+        padding: 1em;
+        max-height: 30vh;
+    }
+    
+    /* Mobile container */
+    .container {
+        flex-direction: column;
+        height: calc(100vh - 5em);
+    }
+    
+    /* Hide cover bar on mobile */
+    .cover-bar {
+        display: none;
+    }
+    
+    /* Mobile sidebar behavior */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -10em;
+        width: 10em;
+        height: 100vh;
+        margin-right: 0;
+        transform: translateX(-100%);
+        z-index: 999;
+        border-left: none;
+    }
+    
+    .sidebar.show {
+        transform: translateX(80%);
+    }
+    
+    /* Mobile project sidebar */
+    .project-sidebar {
+        position: fixed;
+        width: 10em;
+        right: auto;
+        left: 0;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 997;
+    }
+
+    nav {
+        margin-top: 3em;
+    }
+    
+    .project-sidebar.show {
+        transform: translateX(-100%);
+        right: auto;
+    }
+    
+    /* Main content adjustments */
+    main {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow-y: scroll;
+    }
+    
+    /* Responsive typography */
+    h2 {
+        font-size: 1.5rem;
+        color: var(--text-primary);
+    }
+    
+    h3 {
+        font-size: 1.25rem;
+        color: var(--text-primary);
+    }
+    
+    /* Stack skill bars on mobile */
+    .skills-sidebar {
+        max-width: 100%;
+        margin-top: 2em;
+        padding: 1em;
+        background-color: var(--sidebar-background);
+        border: 1px solid var(--blueprint-silver);
+    }
+    
+    /* Bio content mobile layout */
+    .container {
+        flex-direction: column;
+    }
+    
+    .main-content {
+        order: 1;
+    }
+    
+    .skills-sidebar {
+        order: 2;
+        position: static;
+    }
+    
+    /* Responsive images */
+    .image-gallery {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Touch-friendly buttons */
+    .project-btn, nav a {
+        padding: 1em;
+        min-height: 44px; /* iOS touch target size */
+    }
+}
+
+
+
+
+/* Tablet adjustments */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .cover-bar {
+        width: 1em;
+    }
+
+    .sidebar {
+        width: 6em;
+    }
+    
+    .project-sidebar {
+        width: 9em;
+        left: -2em;
+    }
+    
+    .project-sidebar.show {
+        left: 7em;
+    }
+}
+
+
+
+
+/* Large mobile / small tablet in landscape */
+@media (max-width: 768px) and (orientation: landscape) {
+    header {
+        padding: 0.5em;
+        max-height: 20vh;
+    }
+    
+    .container {
+        height: calc(100vh - 3em);
+    }
+}

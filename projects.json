@@ -1,0 +1,37 @@
+[
+    {
+        "id": "capstone",
+        "name": "Capstone Project",
+        "folder": "capstone"
+    },
+    {
+        "id": "keyboard",
+        "name": "Nasa Keyboard",
+        "folder": "keyboard"
+    },
+    {
+        "id": "printer",
+        "name": "Custom 3D Printer",
+        "folder": "printer"
+    },
+    {
+        "id": "supercheesi",
+        "name": "Supercheesi (Board Game)",
+        "folder": "supercheesi"
+    },
+    {
+        "id": "greenhouse",
+        "name": "Greenhouse",
+        "folder": "greenhouse"
+    },
+    {
+        "id": "dogapult",
+        "name": "Dog-a-pult",
+        "folder": "dogapult"
+    },    
+    {
+        "id": "miscellaneous",
+        "name": "Miscellaneous",
+        "folder": "miscellaneous"
+    }
+]

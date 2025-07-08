@@ -1,0 +1,94 @@
+<style>
+    .contact-container {
+        padding: 2em;
+    }
+
+    .contact-methods {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2em;
+        margin: 2em 0;
+    }
+
+    .contact-item {
+        text-align: center;
+    }
+
+    .contact-form {
+        max-width: 500px;
+        margin-top: 3em;
+    }
+
+    .form-group {
+        margin-bottom: 1em;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.3em;
+        font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 0.5em;
+        border: 1px solid #ccc;
+        border-radius: 0.3em;
+        font-family: 'Architects Daughter', cursive;
+    }
+
+    .form-group textarea {
+        resize: vertical;
+    }
+</style>
+
+
+<div class="contact-container">
+    <h2>Contact</h2>
+    <div class="contact-content">
+        <p>
+            I'm always interested in new opportunities and collaborations. 
+            Feel free to reach out if you'd like to discuss a project or just connect!
+        </p>
+        
+        <div class="contact-methods">
+            <div class="contact-item">
+                <h3>Email</h3>
+                <p><a href="mailto:mitchell@mvwengineering.org">Mitchell@mvwengineering.org</a></p>
+            </div>
+            
+            <div class="contact-item">
+                <h3>LinkedIn</h3>
+                <p><a href="https://linkedin.com/in/mitchellvanwagoner" target="_blank">TBA</a></p>
+            </div>
+            
+            <!-- <div class="contact-item">
+                <h3>GitHub</h3>
+                <p><a href="https://github.com/mitchellvanwagoner" target="_blank">github.com/mitchellvanwagoner</a></p>
+            </div> -->
+        </div>
+        
+        <div class="contact-form">
+            <h3>Send a Message</h3>
+            <form action="your-form-handler" method="POST">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                
+                <button type="submit" class="project-btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+</div>

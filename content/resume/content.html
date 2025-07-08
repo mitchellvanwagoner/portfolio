@@ -1,0 +1,62 @@
+<style>
+    .resume-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+    }
+
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+        .resume-container {
+            padding: 2em;
+            padding-top:0;
+            margin: 0;
+        }
+    }
+</style>
+
+
+<div class="resume-container">
+    <div style="
+    text-align: center; 
+    margin-top: 0.5em; 
+    margin-bottom: 0.5em;
+    ">
+        <a href="content/resume/data/resume.pdf" 
+        download="Mitchell_VanWagoner_Resume.pdf"
+        style="
+            background-color: #1e3a8a;
+            color: white;
+            padding: 0.5em 1.5em;
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: 500;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        "
+        onmouseover="this.style.backgroundColor='#1e40af'"
+        onmouseout="this.style.backgroundColor='#1e3a8a'">
+            📄 Download Resume
+        </a>
+    </div>
+
+    <div style="
+        height: calc(90vh - 6em);
+        padding: 0;
+    ">
+        <img src="content/resume/data/resume.jpg"
+            alt="Mitchell Van Wagoner Resume"
+            style="
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+                border-radius: 0;
+                box-shadow: 16px 12px 8px rgba(0,0,0,0.1);
+            ">
+    </div>
+</div>
