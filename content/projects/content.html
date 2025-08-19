@@ -1,11 +1,72 @@
 <style>
+    /* Projects page specific styles */
     .projects-container {
-        padding: 2em;
+        padding: var(--space-xl);
+        max-width: var(--content-width);
+        margin: 0 auto;
+    }
+
+    .projects-overview {
+        margin-top: var(--space-lg);
+    }
+
+    .projects-overview p {
+        margin-bottom: var(--space-md);
+        line-height: var(--leading-normal);
+    }
+
+    .project-categories {
+        margin-top: var(--space-2xl);
+        padding: var(--space-lg);
+        background-color: var(--background-color-alt);
+        border: 2px solid var(--border-color);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-close);
+        transition: box-shadow var(--transition-speed);
+    }
+
+    .project-categories:hover {
+        box-shadow: var(--shadow-close-hover);
+    }
+
+    .project-categories h3 {
+        color: var(--text-accent);
+        margin-bottom: var(--space-md);
+    }
+
+    .project-categories ul {
+        margin: 0;
+        padding-left: var(--space-lg);
+    }
+
+    .project-categories li {
+        margin-bottom: var(--space-sm);
+        line-height: var(--leading-normal);
+    }
+
+    .project-categories li strong {
+        color: var(--primary);
+        font-weight: 600;
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+        .projects-container {
+            padding: var(--space-lg);
+        }
+
+        .project-categories {
+            padding: var(--space-md);
+        }
+
+        .project-categories ul {
+            padding-left: var(--space-md);
+        }
     }
 </style>
 
 <div class="projects-container">
-    <h2>Projects</h2>
+    <h1>Projects</h1>
     <div class="projects-overview">
         <p>
             Welcome to my project portfolio! Here you'll find a collection of my engineering 
@@ -19,6 +80,7 @@
         <div class="project-categories">
             <h3>Project Categories</h3>
             <ul>
+                <li><strong>QA Tools</strong> - QA Tools built for work</li>
                 <li><strong>Capstone</strong> - My senior engineering project</li>
                 <li><strong>Dogapult</strong> - An automated pet toy launcher</li>
                 <li><strong>Greenhouse</strong> - Smart greenhouse monitoring system</li>

@@ -1,72 +1,81 @@
-let projects = [];
-let projectSidebarVisible = false;
-let sections = ['bio', 'resume', 'projects', 'hobbies', 'contact'];
-let mobileMenuOpen = false;
-
-// Function to execute scripts in dynamically loaded content
-function executeScripts(container) {
-    const scripts = container.querySelectorAll('script');
-    scripts.forEach(script => {
-        const newScript = document.createElement('script');
-        if (script.src) {
-            newScript.src = script.src;
-        } else {
-            newScript.textContent = script.textContent;
-        }
-        script.parentNode.replaceChild(newScript, script);
-    });
-}
-
-// Mobile menu handling
-function toggleMobileMenu() {
-    mobileMenuOpen = !mobileMenuOpen;
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('menu-overlay');
-    const menuToggle = document.getElementById('menu-toggle');
-    
-    if (mobileMenuOpen) {
-        sidebar.classList.add('show');
-        overlay.classList.add('show');
-        menuToggle.innerHTML = '✕';
-        document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
-    } else {
-        sidebar.classList.remove('show');
-        overlay.classList.remove('show');
-        menuToggle.innerHTML = '☰';
-        document.body.style.overflow = '';
+// App State Management
+class PortfolioApp {
+    constructor() {
+        this.state = {
+            projects: [],
+            projectSidebarVisible: false,
+            sections: ['bio', 'resume', 'projects', 'hobbies', 'contact'],
+            mobileMenuOpen: false
+        };
         
-        // Also close project sidebar if open
-        if (projectSidebarVisible && window.innerWidth <= 768) {
-            toggleProjectSidebar(false);
+        this.elements = {
+            sidebar: document.getElementById('sidebar'),
+            overlay: document.getElementById('menu-overlay'),
+            menuToggle: document.getElementById('menu-toggle'),
+            projectSidebar: document.getElementById('project-sidebar'),
+            main: document.querySelector('main')
+        };
+    }
+    
+    isMobile() {
+        return window.innerWidth <= 768;
+    }
+    
+    executeScripts(container) {
+        const scripts = container.querySelectorAll('script');
+        scripts.forEach(script => {
+            const newScript = document.createElement('script');
+            if (script.src) {
+                newScript.src = script.src;
+            } else {
+                newScript.textContent = script.textContent;
+            }
+            script.parentNode.replaceChild(newScript, script);
+        });
+    }
+    
+    toggleMobileMenu() {
+        this.state.mobileMenuOpen = !this.state.mobileMenuOpen;
+        const { sidebar, overlay, menuToggle } = this.elements;
+        
+        if (this.state.mobileMenuOpen) {
+            sidebar.classList.add('show');
+            overlay.classList.add('show');
+            menuToggle.innerHTML = '✕';
+            document.body.style.overflow = 'hidden';
+        } else {
+            sidebar.classList.remove('show');
+            overlay.classList.remove('show');
+            menuToggle.innerHTML = '☰';
+            document.body.style.overflow = '';
+            
+            if (this.state.projectSidebarVisible && this.isMobile()) {
+                this.toggleProjectSidebar(false);
+            }
         }
     }
 }
 
-// Check if we're on mobile
-function isMobile() {
-    return window.innerWidth <= 768;
-}
+// Initialize app instance
+const app = new PortfolioApp();
 
 // Load all main sections from content folder
 async function loadMainSections() {
-    const main = document.querySelector('main');
-    main.innerHTML = ''; // Clear loading message
+    app.elements.main.innerHTML = '';
     
-    for (const section of sections) {
+    for (const section of app.state.sections) {
         const div = document.createElement('div');
         div.id = section;
         div.className = 'tab-section';
         div.style.display = section === 'bio' ? 'block' : 'none';
         
         try {
-            // Try to load content.html from section folder
-            let response = await fetch(`content/${section}/content.html`);
+            const response = await fetch(`content/${section}/content.html`);
             
             if (response.ok) {
                 const content = await response.text();
                 div.innerHTML = content;
-                // Execute any scripts in the loaded content
-                executeScripts(div);
+                app.executeScripts(div);
             } else {
                 div.innerHTML = `<h2>${section.charAt(0).toUpperCase() + section.slice(1)}</h2><p>Content not found. Please add content.html to content/${section}/</p>`;
             }
@@ -75,7 +84,7 @@ async function loadMainSections() {
             console.error(`Error loading ${section}:`, error);
         }
         
-        main.appendChild(div);
+        app.elements.main.appendChild(div);
     }
 }
 
@@ -83,23 +92,20 @@ async function loadMainSections() {
 async function loadProjects() {
     try {
         const response = await fetch('projects.json');
-        if (!response.ok) {
-            console.log('No projects.json found');
+        if (response.ok) {
+            app.state.projects = await response.json();
         } else {
-            projects = await response.json();
+            console.log('No projects.json found');
         }
         
-        // Create project navigation links
         const projectNav = document.getElementById('project-nav');
         projectNav.innerHTML = '';
         
-        const main = document.querySelector('main');
-        
-        projects.forEach(project => {
+        app.state.projects.forEach(project => {
             // Create navigation link
             const link = document.createElement('a');
             link.href = `#${project.id}`;
-            link.className = 'project-link';
+            link.className = `project-link ${project.id}`;
             link.textContent = project.name;
             projectNav.appendChild(link);
             
@@ -108,14 +114,11 @@ async function loadProjects() {
             section.id = project.id;
             section.className = 'tab-section project-section';
             section.style.display = 'none';
-            
-            // Add loading message
             section.innerHTML = `<h2>${project.name}</h2><p>Loading project content...</p>`;
             
-            main.appendChild(section);
+            app.elements.main.appendChild(section);
         });
         
-        // Add click handlers to project links
         attachProjectLinkHandlers();
         
     } catch (error) {
@@ -125,20 +128,18 @@ async function loadProjects() {
 
 // Load project content from folder
 async function loadProjectContent(projectId) {
-    const project = projects.find(p => p.id === projectId);
+    const project = app.state.projects.find(p => p.id === projectId);
     if (!project) return;
     
     const section = document.getElementById(projectId);
     
     try {
-        // Try to load content.html from project folder
-        let response = await fetch(`content/projects/${project.folder}/content.html`);
+        const response = await fetch(`content/projects/${project.folder}/content.html`);
         
         if (response.ok) {
             const content = await response.text();
             section.innerHTML = content;
-            // Execute any scripts in the loaded content
-            executeScripts(section);
+            app.executeScripts(section);
         } else {
             section.innerHTML = `
                 <h2>${project.name}</h2>
@@ -158,13 +159,11 @@ function showTab(tabId) {
     const sections = document.querySelectorAll('.tab-section');
     sections.forEach(section => section.style.display = 'none');
     
-    // Close mobile menu when a tab is selected
-    if (isMobile() && mobileMenuOpen) {
-        toggleMobileMenu();
+    if (app.isMobile() && app.state.mobileMenuOpen) {
+        app.toggleMobileMenu();
     }
     
     if (tabId === 'projects') {
-        // Show projects section when projects tab is clicked
         const projectsSection = document.getElementById('projects');
         if (projectsSection) projectsSection.style.display = 'block';
         toggleProjectSidebar(true);
@@ -173,43 +172,37 @@ function showTab(tabId) {
         if (target) {
             target.style.display = 'block';
             
-            // Load project content if it's a project section
             if (target.classList.contains('project-section')) {
                 loadProjectContent(tabId);
             }
         }
         
-        // Hide project sidebar if not on projects or a specific project
-        if (!projects.some(p => p.id === tabId)) {
+        if (!app.state.projects.some(p => p.id === tabId)) {
             toggleProjectSidebar(false);
         }
     }
     
-    // Scroll to top on mobile when changing tabs
-    if (isMobile()) {
+    if (app.isMobile()) {
         window.scrollTo(0, 0);
     }
 }
 
 function toggleProjectSidebar(show) {
-    const sidebar = document.getElementById('project-sidebar');
     if (show !== undefined) {
-        projectSidebarVisible = show;
+        app.state.projectSidebarVisible = show;
     } else {
-        projectSidebarVisible = !projectSidebarVisible;
+        app.state.projectSidebarVisible = !app.state.projectSidebarVisible;
     }
     
-    // On mobile, handle project sidebar differently
-    if (isMobile()) {
-        if (projectSidebarVisible) {
-            sidebar.classList.add('show');
-            // Replace main menu with project menu
-            document.getElementById('sidebar').classList.remove('show');
+    if (app.isMobile()) {
+        if (app.state.projectSidebarVisible) {
+            app.elements.projectSidebar.classList.add('show');
+            app.elements.sidebar.classList.remove('show');
         } else {
-            sidebar.classList.remove('show');
+            app.elements.projectSidebar.classList.remove('show');
         }
     } else {
-        sidebar.classList.toggle('show', projectSidebarVisible);
+        app.elements.projectSidebar.classList.toggle('show', app.state.projectSidebarVisible);
     }
 }
 
@@ -220,11 +213,8 @@ function attachProjectLinkHandlers() {
             const tab = link.getAttribute('href').substring(1);
             showTab(tab);
             
-            // On mobile, close the project sidebar after selection
-            if (isMobile()) {
-                setTimeout(() => {
-                    toggleProjectSidebar(false);
-                }, 300);
+            if (app.isMobile()) {
+                setTimeout(() => toggleProjectSidebar(false), 300);
             }
         });
     });
@@ -232,15 +222,13 @@ function attachProjectLinkHandlers() {
 
 // Handle window resize
 function handleResize() {
-    // Close mobile menu if window becomes larger
-    if (!isMobile() && mobileMenuOpen) {
-        toggleMobileMenu();
+    if (!app.isMobile() && app.state.mobileMenuOpen) {
+        app.toggleMobileMenu();
     }
     
-    // Reset sidebars on desktop
-    if (!isMobile()) {
-        document.getElementById('sidebar').classList.remove('show');
-        document.getElementById('project-sidebar').classList.remove('show');
+    if (!app.isMobile()) {
+        app.elements.sidebar.classList.remove('show');
+        app.elements.projectSidebar.classList.remove('show');
     }
 }
 
@@ -255,11 +243,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     showTab('bio');
     
     // Mobile menu toggle
-    const menuToggle = document.getElementById('menu-toggle');
-    const menuOverlay = document.getElementById('menu-overlay');
-    
-    menuToggle.addEventListener('click', toggleMobileMenu);
-    menuOverlay.addEventListener('click', toggleMobileMenu);
+    app.elements.menuToggle.addEventListener('click', () => app.toggleMobileMenu());
+    app.elements.overlay.addEventListener('click', () => app.toggleMobileMenu());
     
     // Main navigation handlers
     document.querySelectorAll('#sidebar nav a').forEach(link => {
@@ -271,11 +256,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     
     // Project sidebar mouse leave handler (desktop only)
-    const projectSidebar = document.getElementById('project-sidebar');
-    projectSidebar.addEventListener('mouseleave', () => {
-        if (!isMobile()) {
-            projectSidebarVisible = false;
-            projectSidebar.classList.remove('show');
+    app.elements.projectSidebar.addEventListener('mouseleave', () => {
+        if (!app.isMobile()) {
+            app.state.projectSidebarVisible = false;
+            app.elements.projectSidebar.classList.remove('show');
         }
     });
     
@@ -285,4 +269,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(handleResize, 250);
     });
+});
+
+
+
+
+// Content loading events
+document.addEventListener('contentLoaded', function() {
+    if (document.querySelector('#keyboard-project .carousel-container')) {
+        loadCarouselGallery({
+            directory: 'content/projects/keyboard/data',
+            namePattern: 'keyboard',
+            numberFormat: 'parentheses',
+            containerSelector: '#keyboard-project .carousel-container',
+            maxImages: 100,
+        });
+    }
 });

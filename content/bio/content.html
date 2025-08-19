@@ -1,159 +1,105 @@
 <style>
+    /* Bio-specific layout styles */
     .bio-container {
         display: flex;
-        padding: 2em;
-        gap: 30px;
+        padding: var(--space-xl);
+        gap: var(--space-2xl);
         flex-wrap: wrap;
-        overflow-y: scroll;
+        overflow-y: auto;
+        max-width: var(--content-width);
+        margin: 0 auto;
     }
     
     .main-content {
         flex: 2;
-        min-width: 300px;
-    }
-
-    .bio-content {
-        max-width: 100%;
     }
 
     .intro p {
         text-align: justify;
-        margin-bottom: 15px;
+        margin-bottom: var(--space-md);
     }
 
-    .philosophy {
-        background-color: #f8f9fa;
-        border: #2c3e50 solid 2px;
-        padding: 20px;
-        margin-top: 30px;
-    }
+/* ==========================================================================
+    SKILL COMPONENTS
+    ========================================================================== */
 
     .skills-sidebar {
         flex: 1;
         min-width: 280px;
-        padding: 1em;
+        padding: var(--space-md);
         padding-bottom: 0;
-        border: 2px solid #e74c3c;
         height: fit-content;
         position: sticky;
-        top: 1rem;
+        top: var(--space-md);
         overflow-y: auto;
+        background-color: var(--secondary-light);
+        border: 2px solid var(--accent);
+        border-radius: var(--border-radius);
+        box-shadow: 12px 10px 6px rgba(0,0,0,0.5);
     }
 
     .skill-item {
-        margin-bottom: 1em;
+        margin-bottom: var(--space-md);
     }
 
     .skill-name {
-        font-weight: bold;
-        margin-bottom: 2px;
-        color: #2c3e50;
+        font-weight: 600;
+        margin-bottom: var(--space-xs);
+        color: var(--text-dark);
+        font-size: var(--font-size-sm);
     }
 
     .skill-bar {
-        background-color: #ecf0f1;
-        border-radius: 0.5em;
-        height: 1.375em;
+        background-color: var(--primary-pale);
+        border: 1px solid var(--primary);
+        border-radius: var(--border-radius);
+        height: 1.375rem;
         position: relative;
         overflow: hidden;
     }
 
     .skill-fill {
-        background: linear-gradient(to right, #3498db, #2ecc71);
+        background: linear-gradient(to right, var(--primary-light), var(--green));
         height: 100%;
-        border-radius: 0.5em;
+        border-radius: var(--border-radius);
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        padding-right: 8px;
+        padding-right: var(--space-sm);
         width: 0;
-        transition: width 1s ease-out;
+        transition: width var(--transition-slow) var(--transition-spring);
     }
 
     .skill-rating {
-        color: white;
-        font-size: 12px;
-        font-weight: bold;
-    }
-
-    .skill-categories {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1em;
-        margin-top: 1em;
-    }
-
-    .skill-group {
-        background-color: rgba(240, 240, 240, 0.5);
-        padding: 1em;
-    }
-
-    .skill-group h4 {
-        margin-top: 0;
-        color: #333;
+        color: var(--text-light);
+        font-size: var(--font-size-xs);
+        font-weight: 600;
     }
 
     .skill-category {
-        margin-bottom: 1.5em;
-    }
-    
-    .skill-category h4 {
-        margin-bottom: 0.75em;
-        color: #2c3e50;
+        margin-top: var(--space-xl);
     }
 
-    h2 {
-        margin-top: 0em;
+    .skill-category h3 {
+        margin-bottom: var(--space-md);
+        color: var(--text-accent);
     }
-    
 
-    /* Mobile styles */
-    @media (max-width: 768px) {
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+    
+    /* Mobile and Tablet styles */
+    @media (min-width: 0px) and (max-width: 1024px) {
         .bio-container {
             flex-direction: column;
-            gap: 20px;
-        }
-        
-        .skills-sidebar {
-            position: static;
-            margin-top: 2em;
-            padding: 1.5em;
-            padding-bottom: 0;
-        }
-        
-        .intro p {
-            text-align: left;
-        }
-        
-        .philosophy {
-            padding: 15px;
-        }
-        
-        h2 {
-            font-size: 1.5rem;
-        }
-        
-        h3 {
-            font-size: 1.25rem;
-        }
-        
-        h4 {
-            font-size: 1.1rem;
-        }
-    }
-    
-    /* Tablet styles */
-    @media (max-width: 1024px) {
-        .bio-container {
-            gap: 20px;
-        }
-        
-        .skills-sidebar {
-            padding: 1.5em;
-            padding-bottom: 0;
+            gap: var(--space-md);
+            padding: var(--space-lg);
         }
     }
 </style>
+
+
 
 
 <script>
@@ -191,9 +137,10 @@
 </script>
 
 
+
 <div class="bio-container">
     <div class="main-content">
-        <h2>Bio</h2>
+        <h1>Bio</h1>
         <div class="bio-content">
             <div class="intro">
                 <p>
@@ -203,26 +150,28 @@
                     Currently working as a CAD Technician and Software Developer at Sunrun, I combine my engineering expertise with programming skills to develop efficient solutions and quality assurance tools. My journey from mechanical design to software development has given me a unique perspective on solving complex technical challenges.
                 </p>
             </div>
-            
+
             <div class="education">
                 <h3>Education</h3>
-                <p>
+                <div class="badge" style="color:var(--text-dark);">
+                    <h2 style="color:#DC4405"><strong>Oregon State University</strong></h2>
                     <strong>Bachelor of Science in Mechanical Engineering</strong><br>
-                    Oregon State University<br>
-                    Expected Graduation: June 2025<br>
-                    GPA: 3.15<br>
-                    <em>Focus: Robotic Control - SLAM/Kinematics</em><br>
-                    <em>Robotics Lab - OVH Group: Human-Robot Interactions</em><br>
-                    <em>Capstone Project: Robot Comedy (Audience Interaction with AI Feedback)</em>
-                </p>
+                    <strong>Graduated:</strong> June 2025 &nbsp <strong>GPA:</strong> 3.15<br> 
+                    <hr>
+                    <em>&nbsp <strong>Focus:</strong> Robotic Control - SLAM/Kinematics</em><br>
+                    <em>&nbsp <strong>Capstone Project:</strong> Robot Comedy (Audience Interaction with AI Feedback)</em><br>
+                    <em>&nbsp <strong>Robotics Lab - OVH Group:</strong> Human-Robot Interactions</em>
+                </div>
             </div>
-            
+
+            <br>
+
             <div class="interests">
                 <h3>Areas of Interest</h3>
                 <ul>
                     <li>Robotics and Industrial Automation</li>
                     <li>Human-Robot Interactions</li>
-                    <li>3D Printing and Rapid Prototyping (6+ years experience)</li>
+                    <li>3D Printing and Rapid Prototyping (10+ years experience)</li>
                     <li>Prosthetic Design and Biomedical Applications</li>
                     <li>Motion Control Systems and PLCs</li>
                     <li>Sustainable Technology and Home Automation</li>
@@ -242,11 +191,11 @@
         <h2>Technical Skills</h2>
         
         <div class="skill-category">
-            <h4>Programming</h4>
+            <h3>Programming</h3>
             <div class="skill-item">
                 <div class="skill-name">Python</div>
                 <div class="skill-bar">
-                    <div class="skill-fill" data-rating="5">
+                    <div class="skill-fill" data-rating="6">
                         <span class="skill-rating"></span>
                     </div>
                 </div>
@@ -262,7 +211,7 @@
             <div class="skill-item">
                 <div class="skill-name">MATLAB</div>
                 <div class="skill-bar">
-                    <div class="skill-fill" data-rating="5">
+                    <div class="skill-fill" data-rating="4">
                         <span class="skill-rating"></span>
                     </div>
                 </div>
@@ -278,7 +227,7 @@
         </div>
         
         <div class="skill-category">
-            <h4>Design & CAD</h4>
+            <h3>Design & CAD</h3>
             <div class="skill-item">
                 <div class="skill-name">AutoCAD</div>
                 <div class="skill-bar">
@@ -314,7 +263,15 @@
             <div class="skill-item">
                 <div class="skill-name">Blender</div>
                 <div class="skill-bar">
-                    <div class="skill-fill" data-rating="3">
+                    <div class="skill-fill" data-rating="2">
+                        <span class="skill-rating"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">PCB Design</div>
+                <div class="skill-bar">
+                    <div class="skill-fill" data-rating="2">
                         <span class="skill-rating"></span>
                     </div>
                 </div>
@@ -322,7 +279,7 @@
         </div>
         
         <div class="skill-category">
-            <h4>Manufacturing</h4>
+            <h3>Manufacturing</h3>
             <div class="skill-item">
                 <div class="skill-name">3D Printing</div>
                 <div class="skill-bar">
@@ -334,15 +291,15 @@
             <div class="skill-item">
                 <div class="skill-name">Sheet Metal Design</div>
                 <div class="skill-bar">
-                    <div class="skill-fill" data-rating="6">
+                    <div class="skill-fill" data-rating="5">
                         <span class="skill-rating"></span>
                     </div>
                 </div>
             </div>
             <div class="skill-item">
-                <div class="skill-name">PCB Design</div>
+                <div class="skill-name">Wood Working & General Fabrication</div>
                 <div class="skill-bar">
-                    <div class="skill-fill" data-rating="2">
+                    <div class="skill-fill" data-rating="7">
                         <span class="skill-rating"></span>
                     </div>
                 </div>
