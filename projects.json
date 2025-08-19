@@ -1,36 +1,61 @@
 [
     {
-        "id": "capstone",
+        "id": "projectHeaderLink",
+        "name": "WORK PROJECTS",
+        "folder": "workProjects"
+    },
+    {
+        "id": "qatoolsLink",
+        "name": "QA Tools",
+        "folder": "qatools"
+    },
+    
+
+    {
+        "id": "projectHeaderLink",
+        "name": "SCHOOL PROJECTS",
+        "folder": "schoolProjects"
+    },
+    {
+        "id": "capstoneLink",
         "name": "Capstone Project",
         "folder": "capstone"
     },
     {
-        "id": "keyboard",
-        "name": "Nasa Keyboard",
+        "id": "dogapultLink",
+        "name": "Dog-a-pult",
+        "folder": "dogapult"
+    }, 
+
+
+
+    {
+        "id": "projectHeaderLink",
+        "name": "HOBBY PROJECTS",
+        "folder": "hobbyProjects"
+    },
+    {
+        "id": "keyboardLink",
+        "name": "Custom Keyboard",
         "folder": "keyboard"
     },
     {
-        "id": "printer",
+        "id": "printerLink",
         "name": "Custom 3D Printer",
         "folder": "printer"
     },
     {
-        "id": "supercheesi",
-        "name": "Supercheesi (Board Game)",
+        "id": "supercheesiLink",
+        "name": "Supercheesi",
         "folder": "supercheesi"
     },
     {
-        "id": "greenhouse",
+        "id": "greenhouseLink",
         "name": "Greenhouse",
         "folder": "greenhouse"
     },
     {
-        "id": "dogapult",
-        "name": "Dog-a-pult",
-        "folder": "dogapult"
-    },    
-    {
-        "id": "miscellaneous",
+        "id": "miscellaneousLink",
         "name": "Miscellaneous",
         "folder": "miscellaneous"
     }

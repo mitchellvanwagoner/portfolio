@@ -1,13 +1,134 @@
 <style>
+    /* Hobbies page specific styles */
     .hobbies-container {
-        padding: 2em;
+        padding: var(--space-xl);
+        max-width: var(--content-width);
+        margin: 0 auto;
+    }
+
+    .hobbies-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: var(--space-xl);
+        margin-top: var(--space-xl);
+    }
+
+    .hobby-card {
+        background-color: var(--background-color-alt);
+        border: 2px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: var(--space-lg);
+        box-shadow: var(--shadow-close);
+        transition: all var(--transition-speed);
+    }
+
+    .hobby-card:hover {
+        box-shadow: var(--shadow-close-hover);
+        transform: translateY(-2px);
+    }
+
+    .hobby-card h3 {
+        color: var(--text-accent);
+        margin-bottom: var(--space-md);
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+    }
+
+    .hobby-card p {
+        margin-bottom: var(--space-sm);
+        line-height: var(--leading-normal);
+    }
+
+    .hobby-list {
+        margin: var(--space-md) 0;
+        padding-left: var(--space-lg);
+    }
+
+    .hobby-list li {
+        margin-bottom: var(--space-xs);
+        line-height: var(--leading-normal);
+    }
+
+    .coming-soon {
+        text-align: center;
+        padding: var(--space-2xl);
+        background-color: var(--background-color-alt);
+        border: 2px dashed var(--border-color);
+        border-radius: var(--border-radius);
+        margin-top: var(--space-xl);
+        color: var(--text-dark);
+        opacity: 0.7;
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+        .hobbies-container {
+            padding: var(--space-lg);
+        }
+
+        .hobbies-grid {
+            grid-template-columns: 1fr;
+            gap: var(--space-lg);
+        }
+
+        .hobby-card {
+            padding: var(--space-md);
+        }
     }
 </style>
 
 <div class="hobbies-container">
-
-
-
-
+    <h1>Hobbies & Interests</h1>
     
-</div> 
+    <p>Beyond engineering, I have a variety of interests that keep me creative and engaged. Here are some of the activities I enjoy in my free time:</p>
+
+    <div class="hobbies-grid">
+        <div class="hobby-card">
+            <h3>🎮 Gaming</h3>
+            <p>I enjoy both video games and board games as a way to unwind and challenge myself strategically.</p>
+            <ul class="hobby-list">
+                <li>Strategy and puzzle games</li>
+                <li>Cooperative board games</li>
+                <li>Game design concepts</li>
+            </ul>
+        </div>
+
+        <div class="hobby-card">
+            <h3>🛠️ Making & Tinkering</h3>
+            <p>I love working with my hands and building things, often combining traditional craftsmanship with modern technology.</p>
+            <ul class="hobby-list">
+                <li>3D printing and design</li>
+                <li>Electronics projects</li>
+                <li>Woodworking</li>
+                <li>Home automation</li>
+            </ul>
+        </div>
+
+        <div class="hobby-card">
+            <h3>🎵 Music</h3>
+            <p>Music has always been an important part of my life, providing both relaxation and creative expression.</p>
+            <ul class="hobby-list">
+                <li>Listening to various genres</li>
+                <li>Audio equipment and acoustics</li>
+                <li>Music production basics</li>
+            </ul>
+        </div>
+
+        <div class="hobby-card">
+            <h3>🌱 Learning</h3>
+            <p>I'm constantly learning new skills and exploring different fields that interest me.</p>
+            <ul class="hobby-list">
+                <li>Programming languages</li>
+                <li>New engineering concepts</li>
+                <li>Technology trends</li>
+                <li>Online courses and tutorials</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="coming-soon">
+        <h3>More Content Coming Soon</h3>
+        <p>I'm working on adding more detailed information about my hobbies and personal projects. Check back soon for updates!</p>
+    </div>
+</div>

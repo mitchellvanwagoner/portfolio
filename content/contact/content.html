@@ -1,51 +1,159 @@
 <style>
+    /* Contact page specific styles */
     .contact-container {
-        padding: 2em;
+        padding: var(--space-xl);
+        max-width: var(--content-width);
+        margin: 0 auto;
+    }
+
+    .contact-content {
+        margin-top: var(--space-lg);
+    }
+
+    .contact-content > p {
+        margin-bottom: var(--space-xl);
+        line-height: var(--leading-normal);
+        font-size: var(--font-size-lg);
+        text-align: center;
     }
 
     .contact-methods {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 2em;
-        margin: 2em 0;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: var(--space-xl);
+        margin: var(--space-2xl) 0;
     }
 
     .contact-item {
         text-align: center;
+        padding: var(--space-lg);
+        background-color: var(--background-color-alt);
+        border: 2px solid var(--border-color);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-close);
+        transition: all var(--transition-speed);
+    }
+
+    .contact-item:hover {
+        box-shadow: var(--shadow-close-hover);
+        transform: translateY(-2px);
+    }
+
+    .contact-item h3 {
+        color: var(--text-accent);
+        margin-bottom: var(--space-md);
+        font-size: var(--font-size-xl);
+    }
+
+    .contact-item a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color var(--transition-speed);
+    }
+
+    .contact-item a:hover {
+        color: var(--accent);
+        text-decoration: underline;
     }
 
     .contact-form {
-        max-width: 500px;
-        margin-top: 3em;
+        max-width: 600px;
+        margin: var(--space-2xl) auto 0;
+        padding: var(--space-xl);
+        background-color: var(--background-color-alt);
+        border: 2px solid var(--border-color);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-far);
+    }
+
+    .contact-form h3 {
+        color: var(--text-accent);
+        margin-bottom: var(--space-lg);
+        text-align: center;
+        font-size: var(--font-size-2xl);
     }
 
     .form-group {
-        margin-bottom: 1em;
+        margin-bottom: var(--space-lg);
     }
 
     .form-group label {
         display: block;
-        margin-bottom: 0.3em;
-        font-weight: bold;
+        margin-bottom: var(--space-xs);
+        font-weight: 600;
+        color: var(--text-dark);
+        font-size: var(--font-size-base);
     }
 
     .form-group input,
     .form-group textarea {
         width: 100%;
-        padding: 0.5em;
-        border: 1px solid #ccc;
-        border-radius: 0.3em;
-        font-family: 'Architects Daughter', cursive;
+        padding: var(--space-md);
+        border: 2px solid var(--border-color);
+        border-radius: var(--border-radius);
+        font-family: 'Inter', sans-serif;
+        font-size: var(--font-size-base);
+        background-color: var(--neutral-pale);
+        transition: all var(--transition-speed);
+        box-sizing: border-box;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: var(--shadow-close);
     }
 
     .form-group textarea {
         resize: vertical;
+        min-height: 120px;
+        line-height: var(--leading-normal);
+    }
+
+    .form-submit {
+        text-align: center;
+        margin-top: var(--space-xl);
+    }
+
+    .form-note {
+        text-align: center;
+        margin-top: var(--space-md);
+        font-size: var(--font-size-sm);
+        color: var(--text-dark);
+        opacity: 0.7;
+        font-style: italic;
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+        .contact-container {
+            padding: var(--space-lg);
+        }
+
+        .contact-methods {
+            grid-template-columns: 1fr;
+            gap: var(--space-lg);
+        }
+
+        .contact-item {
+            padding: var(--space-md);
+        }
+
+        .contact-form {
+            margin-top: var(--space-xl);
+            padding: var(--space-lg);
+        }
+
+        .contact-content > p {
+            font-size: var(--font-size-base);
+        }
     }
 </style>
 
-
 <div class="contact-container">
-    <h2>Contact</h2>
+    <h1>Contact</h1>
     <div class="contact-content">
         <p>
             I'm always interested in new opportunities and collaborations. 
@@ -54,41 +162,46 @@
         
         <div class="contact-methods">
             <div class="contact-item">
-                <h3>Email</h3>
+                <h3>📧 Email</h3>
                 <p><a href="mailto:mitchell@mvwengineering.org">Mitchell@mvwengineering.org</a></p>
             </div>
             
             <div class="contact-item">
-                <h3>LinkedIn</h3>
-                <p><a href="https://linkedin.com/in/mitchellvanwagoner" target="_blank">TBA</a></p>
+                <h3>💼 LinkedIn</h3>
+                <p><a href="https://linkedin.com/in/mitchellvanwagoner" target="_blank">linkedin.com/in/mitchellvanwagoner</a></p>
             </div>
             
-            <!-- <div class="contact-item">
-                <h3>GitHub</h3>
+            <div class="contact-item">
+                <h3>💻 GitHub</h3>
                 <p><a href="https://github.com/mitchellvanwagoner" target="_blank">github.com/mitchellvanwagoner</a></p>
-            </div> -->
+            </div>
         </div>
         
         <div class="contact-form">
             <h3>Send a Message</h3>
-            <form action="your-form-handler" method="POST">
+            <form action="#" method="POST">
                 <div class="form-group">
-                    <label for="name">Name:</label>
+                    <label for="name">Name</label>
                     <input type="text" id="name" name="name" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="email">Email:</label>
+                    <label for="email">Email</label>
                     <input type="email" id="email" name="email" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="message">Message:</label>
-                    <textarea id="message" name="message" rows="5" required></textarea>
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project or just say hello!"></textarea>
                 </div>
                 
-                <button type="submit" class="project-btn">Send Message</button>
+                <div class="form-submit">
+                    <button type="submit" class="button">Send Message</button>
+                </div>
             </form>
+            <div class="form-note">
+                Note: Form functionality will be implemented soon. For now, please use the email link above.
+            </div>
         </div>
     </div>
 </div>

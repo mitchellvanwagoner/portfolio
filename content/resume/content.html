@@ -1,62 +1,224 @@
 <style>
     .resume-container {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        flex-direction: row;
         align-items: center;
-        padding: 0;
-        margin: 0;
+        padding: var(--space-xl);
+        gap: var(--space-xl);
+        min-height: calc(100vh - var(--header-height));
+        max-width: var(--content-width);
+        margin: 0 auto;
+        overflow-y: auto;
     }
 
+    .resume-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-xl);
+    }
 
-    /* Mobile styles */
+    .resume-image {
+        max-width: 100%;
+        max-height: calc(100vh - var(--header-height) - var(--space-2xl));
+        width: auto;
+        height: auto;
+        box-shadow: var(--shadow-far);
+        border-radius: var(--border-radius);
+        transition: all var(--transition-speed);
+        border: 2px solid var(--border-color);
+    }
+
+    .resume-image:hover {
+        transform: scale(1.01);
+        box-shadow: var(--shadow-far-hover);
+    }
+
+    .diploma-section {
+        width: 100%;
+        max-width: 80%;
+        text-align: center;
+    }
+
+    .diploma-section .resume-image {
+        max-height: calc(60vh - var(--space-xl));
+    }
+
+    .diploma-section h3 {
+        margin-bottom: var(--space-md);
+        color: var(--text-accent);
+    }
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+    .download-buttons-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+        position: relative;
+        top: -25vh;
+        rotate: -90deg;
+    }
+
+    .download-button {
+        background-color: var(--secondary);
+        color: var(--text-dark);
+        padding: var(--space-lg) var(--space-xl);
+        text-decoration: none;
+        transition: all var(--transition-speed);
+        font-size: var(--font-size-lg);
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-sm);
+        box-shadow: var(--shadow-close);
+        border: 2px solid var(--border-color);
+        cursor: pointer;
+        border-radius: var(--border-radius);
+        text-align: center;
+    }
+
+    .download-button:hover,
+    .download-button:focus {
+        background-color: var(--secondary-light);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-close-hover);
+        color: var(--text-dark);
+    }
+
+    .download-button-small {
+        background-color: var(--button-color);
+        color: var(--text-light);
+        padding: var(--space-sm) var(--space-lg);
+        text-decoration: none;
+        transition: all var(--transition-speed);
+        font-size: var(--font-size-base);
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-xs);
+        box-shadow: var(--shadow-close);
+        border: none;
+        cursor: pointer;
+        border-radius: var(--border-radius);
+    }
+
+    .download-button-small:hover,
+    .download-button-small:focus {
+        background-color: var(--highlight);
+        color: var(--text-light);
+        box-shadow: var(--shadow-close-hover);
+    }
+
+    .download-buttons-mobile {
+        display: none;
+        gap: var(--space-md);
+        justify-content: center;
+        margin-bottom: var(--space-sm);
+        flex-wrap: wrap;
+    }
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+    @media (max-width: 1024px) {
+        .resume-container {
+            flex-direction: column;
+            align-items: stretch;
+            padding: var(--space-lg);
+            gap: var(--space-lg);
+        }
+
+        .download-buttons-sidebar {
+            display: none;
+        }
+
+        .download-buttons-mobile {
+            display: flex;
+        }
+
+        .diploma-section {
+            max-width: 100%;
+        }
+
+        .resume-content {
+            gap: var(--space-lg);
+        }
+
+        .resume-image {
+            max-height: calc(90vh - var(--header-height) - var(--space-xl));
+        }
+
+        .diploma-section .resume-image {
+            max-height: calc(50vh - var(--space-lg));
+        }
+    }
+
     @media (max-width: 768px) {
         .resume-container {
-            padding: 2em;
-            padding-top:0;
-            margin: 0;
+            padding: var(--space-md);
+        }
+
+        .download-buttons-mobile {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .resume-image {
+            max-height: calc(80vh - var(--header-height) - var(--space-lg));
+        }
+
+        .diploma-section .resume-image {
+            max-height: calc(40vh - var(--space-md));
         }
     }
 </style>
 
-
 <div class="resume-container">
-    <div style="
-    text-align: center; 
-    margin-top: 0.5em; 
-    margin-bottom: 0.5em;
-    ">
+    <!-- Mobile/Tablet Download Buttons (hidden on desktop) -->
+    <div class="download-buttons-mobile">
         <a href="content/resume/data/resume.pdf" 
-        download="Mitchell_VanWagoner_Resume.pdf"
-        style="
-            background-color: #1e3a8a;
-            color: white;
-            padding: 0.5em 1.5em;
-            text-decoration: none;
-            font-size: 1em;
-            font-weight: 500;
-            display: inline-block;
-            transition: background-color 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        "
-        onmouseover="this.style.backgroundColor='#1e40af'"
-        onmouseout="this.style.backgroundColor='#1e3a8a'">
+           download="Mitchell_VanWagoner_Resume.pdf"
+           class="download-button-small">
             📄 Download Resume
+        </a>
+        <a href="content/resume/data/portfolio.pdf" 
+           download="Mitchell_VanWagoner_Portfolio.pdf"
+           class="download-button-small">
+            📁 Download Portfolio
         </a>
     </div>
 
-    <div style="
-        height: calc(90vh - 6em);
-        padding: 0;
-    ">
-        <img src="content/resume/data/resume.jpg"
-            alt="Mitchell Van Wagoner Resume"
-            style="
-                max-width: 100%;
-                max-height: 100%;
-                object-fit: contain;
-                border-radius: 0;
-                box-shadow: 16px 12px 8px rgba(0,0,0,0.1);
-            ">
+    <!-- Desktop Download Buttons Sidebar -->
+    <div class="download-buttons-sidebar">
+        <a href="content/data/resume.pdf" 
+           download="Mitchell_VanWagoner_Resume.pdf"
+           class="download-button">
+            📄 Download Resume
+        </a>
+        <a href="content/resume/data/portfolio.pdf" 
+           download="Mitchell_VanWagoner_Portfolio.pdf"
+           class="download-button">
+            📁 Download Portfolio
+        </a>
+    </div>
+
+    <!-- Resume Content -->
+    <div class="resume-content">
+        <div>
+            <img src="data/resume.jpg"
+                 alt="Mitchell Van Wagoner Resume"
+                 class="resume-image">
+        </div>
+
+        <div class="diploma-section">
+            <img src="data/diploma.jpg"
+                 alt="Oregon State University Diploma 2025"
+                 class="resume-image">
+        </div>
     </div>
 </div>
