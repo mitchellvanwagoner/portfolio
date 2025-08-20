@@ -1,6 +1,6 @@
 [
     {
-        "id": "projectHeaderLink",
+        "id": "workProjectsLink",
         "name": "WORK PROJECTS",
         "folder": "workProjects"
     },
@@ -12,7 +12,7 @@
     
 
     {
-        "id": "projectHeaderLink",
+        "id": "schoolProjectsLink",
         "name": "SCHOOL PROJECTS",
         "folder": "schoolProjects"
     },
@@ -30,7 +30,7 @@
 
 
     {
-        "id": "projectHeaderLink",
+        "id": "hobbyProjectsLink",
         "name": "HOBBY PROJECTS",
         "folder": "hobbyProjects"
     },

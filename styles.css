@@ -87,10 +87,10 @@
     --transition-spring: cubic-bezier(0.4, 0, 0.2, 1);
 
     /* Shadow System */
-    --shadow-close: 6px 6px 8px rgba(0, 0, 0, 0.3);
-    --shadow-close-hover: 8px 8px 12px rgba(0, 0, 0, 0.4);
-    --shadow-far: 12px 10px 16px rgba(0, 0, 0, 0.5);
-    --shadow-far-hover: 16px 14px 24px rgba(0, 0, 0, 0.6);
+    --shadow-close: 6px 6px 4px rgba(0, 0, 0, 0.3);
+    --shadow-close-hover: 8px 8px 8px rgba(0, 0, 0, 0.4);
+    --shadow-far: 12px 10px 10px rgba(0, 0, 0, 0.5);
+    --shadow-far-hover: 16px 14px 14px rgba(0, 0, 0, 0.6);
     --shadow-dramatic: 20px 16px 32px rgba(0, 0, 0, 0.7);
 
     /* Layout Variables */
@@ -369,7 +369,6 @@ main {
 
 .sidebar nav a {
     display: flex;
-    text-decoration: none;
     justify-content: center;
     font-family: 'Architects Daughter', cursive;
 }
@@ -385,7 +384,7 @@ main {
     border-radius: 0; /* Override default */
     background-color: var(--sidebar-background);
     border-right: var(--border-width) solid var(--border-color);
-    transition: left var(--transition-slow);
+    transition: left var(--transition-slow) var(--transition-spring);
     z-index: var(--z-sidebar-project);
     font-family: 'Architects Daughter', cursive;
     overflow-y: auto;
@@ -400,9 +399,9 @@ main {
     justify-content: center;
 }
 
-.projectHeaderLink {
+.workProjectsLink, .schoolProjectsLink, .hobbyProjectsLink {
     margin-top: var(--space-xl);
-    text-decoration: underline;
+    text-decoration: underline !important;
 }
 
 /* Navigation Links */
@@ -533,7 +532,7 @@ nav a:focus {
     max-width: 40em;
     box-shadow: var(--shadow-close);
     margin-bottom: var(--space-lg);
-    transition: box-shadow var(--transition-speed);
+    transition: box-shadow var(--transition-fast);
 }
 
 .badge:hover {
@@ -552,6 +551,83 @@ nav a:focus {
 .badge p {
     margin-bottom: 0;
 }
+
+/* ==========================================================================
+   PROJECT PAGE COMPONENTS
+   ========================================================================== */
+
+/* Common project container styles */
+.projects-container,
+.hobby-projects-container,
+.work-projects-container,
+.school-projects-container {
+    padding: var(--space-xl);
+    max-width: var(--content-width);
+    margin: 0 auto;
+}
+
+.projects-overview {
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-2xl);
+}
+
+.projects-overview p {
+    margin-bottom: var(--space-md);
+    line-height: var(--leading-normal);
+}
+
+.project-category-section {
+    margin-bottom: var(--space-2xl);
+}
+
+.category-header {
+    color: var(--text-accent);
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-sm);
+    border-bottom: 2px solid var(--border-color);
+    border-radius: 0;
+}
+
+.projects-grid {
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+}
+
+.projects-grid.hobby-grid,
+.projects-grid.work-grid,
+.projects-grid.school-grid {
+    margin-top: var(--space-xl);
+}
+
+.project-badge {
+    height: 30em;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-badge .project-image {
+    flex: 1;
+    width: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: var(--border-radius-sm);
+    margin-top: var(--space-sm);
+}
+
+.project-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.project-link:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
 
 /* ==========================================================================
    PROJECT COMPONENTS
@@ -927,6 +1003,22 @@ nav a:focus {
     .carousel-multi .carousel-slide {
         min-width: 100%;
     }
+
+    /* Project page mobile styles */
+    .projects-container,
+    .hobby-projects-container,
+    .work-projects-container,
+    .school-projects-container {
+        padding: var(--space-lg);
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .category-header {
+        font-size: var(--font-size-xl);
+    }
 }
 
 /* Mobile Landscape */
@@ -968,7 +1060,8 @@ nav a:focus {
     }
 }
 
-/* Accessibility */
+/* Accessibility - Temporarily disabled for development */
+/*
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -978,3 +1071,4 @@ nav a:focus {
         transition-duration: 0.01ms !important;
     }
 }
+*/

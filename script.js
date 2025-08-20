@@ -140,6 +140,7 @@ async function loadProjectContent(projectId) {
             const content = await response.text();
             section.innerHTML = content;
             app.executeScripts(section);
+            attachProjectLinkHandlers();
         } else {
             section.innerHTML = `
                 <h2>${project.name}</h2>

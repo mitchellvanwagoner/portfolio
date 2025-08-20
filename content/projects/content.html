@@ -1,69 +1,4 @@
-<style>
-    /* Projects page specific styles */
-    .projects-container {
-        padding: var(--space-xl);
-        max-width: var(--content-width);
-        margin: 0 auto;
-    }
-
-    .projects-overview {
-        margin-top: var(--space-lg);
-    }
-
-    .projects-overview p {
-        margin-bottom: var(--space-md);
-        line-height: var(--leading-normal);
-    }
-
-    .project-categories {
-        margin-top: var(--space-2xl);
-        padding: var(--space-lg);
-        background-color: var(--background-color-alt);
-        border: 2px solid var(--border-color);
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow-close);
-        transition: box-shadow var(--transition-speed);
-    }
-
-    .project-categories:hover {
-        box-shadow: var(--shadow-close-hover);
-    }
-
-    .project-categories h3 {
-        color: var(--text-accent);
-        margin-bottom: var(--space-md);
-    }
-
-    .project-categories ul {
-        margin: 0;
-        padding-left: var(--space-lg);
-    }
-
-    .project-categories li {
-        margin-bottom: var(--space-sm);
-        line-height: var(--leading-normal);
-    }
-
-    .project-categories li strong {
-        color: var(--primary);
-        font-weight: 600;
-    }
-
-    /* Mobile styles */
-    @media (max-width: 768px) {
-        .projects-container {
-            padding: var(--space-lg);
-        }
-
-        .project-categories {
-            padding: var(--space-md);
-        }
-
-        .project-categories ul {
-            padding-left: var(--space-md);
-        }
-    }
-</style>
+<!-- No page-specific CSS needed - all styles consolidated to main CSS -->
 
 <div class="projects-container">
     <h1>Projects</h1>
@@ -74,21 +9,89 @@
         </p>
         
         <p>
-            <strong>Select a project from the sidebar to view details →</strong>
+            <strong>Click on any project below to view detailed information →</strong>
         </p>
-        
-        <div class="project-categories">
-            <h3>Project Categories</h3>
-            <ul>
-                <li><strong>QA Tools</strong> - QA Tools built for work</li>
-                <li><strong>Capstone</strong> - My senior engineering project</li>
-                <li><strong>Dogapult</strong> - An automated pet toy launcher</li>
-                <li><strong>Greenhouse</strong> - Smart greenhouse monitoring system</li>
-                <li><strong>Keyboard</strong> - Custom mechanical keyboard build</li>
-                <li><strong>Printer</strong> - 3D printer modifications and projects</li>
-                <li><strong>Supercheesi</strong> - Robotics competition entry</li>
-                <li><strong>Miscellaneous</strong> - Various smaller projects</li>
-            </ul>
+    </div>
+
+    <!-- Work Projects Section -->
+    <div class="project-category-section">
+        <h2 class="category-header">Work Projects</h2>
+        <div class="projects-grid">
+            <a href="#qatools" class="project-link">
+                <div class="badge project-badge">
+                    <h3>QA Tools</h3>
+                    <p>Comprehensive quality assurance tools and utilities designed to streamline testing processes, automate repetitive tasks, and improve overall software quality in professional development environments.</p>
+                    <img src="data/keyboard (10).jpg" alt="QA Tools interface and workflow" class="project-image">
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- School Projects Section -->
+    <div class="project-category-section">
+        <h2 class="category-header">School Projects</h2>
+        <div class="projects-grid">
+            <a href="#capstone" class="project-link">
+                <div class="badge project-badge">
+                    <h3>Capstone Project</h3>
+                    <p>Senior engineering capstone project focusing on advanced engineering principles, design methodology, and real-world application. Represents the culmination of undergraduate engineering studies.</p>
+                    <img src="data/keyboard (15).jpg" alt="Capstone project design and implementation" class="project-image">
+                </div>
+            </a>
+
+            <a href="#dogapult" class="project-link">
+                <div class="badge project-badge">
+                    <h3>Dog-a-pult</h3>
+                    <p>Automated pet toy launcher designed to provide entertainment and exercise for dogs. Features adjustable launch angles, distance control, and safety mechanisms for autonomous operation.</p>
+                    <img src="data/keyboard (20).jpg" alt="Dog-a-pult automated pet toy launcher" class="project-image">
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Hobby Projects Section -->
+    <div class="project-category-section">
+        <h2 class="category-header">Hobby Projects</h2>
+        <div class="projects-grid">
+            <a href="#keyboard" class="project-link">
+                <div class="badge project-badge">
+                    <h3>Custom Keyboard</h3>
+                    <p>A custom mechanical keyboard inspired by 50's NASA console design, featuring integrated display, volume controls, and left-side numpad. Built with custom PCB and 3D printed components.</p>
+                    <img src="data/keyboard (1).jpg" alt="Custom NASA-inspired keyboard" class="project-image">
+                </div>
+            </a>
+
+            <a href="#printer" class="project-link">
+                <div class="badge project-badge">
+                    <h3>Custom 3D Printer</h3>
+                    <p>Modifications and improvements to 3D printer hardware and software. Includes custom enclosures, upgraded components, and optimized printing profiles for enhanced performance.</p>
+                    <img src="data/printer (1).jpg" alt="Modified 3D printer setup" class="project-image">
+                </div>
+            </a>
+
+            <a href="#supercheesi" class="project-link">
+                <div class="badge project-badge">
+                    <h3>Supercheesi</h3>
+                    <p>Robotics competition entry featuring autonomous navigation and task completion. Designed for engineering competitions with focus on reliability and performance.</p>
+                    <img src="data/supercheesi (1).jpg" alt="Supercheesi robot" class="project-image">
+                </div>
+            </a>
+
+            <a href="#greenhouse" class="project-link">
+                <div class="badge project-badge">
+                    <h3>Greenhouse</h3>
+                    <p>Smart greenhouse monitoring and control system with automated watering, climate control, and remote monitoring capabilities for optimal plant growth.</p>
+                    <img src="data/greenhouse (1).jpg" alt="Smart greenhouse system" class="project-image">
+                </div>
+            </a>
+
+            <a href="#miscellaneous" class="project-link">
+                <div class="badge project-badge">
+                    <h3>Miscellaneous Projects</h3>
+                    <p>Collection of various smaller projects including bench power supply modifications, rotary encoder interfaces, controller hangers, bed frame designs, and camping gear.</p>
+                    <img src="data/bench_psu (1).jpg" alt="Various miscellaneous projects" class="project-image">
+                </div>
+            </a>
         </div>
     </div>
 </div>

@@ -42,6 +42,39 @@ header h1 {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Engineering Portfolio</title>
+    
+    <!-- Optimization and Caching Meta Tags -->
+    <meta http-equiv="Cache-Control" content="public, max-age=3600">
+    <meta name="description" content="Mitchell Van Wagoner's Engineering Portfolio - Showcasing innovative projects in software development, hardware design, and engineering solutions.">
+    <meta name="keywords" content="engineering, portfolio, software development, hardware design, projects, QA tools, robotics, 3D printing">
+    <meta name="author" content="Mitchell Van Wagoner">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; connect-src 'self';">
+    
+    <!-- Open Graph Meta Tags for Social Sharing -->
+    <meta property="og:title" content="Mitchell Van Wagoner - Engineering Portfolio">
+    <meta property="og:description" content="Explore innovative engineering projects including custom keyboards, robotics, and professional development tools.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://portfolio.mvwengineering.org">
+    <meta property="og:image" content="data/keyboard (1).jpg">
+    
+    <!-- DNS Prefetch for External Resources -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    
+    <!-- Preload Critical Images -->
+    <link rel="preload" as="image" href="data/resume.jpg" type="image/jpeg">
+    
+    <!-- Preload Critical CSS and Fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+    </noscript>
+    
+    <!-- Fallback for browsers that don't support preload -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">

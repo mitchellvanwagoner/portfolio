@@ -33,9 +33,14 @@
         top: var(--space-md);
         overflow-y: auto;
         background-color: var(--secondary-light);
-        border: 2px solid var(--accent);
+        border: 3px solid var(--accent);
         border-radius: var(--border-radius);
-        box-shadow: 12px 10px 6px rgba(0,0,0,0.5);
+        box-shadow: var(--shadow-far);
+        transition: box-shadow var(--transition-fast);
+    }
+
+    .skills-sidebar:hover {
+        box-shadow: var(--shadow-far-hover);
     }
 
     .skill-item {
