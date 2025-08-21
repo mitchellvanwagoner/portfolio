@@ -14,7 +14,6 @@
         margin-bottom: var(--space-xl);
         line-height: var(--leading-normal);
         font-size: var(--font-size-lg);
-        text-align: center;
     }
 
     .contact-methods {
@@ -58,7 +57,7 @@
     }
 
     .contact-form {
-        max-width: 600px;
+        max-width: 1200px;
         margin: var(--space-2xl) auto 0;
         padding: var(--space-xl);
         background-color: var(--background-color-alt);
@@ -76,6 +75,20 @@
 
     .form-group {
         margin-bottom: var(--space-lg);
+        transition: none; /* Disable transitions for form-group resizing */
+    }
+    
+    /* Ensure any child elements that might affect form-group size also have instant transitions */
+    .form-group > *,
+    .form-group::before,
+    .form-group::after {
+        transition: border-color var(--transition-speed), 
+                   box-shadow var(--transition-speed), 
+                   background-color var(--transition-speed),
+                   color var(--transition-speed),
+                   opacity var(--transition-speed);
+        /* Explicitly disable transitions for layout properties */
+        transition-property: border-color, box-shadow, background-color, color, opacity;
     }
 
     .form-group label {
@@ -95,7 +108,10 @@
         font-family: 'Inter', sans-serif;
         font-size: var(--font-size-base);
         background-color: var(--neutral-pale);
-        transition: all var(--transition-speed);
+        /* Preserve transitions for visual effects, disable for layout changes */
+        transition: border-color var(--transition-speed), 
+                   box-shadow var(--transition-speed), 
+                   background-color var(--transition-speed);
         box-sizing: border-box;
     }
 
@@ -124,6 +140,56 @@
         color: var(--text-dark);
         opacity: 0.7;
         font-style: italic;
+    }
+
+    .form-error {
+        color: var(--accent);
+        font-size: var(--font-size-sm);
+        margin-top: var(--space-xs);
+        display: none;
+        font-weight: 500;
+    }
+
+    .form-error.show {
+        display: block;
+    }
+
+    .form-status {
+        text-align: center;
+        margin-top: var(--space-lg);
+        padding: var(--space-md);
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        display: none;
+    }
+
+    .form-status.success {
+        background-color: var(--secondary-pale);
+        color: var(--green);
+        border: 2px solid var(--green);
+        display: block;
+    }
+
+    .form-status.error {
+        background-color: var(--accent-pale);
+        color: var(--accent);
+        border: 2px solid var(--accent);
+        display: block;
+    }
+
+    .btn-loading {
+        opacity: 0.7;
+    }
+
+    #submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
+    }
+
+    #submit-btn:disabled:hover {
+        transform: none !important;
+        box-shadow: var(--shadow-close);
     }
 
     /* Mobile styles */
@@ -179,29 +245,220 @@
         
         <div class="contact-form">
             <h3>Send a Message</h3>
-            <form action="#" method="POST">
+            <form id="contact-form" action="https://formspree.io/f/mjkoqljj" method="POST">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" required>
+                    <div class="form-error" id="name-error"></div>
                 </div>
                 
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" required>
+                    <div class="form-error" id="email-error"></div>
                 </div>
                 
                 <div class="form-group">
                     <label for="message">Message</label>
                     <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project or just say hello!"></textarea>
+                    <div class="form-error" id="message-error"></div>
                 </div>
                 
                 <div class="form-submit">
-                    <button type="submit" class="button">Send Message</button>
+                    <button type="submit" class="button" id="submit-btn">
+                        <span class="btn-text">Send Message</span>
+                        <span class="btn-loading" style="display: none;">Sending...</span>
+                    </button>
                 </div>
+                
+                <div class="form-status" id="form-status"></div>
             </form>
             <div class="form-note">
-                Note: Form functionality will be implemented soon. For now, please use the email link above.
+                Your message will be sent directly to my email. I'll get back to you as soon as possible!
             </div>
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.querySelector('.btn-text');
+    const btnLoading = document.querySelector('.btn-loading');
+    const formStatus = document.getElementById('form-status');
+    
+    // Form validation patterns
+    const validation = {
+        name: {
+            pattern: /^[a-zA-Z\s]{2,50}$/,
+            message: 'Name must be 2-50 characters long and contain only letters and spaces.'
+        },
+        email: {
+            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            message: 'Please enter a valid email address.'
+        },
+        message: {
+            pattern: /^.{10,5000}$/,
+            message: 'Message must be between 10 and 5000 characters long.'
+        }
+    };
+    
+    // Clear error messages
+    function clearErrors() {
+        document.querySelectorAll('.form-error').forEach(error => {
+            error.classList.remove('show');
+            error.textContent = '';
+        });
+        formStatus.className = 'form-status';
+        formStatus.textContent = '';
+    }
+    
+    // Show error message
+    function showError(fieldId, message) {
+        const errorElement = document.getElementById(fieldId + '-error');
+        errorElement.textContent = message;
+        errorElement.classList.add('show');
+    }
+    
+    // Validate form
+    function validateForm() {
+        clearErrors();
+        let isValid = true;
+        
+        Object.keys(validation).forEach(field => {
+            const input = document.getElementById(field);
+            const value = input.value.trim();
+            
+            if (!value) {
+                showError(field, `${field.charAt(0).toUpperCase() + field.slice(1)} is required.`);
+                isValid = false;
+            } else if (!validation[field].pattern.test(value)) {
+                showError(field, validation[field].message);
+                isValid = false;
+            }
+        });
+        
+        return isValid;
+    }
+    
+    // Show status message
+    function showStatus(type, message) {
+        formStatus.className = `form-status ${type}`;
+        formStatus.textContent = message;
+        formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    
+    // Set loading state
+    function setLoading(loading) {
+        submitBtn.disabled = loading;
+        if (loading) {
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline';
+        } else {
+            btnText.style.display = 'inline';
+            btnLoading.style.display = 'none';
+        }
+    }
+    
+    // Submit via Formspree (primary method)
+    async function submitToFormspree(formData) {
+        const formspreeUrl = form.action;
+        
+        // Check if Formspree URL is configured
+        if (formspreeUrl.includes('YOUR_FORM_ID')) {
+            throw new Error('Formspree not configured');
+        }
+        
+        const response = await fetch(formspreeUrl, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
+        return await response.json();
+    }
+    
+    // Fallback: Generate mailto link
+    function submitViaMailto(data) {
+        const subject = encodeURIComponent('Contact Form Message from ' + data.name);
+        const body = encodeURIComponent(
+            `Name: ${data.name}\n` +
+            `Email: ${data.email}\n` +
+            `Message:\n${data.message}\n\n` +
+            `Sent from: ${window.location.href}`
+        );
+        
+        const mailtoLink = `mailto:mitchell@mvwengineering.org?subject=${subject}&body=${body}`;
+        
+        // Open mailto link
+        window.location.href = mailtoLink;
+        
+        return Promise.resolve();
+    }
+    
+    // Main form submission handler
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (!validateForm()) {
+            return;
+        }
+        
+        setLoading(true);
+        clearErrors();
+        
+        const formData = new FormData(form);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            message: formData.get('message')
+        };
+        
+        try {
+            // Try Formspree first
+            await submitToFormspree(formData);
+            
+            showStatus('success', 
+                '✅ Message sent successfully! I\'ll get back to you as soon as possible.');
+            form.reset();
+            
+        } catch (formspreeError) {
+            console.log('Formspree failed, trying mailto fallback:', formspreeError);
+            
+            try {
+                // Fallback to mailto
+                await submitViaMailto(data);
+                
+                showStatus('success', 
+                    '📧 Your email client should open with the message pre-filled. Please send it from there!');
+                
+            } catch (mailtoError) {
+                console.error('Both submission methods failed:', mailtoError);
+                
+                showStatus('error', 
+                    '❌ Unable to send message automatically. Please email me directly at mitchell@mvwengineering.org');
+            }
+        } finally {
+            setLoading(false);
+        }
+    });
+    
+    // Real-time validation on input
+    Object.keys(validation).forEach(field => {
+        const input = document.getElementById(field);
+        input.addEventListener('blur', function() {
+            const errorElement = document.getElementById(field + '-error');
+            if (errorElement.classList.contains('show')) {
+                validateForm();
+            }
+        });
+    });
+});
+</script>

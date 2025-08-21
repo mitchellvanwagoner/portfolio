@@ -3,7 +3,6 @@ class PortfolioApp {
     constructor() {
         this.state = {
             projects: [],
-            projectSidebarVisible: false,
             sections: ['bio', 'resume', 'projects', 'hobbies', 'contact'],
             mobileMenuOpen: false
         };
@@ -12,7 +11,6 @@ class PortfolioApp {
             sidebar: document.getElementById('sidebar'),
             overlay: document.getElementById('menu-overlay'),
             menuToggle: document.getElementById('menu-toggle'),
-            projectSidebar: document.getElementById('project-sidebar'),
             main: document.querySelector('main')
         };
     }
@@ -48,10 +46,6 @@ class PortfolioApp {
             overlay.classList.remove('show');
             menuToggle.innerHTML = '☰';
             document.body.style.overflow = '';
-            
-            if (this.state.projectSidebarVisible && this.isMobile()) {
-                this.toggleProjectSidebar(false);
-            }
         }
     }
 }
@@ -98,17 +92,7 @@ async function loadProjects() {
             console.log('No projects.json found');
         }
         
-        const projectNav = document.getElementById('project-nav');
-        projectNav.innerHTML = '';
-        
         app.state.projects.forEach(project => {
-            // Create navigation link
-            const link = document.createElement('a');
-            link.href = `#${project.id}`;
-            link.className = `project-link ${project.id}`;
-            link.textContent = project.name;
-            projectNav.appendChild(link);
-            
             // Create project section
             const section = document.createElement('div');
             section.id = project.id;
@@ -139,8 +123,18 @@ async function loadProjectContent(projectId) {
         if (response.ok) {
             const content = await response.text();
             section.innerHTML = content;
-            app.executeScripts(section);
-            attachProjectLinkHandlers();
+            
+            // Wait for DOM to be ready, then execute scripts
+            setTimeout(() => {
+                app.executeScripts(section);
+                attachProjectLinkHandlers();
+                
+                // Dispatch custom event for carousel initialization
+                const event = new CustomEvent('projectContentLoaded', {
+                    detail: { projectId, section }
+                });
+                document.dispatchEvent(event);
+            }, 100);
         } else {
             section.innerHTML = `
                 <h2>${project.name}</h2>
@@ -164,22 +158,12 @@ function showTab(tabId) {
         app.toggleMobileMenu();
     }
     
-    if (tabId === 'projects') {
-        const projectsSection = document.getElementById('projects');
-        if (projectsSection) projectsSection.style.display = 'block';
-        toggleProjectSidebar(true);
-    } else {
-        const target = document.getElementById(tabId);
-        if (target) {
-            target.style.display = 'block';
-            
-            if (target.classList.contains('project-section')) {
-                loadProjectContent(tabId);
-            }
-        }
+    const target = document.getElementById(tabId);
+    if (target) {
+        target.style.display = 'block';
         
-        if (!app.state.projects.some(p => p.id === tabId)) {
-            toggleProjectSidebar(false);
+        if (target.classList.contains('project-section')) {
+            loadProjectContent(tabId);
         }
     }
     
@@ -188,24 +172,6 @@ function showTab(tabId) {
     }
 }
 
-function toggleProjectSidebar(show) {
-    if (show !== undefined) {
-        app.state.projectSidebarVisible = show;
-    } else {
-        app.state.projectSidebarVisible = !app.state.projectSidebarVisible;
-    }
-    
-    if (app.isMobile()) {
-        if (app.state.projectSidebarVisible) {
-            app.elements.projectSidebar.classList.add('show');
-            app.elements.sidebar.classList.remove('show');
-        } else {
-            app.elements.projectSidebar.classList.remove('show');
-        }
-    } else {
-        app.elements.projectSidebar.classList.toggle('show', app.state.projectSidebarVisible);
-    }
-}
 
 function attachProjectLinkHandlers() {
     document.querySelectorAll('.project-link').forEach(link => {
@@ -213,10 +179,6 @@ function attachProjectLinkHandlers() {
             e.preventDefault();
             const tab = link.getAttribute('href').substring(1);
             showTab(tab);
-            
-            if (app.isMobile()) {
-                setTimeout(() => toggleProjectSidebar(false), 300);
-            }
         });
     });
 }
@@ -229,7 +191,6 @@ function handleResize() {
     
     if (!app.isMobile()) {
         app.elements.sidebar.classList.remove('show');
-        app.elements.projectSidebar.classList.remove('show');
     }
 }
 
@@ -256,14 +217,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
     
-    // Project sidebar mouse leave handler (desktop only)
-    app.elements.projectSidebar.addEventListener('mouseleave', () => {
-        if (!app.isMobile()) {
-            app.state.projectSidebarVisible = false;
-            app.elements.projectSidebar.classList.remove('show');
-        }
-    });
-    
     // Handle window resize
     let resizeTimer;
     window.addEventListener('resize', () => {
@@ -275,15 +228,76 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 
-// Content loading events
-document.addEventListener('contentLoaded', function() {
-    if (document.querySelector('#keyboard-project .carousel-container')) {
-        loadCarouselGallery({
-            directory: 'content/projects/keyboard/data',
-            namePattern: 'keyboard',
-            numberFormat: 'parentheses',
-            containerSelector: '#keyboard-project .carousel-container',
-            maxImages: 100,
-        });
+// Enhanced carousel loading for project content
+document.addEventListener('projectContentLoaded', function(event) {
+    const { projectId, section } = event.detail;
+    
+    // Clean up any existing carousels in the section
+    const existingCarousels = section.querySelectorAll('.carousel-container');
+    existingCarousels.forEach(container => {
+        // Clear any existing carousel content
+        container.innerHTML = '';
+    });
+    
+    // Initialize carousels based on project type
+    setTimeout(() => {
+        initializeProjectCarousels(projectId, section);
+    }, 50);
+});
+
+function initializeProjectCarousels(projectId, section) {
+    // Keyboard project carousel
+    if (projectId === 'keyboardLink') {
+        const carouselContainer = section.querySelector('#keyboard-project .carousel-container');
+        if (carouselContainer) {
+            try {
+                loadCarouselGallery({
+                    directory: 'data/',
+                    namePattern: 'keyboard',
+                    numberFormat: 'parentheses',
+                    containerSelector: '#keyboard-project .carousel-container',
+                    maxImages: 100,
+                });
+            } catch (error) {
+                console.error('Error loading keyboard carousel:', error);
+                carouselContainer.innerHTML = '<p>Error loading image gallery</p>';
+            }
+        }
     }
+    
+    // Add other project carousels here as needed
+    // Example for printer project:
+    // if (projectId === 'printerLink') {
+    //     const carouselContainer = section.querySelector('#printer-project .carousel-container');
+    //     if (carouselContainer) {
+    //         loadCarouselGallery({
+    //             directory: 'data/',
+    //             namePattern: 'printer',
+    //             numberFormat: 'parentheses',
+    //             containerSelector: '#printer-project .carousel-container',
+    //             maxImages: 100,
+    //         });
+    //     }
+    // }
+}
+
+// Fallback for direct page loads (not navigation)
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait a bit to ensure all content is loaded
+    setTimeout(() => {
+        const keyboardCarousel = document.querySelector('#keyboard-project .carousel-container');
+        if (keyboardCarousel && keyboardCarousel.children.length === 0) {
+            try {
+                loadCarouselGallery({
+                    directory: 'data/',
+                    namePattern: 'keyboard',
+                    numberFormat: 'parentheses',
+                    containerSelector: '#keyboard-project .carousel-container',
+                    maxImages: 100,
+                });
+            } catch (error) {
+                console.error('Error loading keyboard carousel on page load:', error);
+            }
+        }
+    }, 500);
 });
