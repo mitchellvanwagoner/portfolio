@@ -1,0 +1,464 @@
+<style>
+    /* Contact page specific styles */
+    .contact-container {
+        padding: var(--space-xl);
+        max-width: var(--content-width);
+        margin: 0 auto;
+    }
+
+    .contact-content {
+        margin-top: var(--space-lg);
+    }
+
+    .contact-content > p {
+        margin-bottom: var(--space-xl);
+        line-height: var(--leading-normal);
+        font-size: var(--font-size-lg);
+    }
+
+    .contact-methods {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: var(--space-xl);
+        margin: var(--space-2xl) 0;
+    }
+
+    .contact-item {
+        text-align: center;
+        padding: var(--space-lg);
+        background-color: var(--background-color-alt);
+        border: 2px solid var(--border-color);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-close);
+        transition: all var(--transition-speed);
+    }
+
+    .contact-item:hover {
+        box-shadow: var(--shadow-close-hover);
+        transform: translateY(-2px);
+    }
+
+    .contact-item h3 {
+        color: var(--text-accent);
+        margin-bottom: var(--space-md);
+        font-size: var(--font-size-xl);
+    }
+
+    .contact-item a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color var(--transition-speed);
+    }
+
+    .contact-item a:hover {
+        color: var(--accent);
+        text-decoration: underline;
+    }
+
+    .contact-form {
+        max-width: 1200px;
+        margin: var(--space-2xl) auto 0;
+        padding: var(--space-xl);
+        background-color: var(--background-color-alt);
+        border: 2px solid var(--border-color);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-far);
+    }
+
+    .contact-form h3 {
+        color: var(--text-accent);
+        margin-bottom: var(--space-lg);
+        text-align: center;
+        font-size: var(--font-size-2xl);
+    }
+
+    .form-group {
+        margin-bottom: var(--space-lg);
+        transition: none; /* Disable transitions for form-group resizing */
+    }
+    
+    /* Ensure any child elements that might affect form-group size also have instant transitions */
+    .form-group > *,
+    .form-group::before,
+    .form-group::after {
+        transition: border-color var(--transition-speed), 
+                   box-shadow var(--transition-speed), 
+                   background-color var(--transition-speed),
+                   color var(--transition-speed),
+                   opacity var(--transition-speed);
+        /* Explicitly disable transitions for layout properties */
+        transition-property: border-color, box-shadow, background-color, color, opacity;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: var(--space-xs);
+        font-weight: 600;
+        color: var(--text-dark);
+        font-size: var(--font-size-base);
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: var(--space-md);
+        border: 2px solid var(--border-color);
+        border-radius: var(--border-radius);
+        font-family: 'Inter', sans-serif;
+        font-size: var(--font-size-base);
+        background-color: var(--neutral-pale);
+        /* Preserve transitions for visual effects, disable for layout changes */
+        transition: border-color var(--transition-speed), 
+                   box-shadow var(--transition-speed), 
+                   background-color var(--transition-speed);
+        box-sizing: border-box;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: var(--shadow-close);
+    }
+
+    .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+        line-height: var(--leading-normal);
+    }
+
+    .form-submit {
+        text-align: center;
+        margin-top: var(--space-xl);
+    }
+
+    .form-note {
+        text-align: center;
+        margin-top: var(--space-md);
+        font-size: var(--font-size-sm);
+        color: var(--text-dark);
+        opacity: 0.7;
+        font-style: italic;
+    }
+
+    .form-error {
+        color: var(--accent);
+        font-size: var(--font-size-sm);
+        margin-top: var(--space-xs);
+        display: none;
+        font-weight: 500;
+    }
+
+    .form-error.show {
+        display: block;
+    }
+
+    .form-status {
+        text-align: center;
+        margin-top: var(--space-lg);
+        padding: var(--space-md);
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        display: none;
+    }
+
+    .form-status.success {
+        background-color: var(--secondary-pale);
+        color: var(--green);
+        border: 2px solid var(--green);
+        display: block;
+    }
+
+    .form-status.error {
+        background-color: var(--accent-pale);
+        color: var(--accent);
+        border: 2px solid var(--accent);
+        display: block;
+    }
+
+    .btn-loading {
+        opacity: 0.7;
+    }
+
+    #submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
+    }
+
+    #submit-btn:disabled:hover {
+        transform: none !important;
+        box-shadow: var(--shadow-close);
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+        .contact-container {
+            padding: var(--space-lg);
+        }
+
+        .contact-methods {
+            grid-template-columns: 1fr;
+            gap: var(--space-lg);
+        }
+
+        .contact-item {
+            padding: var(--space-md);
+        }
+
+        .contact-form {
+            margin-top: var(--space-xl);
+            padding: var(--space-lg);
+        }
+
+        .contact-content > p {
+            font-size: var(--font-size-base);
+        }
+    }
+</style>
+
+<div class="contact-container">
+    <h1>Contact</h1>
+    <div class="contact-content">
+        <p>
+            I'm always interested in new opportunities and collaborations. 
+            Feel free to reach out if you'd like to discuss a project or just connect!
+        </p>
+        
+        <div class="contact-methods">
+            <div class="contact-item">
+                <h3>📧 Email</h3>
+                <p><a href="mailto:mitchell@mvwengineering.org">Mitchell@mvwengineering.org</a></p>
+            </div>
+            
+            <div class="contact-item">
+                <h3>💼 LinkedIn</h3>
+                <p><a href="https://linkedin.com/in/mitchellvanwagoner" target="_blank">linkedin.com/in/mitchellvanwagoner</a></p>
+            </div>
+            
+            <div class="contact-item">
+                <h3>💻 GitHub</h3>
+                <p><a href="https://github.com/mitchellvanwagoner" target="_blank">github.com/mitchellvanwagoner</a></p>
+            </div>
+        </div>
+        
+        <div class="contact-form">
+            <h3>Send a Message</h3>
+            <form id="contact-form" action="https://formspree.io/f/mjkoqljj" method="POST">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                    <div class="form-error" id="name-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                    <div class="form-error" id="email-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project or just say hello!"></textarea>
+                    <div class="form-error" id="message-error"></div>
+                </div>
+                
+                <div class="form-submit">
+                    <button type="submit" class="button" id="submit-btn">
+                        <span class="btn-text">Send Message</span>
+                        <span class="btn-loading" style="display: none;">Sending...</span>
+                    </button>
+                </div>
+                
+                <div class="form-status" id="form-status"></div>
+            </form>
+            <div class="form-note">
+                Your message will be sent directly to my email. I'll get back to you as soon as possible!
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.querySelector('.btn-text');
+    const btnLoading = document.querySelector('.btn-loading');
+    const formStatus = document.getElementById('form-status');
+    
+    // Form validation patterns
+    const validation = {
+        name: {
+            pattern: /^[a-zA-Z\s]{2,50}$/,
+            message: 'Name must be 2-50 characters long and contain only letters and spaces.'
+        },
+        email: {
+            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            message: 'Please enter a valid email address.'
+        },
+        message: {
+            pattern: /^.{10,5000}$/,
+            message: 'Message must be between 10 and 5000 characters long.'
+        }
+    };
+    
+    // Clear error messages
+    function clearErrors() {
+        document.querySelectorAll('.form-error').forEach(error => {
+            error.classList.remove('show');
+            error.textContent = '';
+        });
+        formStatus.className = 'form-status';
+        formStatus.textContent = '';
+    }
+    
+    // Show error message
+    function showError(fieldId, message) {
+        const errorElement = document.getElementById(fieldId + '-error');
+        errorElement.textContent = message;
+        errorElement.classList.add('show');
+    }
+    
+    // Validate form
+    function validateForm() {
+        clearErrors();
+        let isValid = true;
+        
+        Object.keys(validation).forEach(field => {
+            const input = document.getElementById(field);
+            const value = input.value.trim();
+            
+            if (!value) {
+                showError(field, `${field.charAt(0).toUpperCase() + field.slice(1)} is required.`);
+                isValid = false;
+            } else if (!validation[field].pattern.test(value)) {
+                showError(field, validation[field].message);
+                isValid = false;
+            }
+        });
+        
+        return isValid;
+    }
+    
+    // Show status message
+    function showStatus(type, message) {
+        formStatus.className = `form-status ${type}`;
+        formStatus.textContent = message;
+        formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    
+    // Set loading state
+    function setLoading(loading) {
+        submitBtn.disabled = loading;
+        if (loading) {
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline';
+        } else {
+            btnText.style.display = 'inline';
+            btnLoading.style.display = 'none';
+        }
+    }
+    
+    // Submit via Formspree (primary method)
+    async function submitToFormspree(formData) {
+        const formspreeUrl = form.action;
+        
+        // Check if Formspree URL is configured
+        if (formspreeUrl.includes('YOUR_FORM_ID')) {
+            throw new Error('Formspree not configured');
+        }
+        
+        const response = await fetch(formspreeUrl, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
+        return await response.json();
+    }
+    
+    // Fallback: Generate mailto link
+    function submitViaMailto(data) {
+        const subject = encodeURIComponent('Contact Form Message from ' + data.name);
+        const body = encodeURIComponent(
+            `Name: ${data.name}\n` +
+            `Email: ${data.email}\n` +
+            `Message:\n${data.message}\n\n` +
+            `Sent from: ${window.location.href}`
+        );
+        
+        const mailtoLink = `mailto:mitchell@mvwengineering.org?subject=${subject}&body=${body}`;
+        
+        // Open mailto link
+        window.location.href = mailtoLink;
+        
+        return Promise.resolve();
+    }
+    
+    // Main form submission handler
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (!validateForm()) {
+            return;
+        }
+        
+        setLoading(true);
+        clearErrors();
+        
+        const formData = new FormData(form);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            message: formData.get('message')
+        };
+        
+        try {
+            // Try Formspree first
+            await submitToFormspree(formData);
+            
+            showStatus('success', 
+                '✅ Message sent successfully! I\'ll get back to you as soon as possible.');
+            form.reset();
+            
+        } catch (formspreeError) {
+            console.log('Formspree failed, trying mailto fallback:', formspreeError);
+            
+            try {
+                // Fallback to mailto
+                await submitViaMailto(data);
+                
+                showStatus('success', 
+                    '📧 Your email client should open with the message pre-filled. Please send it from there!');
+                
+            } catch (mailtoError) {
+                console.error('Both submission methods failed:', mailtoError);
+                
+                showStatus('error', 
+                    '❌ Unable to send message automatically. Please email me directly at mitchell@mvwengineering.org');
+            }
+        } finally {
+            setLoading(false);
+        }
+    });
+    
+    // Real-time validation on input
+    Object.keys(validation).forEach(field => {
+        const input = document.getElementById(field);
+        input.addEventListener('blur', function() {
+            const errorElement = document.getElementById(field + '-error');
+            if (errorElement.classList.contains('show')) {
+                validateForm();
+            }
+        });
+    });
+});
+</script>
