@@ -1,20 +1,8 @@
 [
     {
-        "id": "workProjectsLink",
-        "name": "WORK PROJECTS",
-        "folder": "workProjects"
-    },
-    {
         "id": "qatoolsLink",
         "name": "QA Tools",
         "folder": "qatools"
-    },
-    
-
-    {
-        "id": "schoolProjectsLink",
-        "name": "SCHOOL PROJECTS",
-        "folder": "schoolProjects"
     },
     {
         "id": "capstoneLink",
@@ -25,14 +13,6 @@
         "id": "dogapultLink",
         "name": "Dog-a-pult",
         "folder": "dogapult"
-    }, 
-
-
-
-    {
-        "id": "hobbyProjectsLink",
-        "name": "HOBBY PROJECTS",
-        "folder": "hobbyProjects"
     },
     {
         "id": "keyboardLink",

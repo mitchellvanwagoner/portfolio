@@ -84,6 +84,7 @@
     --transition-speed: 0.3s;
     --transition-fast: 0.15s;
     --transition-slow: 0.5s;
+    --transition-xslow: 1.0s;
     --transition-spring: cubic-bezier(0.4, 0, 0.2, 1);
 
     /* Shadow System */
@@ -97,10 +98,9 @@
     --header-height: 10vh;
     --main-height: 90vh;
     --sidebar-width: 8em;
-    --project-sidebar-width: 14em;
     --cover-bar-width: 2em;
     --border-width: 0.125em;
-    --content-width: 1600px;
+    --content-width: 1400px;
 
     /* Z-Index Scale */
     --z-base: 1;
@@ -208,6 +208,12 @@ h6 {
     letter-spacing: 0.05em;
 }
 
+/* Text Emphasis */
+strong, b {
+    font-weight: 800;
+}
+
+
 /* Paragraph and Text Elements */
 p {
     font-size: var(--font-size-base);
@@ -215,6 +221,7 @@ p {
     margin-bottom: 1em;
     color: var(--text-dark);
 }
+
 
 /* Text Utilities */
 .text-xs { font-size: var(--font-size-xs); }
@@ -373,36 +380,7 @@ main {
     font-family: 'Architects Daughter', cursive;
 }
 
-/* Project Sidebar */
-.project-sidebar {
-    position: absolute;
-    top: 0;
-    left: -4em;
-    width: var(--project-sidebar-width);
-    height: 100%;
-    padding-top: var(--space-xl);
-    border-radius: 0; /* Override default */
-    background-color: var(--sidebar-background);
-    border-right: var(--border-width) solid var(--border-color);
-    transition: left var(--transition-slow) var(--transition-spring);
-    z-index: var(--z-sidebar-project);
-    font-family: 'Architects Daughter', cursive;
-    overflow-y: auto;
-}
 
-.project-sidebar.show {
-    left: 10em;
-}
-
-.project-sidebar nav a {
-    display: flex;
-    justify-content: center;
-}
-
-.workProjectsLink, .schoolProjectsLink, .hobbyProjectsLink {
-    margin-top: var(--space-xl);
-    text-decoration: underline !important;
-}
 
 /* Navigation Links */
 nav {
@@ -438,7 +416,7 @@ nav a:focus {
 .menu-toggle {
     display: none;
     position: fixed;
-    top: 4vh;
+    top: 3vh;
     left: var(--space-md);
     z-index: var(--z-menu-toggle);
     background-color: var(--sidebar-background);
@@ -524,7 +502,6 @@ nav a:focus {
 
 /* Badge */
 .badge {
-    justify-self: center;
     background-color: var(--background-color-alt);
     border: solid 2px var(--border-color);
     color: var(--primary);
@@ -635,7 +612,7 @@ nav a:focus {
 
 /* Project Header */
 .project-header {
-    border-bottom: 3px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
     border-radius: 0; /* Override default */
     padding-bottom: 0;
     margin-bottom: var(--space-xl);
@@ -939,21 +916,9 @@ nav a:focus {
     .sidebar.show {
         transform: translateX(100%);
     }
-    
-    .project-sidebar {
-        position: fixed;
-        width: 16em;
-        transform: translateX(-100%);
-        transition: transform var(--transition-slow);
-        z-index: calc(var(--z-menu-sidebar) - 2);
-    }
 
     nav {
         margin-top: 6em;
-    }
-    
-    .project-sidebar.show {
-        transform: translateX(-10em);
     }
     
     main {
@@ -1041,22 +1006,6 @@ nav a:focus {
 
     .sidebar {
         width: 7em;
-    }
-    
-    .project-sidebar {
-        width: var(--project-sidebar-width);
-        left: -7em;
-    }
-    
-    .project-sidebar.show {
-        left: 7em;
-    }
-}
-
-/* Desktop Enhancement */
-@media (min-width: 1025px) {
-    .project-sidebar:hover {
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     }
 }
 
