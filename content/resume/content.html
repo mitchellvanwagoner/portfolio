@@ -7,7 +7,6 @@
         margin-bottom: var(--space-xl);
         min-height: calc(100vh - var(--header-height));
         max-width: var(--content-width);
-        
         justify-content: center;
         align-content: center;
     }
@@ -15,41 +14,30 @@
     .resume-content {
         display: flex;
         flex-direction: column;
-        align-items: center;
         gap: var(--space-xl);
 
     }
 
-    .resume-image {
+    .resume-content img {
         max-width: 100%;
-        max-height: calc(100vh - var(--header-height) - var(--space-lg));
-        width: auto;
         height: auto;
+        width: auto;
         box-shadow: var(--shadow-far);
         border-radius: var(--border-radius);
         transition: all var(--transition-speed);
         border: 2px solid var(--border-color);
+        align-self: center;
     }
 
-    .resume-image:hover {
-        transform: scale(1.01);
-        box-shadow: var(--shadow-far-hover);
+    .resume-image {
+        max-height: calc(100vh - var(--header-height) - var(--space-lg));
     }
 
-    .diploma-section {
-        width: 100%;
-        max-width: 80%;
-        text-align: center;
+    .diploma-image {
+        max-height: calc(50vh - var(--space-lg));
+        max-width: 90%;
     }
 
-    .diploma-section .resume-image {
-        max-height: calc(60vh - var(--space-xl));
-    }
-
-    .diploma-section h3 {
-        margin-bottom: var(--space-md);
-        color: var(--text-accent);
-    }
 
 /* ==========================================================================
    BUTTONS
@@ -57,7 +45,8 @@
     .download-buttons-sidebar {
         display: flex;
         flex-direction: row;
-        gap: var(--space-sm);
+        gap: var(--space-md);
+        margin-right: var(--space-sm);
         align-self: center;
         writing-mode: sideways-lr;
         text-orientation: sideways;
@@ -87,9 +76,7 @@
     .download-button:hover,
     .download-button:focus {
         background-color: var(--highlight);
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-close-hover);
-        color: var(--text-dark);
+        color: var(--text-light);
     }
 
     .download-button-small {
@@ -114,7 +101,6 @@
     .download-button-small:focus {
         background-color: var(--highlight);
         color: var(--text-light);
-        box-shadow: var(--shadow-close-hover);
     }
 
     .download-buttons-mobile {
@@ -187,12 +173,12 @@
     <div class="download-buttons-mobile">
         <a href="data/resume.pdf" 
            download="Mitchell_VanWagoner_Resume.pdf"
-           class="download-button-small">
+           class="download-button-small hover-close">
             📄 Download Resume
         </a>
         <a href="data/portfolio.pdf" 
            download="Mitchell_VanWagoner_Portfolio.pdf"
-           class="download-button-small">
+           class="download-button-small hover-close">
             📁 Download Portfolio
         </a>
     </div>
@@ -201,28 +187,24 @@
     <div class="download-buttons-sidebar">
         <a href="data/portfolio.pdf" 
            download="Mitchell_VanWagoner_Portfolio.pdf"
-           class="download-button">
+           class="download-button hover-close">
             📁 Download Portfolio
         </a>
         <a href="data/resume.pdf" 
            download="Mitchell_VanWagoner_Resume.pdf"
-           class="download-button">
+           class="download-button hover-close">
             📄 Download Resume
         </a>
     </div>
 
     <!-- Resume Content -->
     <div class="resume-content">
-        <div>
             <img src="data/resume.jpg"
                  alt="Mitchell Van Wagoner Resume"
-                 class="resume-image">
-        </div>
+                 class="resume-image hover-far">
 
-        <div class="diploma-section">
             <img src="data/diploma.jpg"
                  alt="Oregon State University Diploma 2025"
-                 class="resume-image">
-        </div>
+                 class="diploma-image hover-far">
     </div>
 </div>

@@ -22,10 +22,6 @@
         transition: all var(--transition-speed);
     }
 
-    .hobby-card:hover {
-        box-shadow: var(--shadow-close-hover);
-        transform: translateY(-2px);
-    }
 
     .hobby-card h3 {
         color: var(--text-accent);
@@ -38,6 +34,7 @@
     .hobby-card p {
         margin-bottom: var(--space-sm);
         line-height: var(--leading-normal);
+        text-align: left;
     }
 
     .hobby-list {
@@ -84,7 +81,7 @@
     <p>Beyond engineering, I have a variety of interests that keep me creative and engaged. Here are some of the activities I enjoy in my free time:</p>
 
     <div class="hobbies-grid">
-        <div class="hobby-card">
+        <div class="hobby-card hover-close">
             <h3>🎮 Gaming</h3>
             <p>I enjoy both video games and board games as a way to unwind and challenge myself strategically.</p>
             <ul class="hobby-list">
@@ -94,7 +91,7 @@
             </ul>
         </div>
 
-        <div class="hobby-card">
+        <div class="hobby-card hover-close">
             <h3>🛠️ Making & Tinkering</h3>
             <p>I love working with my hands and building things, often combining traditional craftsmanship with modern technology.</p>
             <ul class="hobby-list">
@@ -105,7 +102,7 @@
             </ul>
         </div>
 
-        <div class="hobby-card">
+        <div class="hobby-card hover-close">
             <h3>🎵 Music</h3>
             <p>Music has always been an important part of my life, providing both relaxation and creative expression.</p>
             <ul class="hobby-list">
@@ -115,7 +112,7 @@
             </ul>
         </div>
 
-        <div class="hobby-card">
+        <div class="hobby-card hover-close">
             <h3>🌱 Learning</h3>
             <p>I'm constantly learning new skills and exploring different fields that interest me.</p>
             <ul class="hobby-list">
@@ -123,6 +120,22 @@
                 <li>New engineering concepts</li>
                 <li>Technology trends</li>
                 <li>Online courses and tutorials</li>
+            </ul>
+        </div>
+
+
+
+
+
+
+        <div class="hobby-card hover-close">
+            <h3>🥽 VR</h3>
+            <p>I enjoy immersive virtual reality experiences, whether it's gaming, simulations, or even just exploring a new environment.</p>
+            <ul class="hobby-list">
+                <li>VR games</li>
+                <li>Virtual reality simulations</li>
+                <li>Augmented reality applications</li>
+                <li>VR Input and Haptic Feedback</li>
             </ul>
         </div>
     </div>
