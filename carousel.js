@@ -11,11 +11,9 @@ class CarouselGallery {
             extensions: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
             showDots: false,
             showCounter: true,
-            showThumbnails: false,
             autoPlay: false,
-            autoPlayInterval: 3000,
+            autoPlayInterval: 5000,
             loop: true,
-            itemsPerView: 1,
             ...config
         };
 
@@ -64,7 +62,10 @@ class CarouselGallery {
                     this.images.push({
                         src: imagePath,
                         alt: `${this.settings.namePattern} Image ${loadedCount}`,
-                        filename: filename
+                        filename: filename,
+                        width: img.naturalWidth,
+                        height: img.naturalHeight,
+                        aspectRatio: img.naturalWidth / img.naturalHeight
                     });
 
                     if (loadedCount === 1) {
@@ -87,25 +88,26 @@ class CarouselGallery {
     }
 
     buildCarousel() {
-        const multiClass = this.settings.itemsPerView > 1 ? 'carousel-multi' : '';
         
         this.container.innerHTML = `
-            <div class="carousel-wrapper ${multiClass}">
-                <div class="carousel-track"></div>
-                <button class="carousel-nav prev" aria-label="Previous image">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M15 18l-6-6 6-6" />
-                    </svg>
-                </button>
-                <button class="carousel-nav next" aria-label="Next image">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 18l6-6-6-6" />
-                    </svg>
-                </button>
-                ${this.settings.showCounter ? '<div class="carousel-counter"></div>' : ''}
-                ${this.settings.showDots ? '<div class="carousel-dots"></div>' : ''}
-            </div>
-            ${this.settings.showThumbnails ? '<div class="carousel-thumbnails"></div>' : ''}
+            <div class="carousel-track"></div>
+            <button class="carousel-nav prev" aria-label="Previous image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg>
+            </button>
+            <button class="carousel-nav next" aria-label="Next image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6" />
+                </svg>
+            </button>
+            ${this.settings.showCounter ? '<div class="carousel-counter"></div>' : ''}
+            ${this.settings.showDots ? '<div class="carousel-dots"></div>' : ''}
+            <button class="carousel-fullscreen" aria-label="View fullscreen">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m21 21-6-6m6 6v-4.8m0 4.8h-4.8M3 16.2V21m0 0h4.8M3 21l6-6M21 7.8V3m0 0h-4.8M21 3l-6 6M3 7.8V3m0 0h4.8M3 3l6 6"/>
+                </svg>
+            </button>
         `;
 
         this.attachEventListeners();
@@ -115,16 +117,20 @@ class CarouselGallery {
     attachEventListeners() {
         const prevBtn = this.container.querySelector('.carousel-nav.prev');
         const nextBtn = this.container.querySelector('.carousel-nav.next');
+        const fullscreenBtn = this.container.querySelector('.carousel-fullscreen');
         const track = this.container.querySelector('.carousel-track');
 
         prevBtn.addEventListener('click', () => this.navigate(-1));
         nextBtn.addEventListener('click', () => this.navigate(1));
+        fullscreenBtn.addEventListener('click', () => this.toggleFullscreen());
 
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') this.navigate(-1);
             if (e.key === 'ArrowRight') this.navigate(1);
+            if (e.key === 'Escape') this.exitFullscreen();
         });
+
 
         // Touch/swipe support
         let touchStartX = 0;
@@ -156,7 +162,6 @@ class CarouselGallery {
         const track = this.container.querySelector('.carousel-track');
         const counter = this.container.querySelector('.carousel-counter');
         const dotsContainer = this.container.querySelector('.carousel-dots');
-        const thumbnailsContainer = this.container.querySelector('.carousel-thumbnails');
 
         if (!track) return;
 
@@ -181,27 +186,11 @@ class CarouselGallery {
             });
         }
 
-        // Update thumbnails
-        if (thumbnailsContainer) {
-            thumbnailsContainer.innerHTML = this.images.map((img, index) => `
-                <div class="carousel-thumbnail ${index === this.currentIndex ? 'active' : ''}" 
-                        data-index="${index}">
-                    <img src="${img.src}" alt="${img.alt}">
-                </div>
-            `).join('');
-
-            thumbnailsContainer.querySelectorAll('.carousel-thumbnail').forEach(thumb => {
-                thumb.addEventListener('click', (e) => {
-                    this.goToSlide(parseInt(e.currentTarget.dataset.index));
-                });
-            });
-        }
-
         this.updateView();
     }
 
     navigate(direction) {
-        const maxIndex = Math.ceil(this.images.length / this.settings.itemsPerView) - 1;
+        const maxIndex = this.images.length - 1;
 
         if (this.settings.loop) {
             if (direction === 1 && this.currentIndex >= maxIndex) {
@@ -229,13 +218,11 @@ class CarouselGallery {
         const prevBtn = this.container.querySelector('.carousel-nav.prev');
         const nextBtn = this.container.querySelector('.carousel-nav.next');
         const dots = this.container.querySelectorAll('.carousel-dot');
-        const thumbnails = this.container.querySelectorAll('.carousel-thumbnail');
 
         if (!track) return;
 
         // Update track position
-        const slideWidth = 100 / this.settings.itemsPerView;
-        track.style.transform = `translateX(-${this.currentIndex * slideWidth}%)`;
+        track.style.transform = `translateX(-${this.currentIndex * 100}%)`;
 
         // Update counter
         if (counter) {
@@ -245,18 +232,15 @@ class CarouselGallery {
         // Update navigation buttons
         if (!this.settings.loop && prevBtn && nextBtn) {
             prevBtn.disabled = this.currentIndex === 0;
-            nextBtn.disabled = this.currentIndex >= this.images.length - this.settings.itemsPerView;
+            nextBtn.disabled = this.currentIndex >= this.images.length - 1;
         }
 
-        // Update dots and thumbnails
+        // Update dots
         dots.forEach((dot, index) => {
             dot.classList.toggle('active', index === this.currentIndex);
         });
-
-        thumbnails.forEach((thumb, index) => {
-            thumb.classList.toggle('active', index === this.currentIndex);
-        });
     }
+
 
     startAutoPlay() {
         if (!this.settings.autoPlay) return;
@@ -271,6 +255,84 @@ class CarouselGallery {
         }
     }
 
+    toggleFullscreen() {
+        if (document.fullscreenElement) {
+            this.exitFullscreen();
+        } else {
+            this.enterFullscreen();
+        }
+    }
+
+    enterFullscreen() {
+        const currentImage = this.images[this.currentIndex];
+        if (!currentImage) return;
+
+        // Create fullscreen overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'carousel-fullscreen-overlay';
+        overlay.innerHTML = `
+            <div class="carousel-fullscreen-content">
+                <img src="${currentImage.src}" alt="${currentImage.alt}" class="carousel-fullscreen-image">
+                <div class="carousel-fullscreen-controls">
+                    <button class="carousel-fullscreen-nav prev" aria-label="Previous image">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 18l-6-6 6-6" />
+                        </svg>
+                    </button>
+                    <button class="carousel-fullscreen-nav next" aria-label="Next image">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6" />
+                        </svg>
+                    </button>
+                    <button class="carousel-fullscreen-close" aria-label="Close fullscreen">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 6L6 18M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+        document.body.style.overflow = 'hidden';
+
+        // Add event listeners
+        const closeBtn = overlay.querySelector('.carousel-fullscreen-close');
+        const prevBtn = overlay.querySelector('.carousel-fullscreen-nav.prev');
+        const nextBtn = overlay.querySelector('.carousel-fullscreen-nav.next');
+
+        closeBtn.addEventListener('click', () => this.exitFullscreen());
+        prevBtn.addEventListener('click', () => this.fullscreenNavigate(-1));
+        nextBtn.addEventListener('click', () => this.fullscreenNavigate(1));
+        
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) this.exitFullscreen();
+        });
+
+        this.fullscreenOverlay = overlay;
+    }
+
+    exitFullscreen() {
+        const overlay = document.querySelector('.carousel-fullscreen-overlay');
+        if (overlay) {
+            overlay.remove();
+            document.body.style.overflow = '';
+            this.fullscreenOverlay = null;
+        }
+    }
+
+    fullscreenNavigate(direction) {
+        this.navigate(direction);
+        
+        // Update fullscreen image
+        const overlay = document.querySelector('.carousel-fullscreen-overlay');
+        const image = overlay?.querySelector('.carousel-fullscreen-image');
+        if (image && this.images[this.currentIndex]) {
+            image.src = this.images[this.currentIndex].src;
+            image.alt = this.images[this.currentIndex].alt;
+        }
+    }
+
     // Public API
     next() { this.navigate(1); }
     prev() { this.navigate(-1); }
@@ -280,6 +342,7 @@ class CarouselGallery {
     
     destroy() {
         this.stopAutoPlay();
+        this.exitFullscreen();
         this.container.innerHTML = '';
     }
 }

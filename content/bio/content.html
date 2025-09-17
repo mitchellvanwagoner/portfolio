@@ -35,13 +35,10 @@
         background-color: var(--secondary-light);
         border: 3px solid var(--accent);
         border-radius: var(--border-radius);
-        box-shadow: var(--shadow-far);
+        box-shadow: var(--shadow-close);
         transition: box-shadow var(--transition-fast);
     }
 
-    .skills-sidebar:hover {
-        box-shadow: var(--shadow-far-hover);
-    }
 
     .skill-item {
         margin-bottom: var(--space-md);
@@ -158,7 +155,7 @@
 
             <div class="education">
                 <h3>Education</h3>
-                <div class="badge" style="color:var(--text-dark);">
+                <div class="badge hover-close" style="color:var(--text-dark);">
                     <h2 style="color:#DC4405"><strong>Oregon State University</strong></h2>
                     <strong>Bachelor of Science in Mechanical Engineering</strong><br>
                     <strong>Graduated:</strong> June 2025 &nbsp <strong>GPA:</strong> 3.15<br> 
@@ -193,7 +190,7 @@
         </div>
     </div>
     
-    <div class="skills-sidebar">
+    <div class="skills-sidebar hover-close">
         <h2>Technical Skills</h2>
         
         <div class="skill-category">
