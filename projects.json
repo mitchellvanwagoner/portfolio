@@ -25,6 +25,11 @@
         "folder": "printer"
     },
     {
+        "id": "trebuchetLink",
+        "name": "Trebuchet",
+        "folder": "trebuchet"
+    },
+    {
         "id": "supercheesiLink",
         "name": "Supercheesi",
         "folder": "supercheesi"
@@ -37,6 +42,19 @@
     {
         "id": "miscellaneousLink",
         "name": "Miscellaneous",
-        "folder": "miscellaneous"
+        "folder": "miscellaneous",
+        "miscImages": [
+            "bedframe",
+            "bench_psu",
+            "controller_hanger",
+            "dice_box",
+            "disc_charger",
+            "drill_press",
+            "headphone_holder",
+            "rotary_encoder",
+            "shave_stand",
+            "silverware_tray",
+            "underquilt"
+        ]
     }
 ]

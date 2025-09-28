@@ -1,10 +1,139 @@
-<style>
-    .qatools-container {
-        padding: 2em;
-    }
-</style>
+<div class="project-container">
+    <h1>QA Checklist and Analytics</h1>
+    <div class="project-header">
+        <p class="project-date">2023 - 2024</p>
+    </div>
 
+    <div class="project-content">
+        <section class="project-overview">
+            <h2>Overview</h2>
 
-<div class="qatools-container">
+            <div class="image-text-block image-left size-lg">
+                <div class="image-container">
+                    <img src="data/qatools (1).jpg" alt="QA Checklist Main Interface" class="hover-close">
+                    <div class="image-caption">Main QA checklist interface with analytics</div>
+                </div>
+                <div class="text-container">
+                    <p>To streamline the quality assurance process for my team, I developed a comprehensive QA checklist web application using Google Apps Script. This tool transforms the traditional QA workflow by providing real-time analytics, historical feedback, and consistent reporting across all team members. The system integrates seamlessly with Google Sheets for data management while offering a clean, user-friendly frontend interface.</p>
+                </div>
+            </div>
 
+            <div class="tech-stack">
+                <h3>Technologies Used</h3>
+                <div class="tech-badges">
+                    <span class="tech-badge hover-close">Google Apps Script</span>
+                    <span class="tech-badge hover-close">Google Sheets API</span>
+                    <span class="tech-badge hover-close">JavaScript</span>
+                    <span class="tech-badge hover-close">HTML/CSS</span>
+                    <span class="tech-badge hover-close">Data Analytics</span>
+                </div>
+            </div>
+
+            <div class="project-features">
+                <h3>Key Features</h3>
+                <ul>
+                    <li>Real-time error rate analytics by development team, city, and designer</li>
+                    <li>Historical feedback system for recurring issues</li>
+                    <li>Automated QA report generation and email distribution</li>
+                    <li>Separate tools for Master plans and Individual designs</li>
+                    <li>Performance tracking dashboards with trend analysis</li>
+                    <li>Integration with task scheduling systems</li>
+                </ul>
+            </div>
+
+            <div class="challenges-list">
+                <h3>Challenges & Solutions</h3>
+                <ul>
+                    <li>
+                        <strong>Challenge:</strong> Inconsistent QA reports from different team members<br>
+                        <strong>Solution:</strong> Implemented standardized checklists with contextual feedback showing common issues for each designer/location
+                    </li>
+                    <li>
+                        <strong>Challenge:</strong> Managing two distinct design workflows (Master vs Individual plans)<br>
+                        <strong>Solution:</strong> Built separate but unified tools tailored to each team's specific requirements and processes
+                    </li>
+                    <li>
+                        <strong>Challenge:</strong> Tracking external contractor performance<br>
+                        <strong>Solution:</strong> Integrated scoring system into contracts with automated performance monitoring
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="project-report">
+            <h2>Project Report</h2>
+
+            <h3>Interface Design</h3>
+            <hr>
+            <div class="image-text-block image-left size-lg">
+                <div class="image-container">
+                    <img src="data/qatools (1).jpg" alt="Analytics Dashboard" class="hover-close">
+                    <div class="image-caption">Real-time analytics showing error rates by category</div>
+                </div>
+                <div class="text-container">
+                    <p>The main QA interface features a clean, tabbed design where each section loads relevant checklist items. What sets this system apart is the contextual analytics displayed next to each item - three percentages showing error rates for the current Authority Having Jurisdiction (AHJ), Community, and Designer. This immediate feedback allows QA staff to focus on historically problematic areas before they become issues.</p>
+                    <p>The top section automatically pulls account information from our task scheduler, ensuring seamless integration with existing workflows. This eliminates manual data entry and reduces the chance of errors in project tracking.</p>
+                </div>
+            </div>
+
+            <h3>Historical Feedback System</h3>
+            <hr>
+            <div class="image-text-block image-right size-lg">
+                <div class="image-container">
+                    <img src="data/qatools (2).jpg" alt="Historical Comments Dialog" class="hover-close">
+                    <div class="image-caption">Clickable percentages reveal detailed historical feedback</div>
+                </div>
+                <div class="text-container">
+                    <p>Each percentage displayed in the interface is interactive - clicking reveals a detailed dialog showing all previous comments made on that specific item for the relevant AHJ, Community, or Designer. This feature was crucial in achieving my main goal: providing QA staff with immediate context about problem areas associated with each design.</p>
+                    <p>Previously, our team relied on simple checklists with no feedback mechanism, resulting in inconsistent QA reports. Different team members focused on different issues, creating an inconsistent quality assurance process. The contextual feedback system has dramatically improved consistency across all QA staff.</p>
+                </div>
+            </div>
+
+            <h3>Automated Reporting and Communication</h3>
+            <hr>
+            <div class="image-text-block image-left size-lg">
+                <div class="image-container">
+                    <img src="data/qatools (3).jpg" alt="QA Report Generation" class="hover-close">
+                    <div class="image-caption">Automated report generation with email distribution</div>
+                </div>
+                <div class="text-container">
+                    <p>Upon completion of a QA review, the system generates a comprehensive report that can be reviewed before submission. The Review QA button opens a popup allowing the QA staff to copy the report text for immediate use in other processes.</p>
+                    <p>When submitted, the system automatically emails the complete QA report to both the designer and their immediate supervisor, ensuring rapid communication of issues. Simultaneously, all QA data is published to the analytics database, feeding the performance tracking systems.</p>
+                </div>
+            </div>
+
+            <h3>Performance Analytics and Data Intelligence</h3>
+            <hr>
+            <div class="dual-image-block primary-right primary-xl secondary-xl">
+                <div class="dual-image-primary">
+                    <img src="data/qatools (5).jpg" alt="Designer Performance Dashboard">
+                    <div class="image-caption">Designer performance tracking over time</div>
+                </div>
+                <div class="dual-image-block-side">
+                    <div class="dual-image-text">
+                        <p>The analytics dashboard provides detailed breakdowns of designer performance, showing progress over time and identifying areas for improvement. Each designer has their own scorecard tracking error rates across different QA categories, enabling targeted training and development.</p>
+                        <p>This system also monitors external contractor teams used during high-demand periods. Performance scores are integrated directly into contracts, ensuring quality standards are maintained even when scaling operations with external resources.</p>
+                    </div>
+                    <div class="dual-image-secondary">
+                        <img src="data/qatools (4).jpg" alt="Team Analytics Overview">
+                        <div class="image-caption">Team-wide error analysis for process improvement</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="image-text-block image-right size-lg">
+                <div class="image-container">
+                    <img src="data/qatools (6).jpg" alt="Bi-weekly Review Charts" class="hover-close">
+                    <div class="image-caption">Error trend analysis presented at team meetings</div>
+                </div>
+                <div class="text-container">
+                    <p>The system generates comprehensive graphs showing total error scores for each QA item, which are reviewed during bi-weekly team meetings. This data-driven approach gives everyone visibility into emerging trends and helps both designers and QA staff understand what areas require additional attention moving forward.</p>
+                    <p>By transforming subjective quality assessments into quantifiable metrics, the tool has created a culture of continuous improvement where decisions are based on concrete data rather than perception.</p>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
 </div>
+

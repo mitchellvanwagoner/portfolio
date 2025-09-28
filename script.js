@@ -246,58 +246,185 @@ document.addEventListener('projectContentLoaded', function(event) {
 });
 
 function initializeProjectCarousels(projectId, section) {
-    // Keyboard project carousel
-    if (projectId === 'keyboardLink') {
-        const carouselContainer = section.querySelector('#keyboard-project .carousel-container');
-        if (carouselContainer) {
+    // Find the project configuration
+    const project = app.state.projects.find(p => p.id === projectId);
+    if (!project) return;
+
+    // Look for any carousel containers in this section
+    const carouselContainers = section.querySelectorAll('.carousel-container');
+
+    carouselContainers.forEach(container => {
+        // Get the carousel ID from the parent element
+        const parentWithId = container.closest('[id]');
+        if (!parentWithId) return;
+
+        const carouselId = parentWithId.id;
+        const containerSelector = `#${carouselId} .carousel-container`;
+
+        // Special handling for miscellaneous project
+        if (project.folder === 'miscellaneous') {
+            initializeMiscellaneousCarousel(containerSelector);
+        } else {
             try {
                 loadCarouselGallery({
                     directory: 'data/',
-                    namePattern: 'keyboard',
+                    namePattern: project.folder, // Use folder name as image pattern
                     numberFormat: 'parentheses',
-                    containerSelector: '#keyboard-project .carousel-container',
+                    containerSelector: containerSelector,
                     maxImages: 100,
                 });
             } catch (error) {
-                console.error('Error loading keyboard carousel:', error);
-                carouselContainer.innerHTML = '<p>Error loading image gallery</p>';
+                console.error(`Error loading ${project.folder} carousel:`, error);
+                container.innerHTML = '<p>Error loading image gallery</p>';
             }
         }
+    });
+}
+
+// Special carousel for miscellaneous project - loads images from explicit list
+async function initializeMiscellaneousCarousel(containerSelector) {
+    const container = document.querySelector(containerSelector);
+    if (!container) return;
+
+    container.innerHTML = '<div class="carousel-loading">Loading miscellaneous images...</div>';
+
+    try {
+        // Find the miscellaneous project configuration
+        const miscProject = app.state.projects.find(p => p.folder === 'miscellaneous');
+        if (!miscProject || !miscProject.miscImages) {
+            container.innerHTML = '<div class="carousel-loading">No miscellaneous images configured</div>';
+            return;
+        }
+
+        // Create a custom carousel that loads the specified images
+        const miscCarousel = new CarouselGallery({
+            containerSelector: containerSelector,
+            directory: 'data',
+            namePattern: '',  // We'll override the loading logic
+            maxImages: 0,     // We'll handle this ourselves
+        });
+
+        // Override the loadImages method to load specified images
+        miscCarousel.loadImages = async function() {
+            const extensions = this.settings.extensions;
+            const loadedImages = [];
+
+            // Load each specified image pattern
+            for (const pattern of miscProject.miscImages) {
+                // Try numbered images first (e.g., "bedframe (1).jpg", "bedframe (2).jpg")
+                for (let i = 1; i <= 20; i++) {
+                    for (const ext of extensions) {
+                        const testFilename = `${pattern} (${i}).${ext}`;
+                        const imagePath = `${this.settings.directory}/${testFilename}`;
+
+                        try {
+                            const img = new Image();
+                            await new Promise((resolve, reject) => {
+                                img.onload = () => {
+                                    loadedImages.push({
+                                        src: imagePath,
+                                        alt: `${pattern.replace(/_/g, ' ')} ${i}`,
+                                        filename: testFilename,
+                                        width: img.naturalWidth,
+                                        height: img.naturalHeight,
+                                        aspectRatio: img.naturalWidth / img.naturalHeight
+                                    });
+                                    resolve();
+                                };
+                                img.onerror = () => reject();
+                                img.src = imagePath;
+                            });
+                        } catch (error) {
+                            // Image doesn't exist, continue
+                        }
+                    }
+                }
+
+                // Also try single images without numbers (e.g., "diploma.jpg")
+                for (const ext of extensions) {
+                    const testFilename = `${pattern}.${ext}`;
+                    const imagePath = `${this.settings.directory}/${testFilename}`;
+
+                    try {
+                        const img = new Image();
+                        await new Promise((resolve, reject) => {
+                            img.onload = () => {
+                                // Avoid duplicates
+                                if (!loadedImages.find(existingImg => existingImg.src === imagePath)) {
+                                    loadedImages.push({
+                                        src: imagePath,
+                                        alt: pattern.replace(/_/g, ' '),
+                                        filename: testFilename,
+                                        width: img.naturalWidth,
+                                        height: img.naturalHeight,
+                                        aspectRatio: img.naturalWidth / img.naturalHeight
+                                    });
+                                }
+                                resolve();
+                            };
+                            img.onerror = () => reject();
+                            img.src = imagePath;
+                        });
+                    } catch (error) {
+                        // Image doesn't exist, continue
+                    }
+                }
+            }
+
+            this.images = loadedImages;
+
+            if (loadedImages.length > 0) {
+                this.buildCarousel();
+            } else {
+                container.innerHTML = '<div class="carousel-loading">No miscellaneous images found</div>';
+            }
+        };
+
+        // Start the loading process
+        miscCarousel.loadImages();
+
+    } catch (error) {
+        console.error('Error loading miscellaneous carousel:', error);
+        container.innerHTML = '<p>Error loading miscellaneous image gallery</p>';
     }
-    
-    // Add other project carousels here as needed
-    // Example for printer project:
-    // if (projectId === 'printerLink') {
-    //     const carouselContainer = section.querySelector('#printer-project .carousel-container');
-    //     if (carouselContainer) {
-    //         loadCarouselGallery({
-    //             directory: 'data/',
-    //             namePattern: 'printer',
-    //             numberFormat: 'parentheses',
-    //             containerSelector: '#printer-project .carousel-container',
-    //             maxImages: 100,
-    //         });
-    //     }
-    // }
 }
 
 // Fallback for direct page loads (not navigation)
 document.addEventListener('DOMContentLoaded', function() {
     // Wait a bit to ensure all content is loaded
     setTimeout(() => {
-        const keyboardCarousel = document.querySelector('#keyboard-project .carousel-container');
-        if (keyboardCarousel && keyboardCarousel.children.length === 0) {
-            try {
-                loadCarouselGallery({
-                    directory: 'data/',
-                    namePattern: 'keyboard',
-                    numberFormat: 'parentheses',
-                    containerSelector: '#keyboard-project .carousel-container',
-                    maxImages: 100,
-                });
-            } catch (error) {
-                console.error('Error loading keyboard carousel on page load:', error);
-            }
-        }
+        // Find all carousel containers that haven't been initialized
+        const emptyCarousels = document.querySelectorAll('.carousel-container:empty, .carousel-container:not(:has(*))');
+
+        emptyCarousels.forEach(container => {
+            const parentWithId = container.closest('[id]');
+            if (!parentWithId) return;
+
+            // Try to determine which project this carousel belongs to
+            app.state.projects.forEach(project => {
+                // Check if the carousel ID contains the project name
+                const carouselId = parentWithId.id;
+                if (carouselId.includes(project.folder) || carouselId.includes(project.name.toLowerCase().replace(/\s+/g, ''))) {
+                    const containerSelector = `#${carouselId} .carousel-container`;
+
+                    // Special handling for miscellaneous project
+                    if (project.folder === 'miscellaneous') {
+                        initializeMiscellaneousCarousel(containerSelector);
+                    } else {
+                        try {
+                            loadCarouselGallery({
+                                directory: 'data/',
+                                namePattern: project.folder,
+                                numberFormat: 'parentheses',
+                                containerSelector: containerSelector,
+                                maxImages: 100,
+                            });
+                        } catch (error) {
+                            console.error(`Error loading ${project.folder} carousel on page load:`, error);
+                        }
+                    }
+                }
+            });
+        });
     }, 500);
 });

@@ -10,29 +10,34 @@
         margin-top: var(--space-lg);
     }
 
-    .contact-content > p {
+    .contact-content p {
+        justify-self: center;
         margin-bottom: var(--space-md);
         line-height: var(--leading-normal);
         font-size: var(--font-size-lg);
     }
 
     .contact-methods {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        display: flex;
+        flex-direction: row;
+        align-content: space-around;
+        justify-content: center;
         gap: var(--space-xl);
         margin: var(--space-lg) 0;
     }
 
     .contact-item {
+        display: grid;
         text-align: center;
+        justify-content: center;
         padding: var(--space-lg);
         background-color: var(--background-color-alt);
         border: 2px solid var(--border-color);
         border-radius: var(--border-radius);
         box-shadow: var(--shadow-close);
         transition: all var(--transition-speed);
+        width: 26em;
     }
-
 
     .contact-item h3 {
         color: var(--text-accent);
@@ -65,7 +70,6 @@
     .contact-form h3 {
         color: var(--text-accent);
         margin-bottom: var(--space-lg);
-        text-align: center;
         font-size: var(--font-size-2xl);
     }
 
@@ -217,15 +221,11 @@
 <div class="contact-container">
     <h1>Contact</h1>
     <div class="contact-content">
-        <p>
-            I'm always interested in new opportunities and collaborations. 
-            Feel free to reach out if you'd like to discuss a project or just connect!
-        </p>
         
         <div class="contact-methods">
             <div class="contact-item hover-close">
                 <h3>📧 Email</h3>
-                <p><a href="mailto:mitchell@mvwengineering.org">Mitchell@mvwengineering.org</a></p>
+                <p><a href="mailto:mitchell@MVWEngineering.org">Mitchell@mvwengineering.org</a></p>
             </div>
             
             <div class="contact-item hover-close">
