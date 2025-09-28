@@ -41,23 +41,21 @@ header h1 {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Engineering Portfolio</title>
+    <title>🏆 MVW Portfolio</title>
     
-    <!-- Optimization and Caching Meta Tags -->
-    <meta http-equiv="Cache-Control" content="public, max-age=3600">
+    <!-- SEO Meta Tags -->
     <meta name="description" content="Mitchell Van Wagoner's Engineering Portfolio - Showcasing innovative projects in software development, hardware design, and engineering solutions.">
-    <meta name="keywords" content="engineering, portfolio, software development, hardware design, projects, QA tools, robotics, 3D printing">
     <meta name="author" content="Mitchell Van Wagoner">
     
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; connect-src 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline' www.googletagmanager.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; connect-src 'self' www.google-analytics.com www.googletagmanager.com;">
     
     <!-- Open Graph Meta Tags for Social Sharing -->
     <meta property="og:title" content="Mitchell Van Wagoner - Engineering Portfolio">
     <meta property="og:description" content="Explore innovative engineering projects including custom keyboards, robotics, and professional development tools.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://portfolio.mvwengineering.org">
-    <meta property="og:image" content="data/keyboard (1).jpg">
+    <meta property="og:image" content="https://portfolio.mvwengineering.org/data/keyboard%20(1).jpg">
     
     <!-- DNS Prefetch for External Resources -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -74,10 +72,21 @@ header h1 {
         <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
     </noscript>
     
-    <!-- Fallback for browsers that don't support preload -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3QFW0TDFG3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-3QFW0TDFG3');
+    </script>
+
+
+    <script src="analytics.js" defer></script>
     <script src="carousel.js" defer></script>
     <script src="script.js" defer></script>
 </head>
