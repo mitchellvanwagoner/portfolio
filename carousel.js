@@ -14,19 +14,22 @@ class CarouselGallery {
             autoPlay: false,
             autoPlayInterval: 5000,
             loop: true,
+            onComplete: null, // Callback when carousel finishes loading
             ...config
         };
 
         this.currentIndex = 0;
         this.images = [];
         this.autoPlayTimer = null;
+        this.isComplete = false;
         this.container = document.querySelector(this.settings.containerSelector);
-        
+
         if (!this.container) {
             console.error('Container not found:', this.settings.containerSelector);
+            if (this.settings.onComplete) this.settings.onComplete();
             return;
         }
-        
+
         this.init();
     }
 
@@ -51,6 +54,15 @@ class CarouselGallery {
         let attemptedCount = 0;
         const totalAttempts = this.settings.maxImages * this.settings.extensions.length;
 
+        const checkComplete = () => {
+            if (attemptedCount >= totalAttempts) {
+                this.isComplete = true;
+                if (this.settings.onComplete) {
+                    this.settings.onComplete();
+                }
+            }
+        };
+
         for (let i = this.settings.startIndex; i < this.settings.startIndex + this.settings.maxImages; i++) {
             this.settings.extensions.forEach(ext => {
                 const img = new Image();
@@ -59,20 +71,27 @@ class CarouselGallery {
 
                 img.onload = () => {
                     loadedCount++;
+                    attemptedCount++;
                     this.images.push({
                         src: imagePath,
-                        alt: `${this.settings.namePattern} Image ${loadedCount}`,
+                        alt: `${this.settings.namePattern} Image ${i}`,
                         filename: filename,
+                        index: i, // Store the original index for sorting
                         width: img.naturalWidth,
                         height: img.naturalHeight,
                         aspectRatio: img.naturalWidth / img.naturalHeight
                     });
+
+                    // Sort images by their index to maintain numerical order
+                    this.images.sort((a, b) => a.index - b.index);
 
                     if (loadedCount === 1) {
                         this.buildCarousel();
                     } else {
                         this.updateCarousel();
                     }
+
+                    checkComplete();
                 };
 
                 img.onerror = () => {
@@ -80,6 +99,7 @@ class CarouselGallery {
                     if (attemptedCount === totalAttempts && loadedCount === 0) {
                         this.container.innerHTML = '<div class="carousel-loading">No images found</div>';
                     }
+                    checkComplete();
                 };
 
                 img.src = imagePath;

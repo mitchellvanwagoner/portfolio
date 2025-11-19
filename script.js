@@ -4,7 +4,9 @@ class PortfolioApp {
         this.state = {
             projects: [],
             sections: ['bio', 'resume', 'projects', 'hobbies', 'contact'],
-            mobileMenuOpen: false
+            mobileMenuOpen: false,
+            loadedProjects: new Set(), // Track which projects have been loaded
+            carouselState: new Map() // Track carousel loading state: 'loading', 'loaded', or null
         };
         
         this.elements = {
@@ -112,23 +114,31 @@ async function loadProjects() {
 
 // Load project content from folder
 async function loadProjectContent(projectId) {
+    // Check if project content has already been loaded
+    if (app.state.loadedProjects.has(projectId)) {
+        return; // Skip loading if already loaded
+    }
+
     const project = app.state.projects.find(p => p.id === projectId);
     if (!project) return;
-    
+
     const section = document.getElementById(projectId);
-    
+
     try {
         const response = await fetch(`content/projects/${project.folder}/content.html`);
-        
+
         if (response.ok) {
             const content = await response.text();
             section.innerHTML = content;
-            
+
+            // Mark this project as loaded
+            app.state.loadedProjects.add(projectId);
+
             // Wait for DOM to be ready, then execute scripts
             setTimeout(() => {
                 app.executeScripts(section);
                 attachProjectLinkHandlers();
-                
+
                 // Dispatch custom event for carousel initialization
                 const event = new CustomEvent('projectContentLoaded', {
                     detail: { projectId, section }
@@ -150,23 +160,28 @@ async function loadProjectContent(projectId) {
     }
 }
 
-function showTab(tabId) {
+function showTab(tabId, updateHash = true) {
     const sections = document.querySelectorAll('.tab-section');
     sections.forEach(section => section.style.display = 'none');
-    
+
     if (app.isMobile() && app.state.mobileMenuOpen) {
         app.toggleMobileMenu();
     }
-    
+
     const target = document.getElementById(tabId);
     if (target) {
         target.style.display = 'block';
-        
+
         if (target.classList.contains('project-section')) {
             loadProjectContent(tabId);
         }
+
+        // Update hash for browser history
+        if (updateHash) {
+            window.location.hash = tabId;
+        }
     }
-    
+
     if (app.isMobile()) {
         window.scrollTo(0, 0);
     }
@@ -197,12 +212,16 @@ function handleResize() {
 document.addEventListener('DOMContentLoaded', async () => {
     // Load main sections first
     await loadMainSections();
-    
+
     // Then load projects
     await loadProjects();
-    
-    // Show bio by default
-    showTab('bio');
+
+    // Determine which tab to show based on URL hash
+    const hash = window.location.hash.substring(1); // Remove the #
+    const tabId = hash || 'bio';
+
+    // Show the appropriate tab without updating hash (it's the initial load or already set)
+    showTab(tabId, false);
     
     // Mobile menu toggle
     app.elements.menuToggle.addEventListener('click', () => app.toggleMobileMenu());
@@ -223,6 +242,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(handleResize, 250);
     });
+
+    // Start background preloading of carousel images
+    preloadCarouselsInBackground();
+});
+
+// Handle browser back/forward buttons and hash changes
+window.addEventListener('hashchange', () => {
+    const hash = window.location.hash.substring(1); // Remove the #
+    const tabId = hash || 'bio';
+    // User clicked back/forward or hash changed, show the tab without updating hash again
+    showTab(tabId, false);
 });
 
 
@@ -231,27 +261,49 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Enhanced carousel loading for project content
 document.addEventListener('projectContentLoaded', function(event) {
     const { projectId, section } = event.detail;
-    
-    // Clean up any existing carousels in the section
-    const existingCarousels = section.querySelectorAll('.carousel-container');
-    existingCarousels.forEach(container => {
-        // Clear any existing carousel content
-        container.innerHTML = '';
-    });
-    
-    // Initialize carousels based on project type
-    setTimeout(() => {
-        initializeProjectCarousels(projectId, section);
-    }, 50);
+
+    // Check if carousel is already loaded from background preloading
+    const carouselState = app.state.carouselState.get(projectId);
+
+    if (carouselState === 'loaded') {
+        // Images already loaded in background, carousel should already be visible
+        return;
+    }
+
+    if (carouselState === 'loading') {
+        // Currently loading in background, carousel will appear when ready
+        return;
+    }
+
+    // Not loaded yet - load immediately with high priority
+    initializeProjectCarousels(projectId, section, true);
 });
 
-function initializeProjectCarousels(projectId, section) {
+function initializeProjectCarousels(projectId, section = null, immediate = false) {
     // Find the project configuration
     const project = app.state.projects.find(p => p.id === projectId);
     if (!project) return;
 
+    // If section not provided, get it from DOM
+    if (!section) {
+        section = document.getElementById(projectId);
+        if (!section) return; // Section doesn't exist yet
+    }
+
+    // Mark as loading
+    app.state.carouselState.set(projectId, 'loading');
+
     // Look for any carousel containers in this section
     const carouselContainers = section.querySelectorAll('.carousel-container');
+
+    if (carouselContainers.length === 0) {
+        // No carousel containers, mark as loaded
+        app.state.carouselState.set(projectId, 'loaded');
+        return;
+    }
+
+    let loadedCount = 0;
+    const totalCarousels = carouselContainers.length;
 
     carouselContainers.forEach(container => {
         // Get the carousel ID from the parent element
@@ -261,9 +313,17 @@ function initializeProjectCarousels(projectId, section) {
         const carouselId = parentWithId.id;
         const containerSelector = `#${carouselId} .carousel-container`;
 
+        // Callback to track when carousel is done loading
+        const onCarouselLoaded = () => {
+            loadedCount++;
+            if (loadedCount === totalCarousels) {
+                app.state.carouselState.set(projectId, 'loaded');
+            }
+        };
+
         // Special handling for miscellaneous project
         if (project.folder === 'miscellaneous') {
-            initializeMiscellaneousCarousel(containerSelector);
+            initializeMiscellaneousCarousel(containerSelector, onCarouselLoaded);
         } else {
             try {
                 loadCarouselGallery({
@@ -272,19 +332,24 @@ function initializeProjectCarousels(projectId, section) {
                     numberFormat: 'parentheses',
                     containerSelector: containerSelector,
                     maxImages: 100,
+                    onComplete: onCarouselLoaded
                 });
             } catch (error) {
                 console.error(`Error loading ${project.folder} carousel:`, error);
                 container.innerHTML = '<p>Error loading image gallery</p>';
+                onCarouselLoaded(); // Still count as "done" even if error
             }
         }
     });
 }
 
 // Special carousel for miscellaneous project - loads images from explicit list
-async function initializeMiscellaneousCarousel(containerSelector) {
+async function initializeMiscellaneousCarousel(containerSelector, onComplete = null) {
     const container = document.querySelector(containerSelector);
-    if (!container) return;
+    if (!container) {
+        if (onComplete) onComplete();
+        return;
+    }
 
     container.innerHTML = '<div class="carousel-loading">Loading miscellaneous images...</div>';
 
@@ -378,6 +443,9 @@ async function initializeMiscellaneousCarousel(containerSelector) {
             } else {
                 container.innerHTML = '<div class="carousel-loading">No miscellaneous images found</div>';
             }
+
+            // Call completion callback
+            if (onComplete) onComplete();
         };
 
         // Start the loading process
@@ -386,7 +454,57 @@ async function initializeMiscellaneousCarousel(containerSelector) {
     } catch (error) {
         console.error('Error loading miscellaneous carousel:', error);
         container.innerHTML = '<p>Error loading miscellaneous image gallery</p>';
+        if (onComplete) onComplete();
     }
+}
+
+// Background preloader for project content and carousel images
+async function preloadCarouselsInBackground() {
+    let currentIndex = 0;
+
+    const loadNextProject = async () => {
+        if (currentIndex >= app.state.projects.length) {
+            console.log('Background preloading complete');
+            return;
+        }
+
+        const project = app.state.projects[currentIndex];
+
+        // Load project content if not already loaded
+        if (!app.state.loadedProjects.has(project.id)) {
+            console.log(`Background loading project content: ${project.name}`);
+            await loadProjectContent(project.id);
+
+            // Wait a bit for content to settle
+            await new Promise(resolve => setTimeout(resolve, 200));
+        }
+
+        // Now load carousel images
+        const carouselState = app.state.carouselState.get(project.id);
+        if (carouselState !== 'loaded' && carouselState !== 'loading') {
+            console.log(`Background loading carousel for: ${project.name}`);
+            initializeProjectCarousels(project.id, null, false);
+        }
+
+        // Move to next project after a delay to avoid blocking the browser
+        currentIndex++;
+
+        // Use requestIdleCallback for better performance
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => loadNextProject(), { timeout: 1000 });
+        } else {
+            setTimeout(() => loadNextProject(), 500);
+        }
+    };
+
+    // Start preloading after a delay to let the page settle
+    setTimeout(() => {
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(loadNextProject, { timeout: 2000 });
+        } else {
+            setTimeout(loadNextProject, 1000);
+        }
+    }, 2000);
 }
 
 // Fallback for direct page loads (not navigation)
@@ -427,4 +545,16 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }, 500);
+});
+
+// =============================================================================
+// ZOOMABLE IMAGE FUNCTIONALITY (OPEN IN NEW TAB)
+// =============================================================================
+
+// Add click listeners to all zoomable images
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('zoomable-image')) {
+        // Open image in new tab where users can use native browser zoom
+        window.open(e.target.src, '_blank');
+    }
 });

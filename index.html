@@ -1,43 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<style>
-/* Header */
-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: var(--header-height);
-    padding: 1.5em;
-    text-align: center;
-    border-radius: 0px;
-    border-bottom: 0.125em solid var(--border-color);
-    background-color: var(--primary);
-    background-image: 
-        linear-gradient(var(--blueprint-grid-primary) 1px, transparent 1px),
-        linear-gradient(90deg, var(--blueprint-grid-primary) 1px, transparent 1px),
-        linear-gradient(var(--blueprint-grid-secondary) 1px, transparent 1px),
-        linear-gradient(90deg, var(--blueprint-grid-secondary) 1px, transparent 1px),
-        radial-gradient(circle at 20% 30%, var(--blueprint-dots) 2px, transparent 2px),
-        radial-gradient(circle at 80% 70%, var(--blueprint-dots) 2px, transparent 2px);
-    background-size: 
-        40px 40px,
-        40px 40px,
-        10px 10px,
-        10px 10px,
-        80px 80px,
-        80px 80px;
-    position: relative;
-    color: var(--text-light);
-}
-
-header h1 {
-    padding: 0;
-    margin: 0;
-    font-size: clamp(1.5rem, 5vw, 3rem);
-    color: var(--text-light)
-}
-</style>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
@@ -48,7 +10,7 @@ header h1 {
     <meta name="author" content="Mitchell Van Wagoner">
     
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline' www.googletagmanager.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; connect-src 'self' www.google-analytics.com www.googletagmanager.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline' www.googletagmanager.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; frame-src https://www.youtube.com; connect-src 'self' www.google-analytics.com www.googletagmanager.com;">
     
     <!-- Open Graph Meta Tags for Social Sharing -->
     <meta property="og:title" content="Mitchell Van Wagoner - Engineering Portfolio">

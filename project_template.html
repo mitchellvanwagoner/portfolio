@@ -1,0 +1,224 @@
+<!-- 
+TEMPLATE USAGE NOTES:
+
+1. Image Sizes:
+   - size-sm: Small images
+   - size-md: Medium images  
+   - size-lg: Large images (most common)
+   - size-xl: Extra large images
+
+2. Image Alignment:
+   - image-left: Image on left, text on right
+   - image-right: Image on right, text on left
+
+3. Dual Image Blocks:
+   - Use for complex explanations needing multiple views
+   - primary-right/primary-left: Controls primary image position
+   - Specify sizes for both images (e.g., primary-lg secondary-md)
+
+4. Structure:
+   - Keep project-overview section for high-level info
+   - Use project-report section for detailed documentation
+   - Each major topic gets its own h3 section with hr separator
+
+5. Optional Elements:
+   - Project Links section (uncomment if needed)
+   - Coming Soon section (for ongoing projects)
+   - Add/remove sections as needed for your project
+
+6. Replace all bracketed placeholders [like this] with your content
+-->
+
+
+<div class="project-container">
+    <h1>[Project Name]</h1>
+    <div class="project-header">
+        <p class="project-date">[Start Date] - [End Date/Current]</p>
+    </div>
+
+    <div class="project-content">
+        <section class="project-overview">
+            <h2>Overview</h2>
+            
+            <div class="image-text-block image-left size-lg">
+                <div class="image-container">
+                    <img src="[path/to/overview-image.jpg]" alt="[Project overview image description]" class="hover-close">
+                    <div class="image-caption">[Overview image caption]</div>
+                </div>
+                <div class="text-container">
+                    <p>[Project overview description - explain what the project is and its main purpose]</p>
+                </div>
+            </div>
+
+            <div class="tech-stack">
+                <h3>Technologies Used</h3>
+                <div class="tech-badges">
+                    <span class="tech-badge hover-close">[Technology 1]</span>
+                    <span class="tech-badge hover-close">[Technology 2]</span>
+                    <span class="tech-badge hover-close">[Technology 3]</span>
+                    <span class="tech-badge hover-close">[Technology 4]</span>
+                </div>
+            </div>
+            
+            <div class="project-features">
+                <h3>Key Features</h3>
+                <ul>
+                    <li>[Feature 1]</li>
+                    <li>[Feature 2]</li>
+                    <li>[Feature 3]</li>
+                    <li>[Feature 4]</li>
+                    <li>[Feature 5]</li>
+                </ul>
+            </div>
+
+            <div class="challenges-list">
+                <h3>Challenges & Solutions</h3>
+                <ul>
+                    <li>
+                        <strong>Challenge:</strong> [Description of challenge 1]<br>
+                        <strong>Solution:</strong> [How you solved challenge 1]
+                    </li>
+                    <li>
+                        <strong>Challenge:</strong> [Description of challenge 2]<br>
+                        <strong>Solution:</strong> [How you solved challenge 2]
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Optional Project Links Section -->
+            <!-- <div class="project-links">
+                <h3>Project Links</h3>
+                <div class="links">
+                    <a href="[github-url]" target="_blank" class="project-btn hover-close">
+                        View on GitHub
+                    </a>
+                    <a href="[documentation-url]" target="_blank" class="project-btn hover-close">
+                        Documentation
+                    </a>
+                    <a href="[demo-url]" target="_blank" class="project-btn hover-close">
+                        Live Demo
+                    </a>
+                </div>
+            </div> -->
+
+            <br>
+
+            <div class="project-gallery carousel-compact" id="[project-id]">
+                <h3>Project Gallery</h3>
+                <div class="carousel-container hover-far"></div>
+            </div>
+            
+        </section>
+
+
+
+
+        <section class="project-report">
+            <h2>Project Report</h2>
+            
+            <!-- Section 1 -->
+            <h3>[Section 1 Title]</h3>
+            <hr>
+            
+            <!-- Image-Text Block Examples - Left Aligned -->
+            <div class="image-text-block image-left size-lg">
+                <div class="image-container">
+                    <img src="[path/to/image.jpg]" alt="[Image description]" class="hover-close">
+                    <div class="image-caption">[Image caption]</div>
+                </div>
+                <div class="text-container">
+                    <p>[Paragraph describing this aspect of the project]</p>
+                </div>
+            </div>
+
+            <!-- You can use different sizes: size-sm, size-md, size-lg, size-xl -->
+            <div class="image-text-block image-left size-xl">
+                <div class="image-container">
+                    <img src="[path/to/image.jpg]" alt="[Image description]" class="hover-close">
+                    <div class="image-caption">[Image caption]</div>
+                </div>
+                <div class="text-container">
+                    <p>[Paragraph describing this aspect of the project]</p>
+                </div>
+            </div>
+
+            <!-- Section 2 -->
+            <h3>[Section 2 Title]</h3>
+            <hr>
+            
+            <!-- Image-Text Block Examples - Right Aligned -->
+            <div class="image-text-block image-right size-lg">
+                <div class="image-container">
+                    <img src="[path/to/image.jpg]" alt="[Image description]" class="hover-close">
+                    <div class="image-caption">[Image caption]</div>
+                </div>
+                <div class="text-container">
+                    <p>[Paragraph describing this aspect of the project]</p>
+                </div>
+            </div>
+
+            <div class="image-text-block image-right size-md">
+                <div class="image-container">
+                    <img src="[path/to/image.jpg]" alt="[Image description]" class="hover-close">
+                    <div class="image-caption">[Image caption]</div>
+                </div>
+                <div class="text-container">
+                    <p>[Paragraph describing this aspect of the project]</p>
+                </div>
+            </div>
+
+            <!-- Section 3 -->
+            <h3>[Section 3 Title]</h3>
+            <hr>
+
+            <!-- Dual Image Block Example -->
+            <div class="dual-image-block primary-right primary-lg secondary-md">
+                <div class="dual-image-primary">
+                    <img src="[path/to/primary-image.jpg]" alt="[Primary image description]">
+                    <div class="image-caption">[Primary image caption]</div>
+                </div>
+                <div class="dual-image-block-side">
+                    <div class="dual-image-text">
+                        <p>[Paragraph describing this complex aspect that requires multiple images]</p>
+                    </div>
+                    <div class="dual-image-secondary">
+                        <img src="[path/to/secondary-image.jpg]" alt="[Secondary image description]">
+                        <div class="image-caption">[Secondary image caption]</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add more sections as needed -->
+            <h3>[Section 4 Title]</h3>
+            <hr>
+            
+            <div class="image-text-block image-left size-lg">
+                <div class="image-container">
+                    <img src="[path/to/image.jpg]" alt="[Image description]" class="hover-close">
+                    <div class="image-caption">[Image caption]</div>
+                </div>
+                <div class="text-container">
+                    <p>[Paragraph describing this aspect of the project]</p>
+                </div>
+            </div>
+
+            <!-- For animated GIFs -->
+            <div class="image-text-block image-left size-lg">
+                <div class="image-container">
+                    <img src="[path/to/animation.gif]" alt="[Animation description]" class="hover-close">
+                    <div class="image-caption">[Animation caption]</div>
+                </div>
+                <div class="text-container">
+                    <p>[Paragraph describing what the animation shows]</p>
+                </div>
+            </div>
+
+            <!-- Optional: Coming Soon Section for Ongoing Projects -->
+            <!-- <div class="coming-soon">
+                <h3>More Progress Coming Soon</h3>
+                <p>This is a continuing project, so more progress will be added as work continues. Check back soon for updates!</p>
+            </div> -->
+        </section>
+
+    </div> 
+</div>
