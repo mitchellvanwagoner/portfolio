@@ -10,15 +10,18 @@
             
             <div class="image-text-block image-left size-md">
                 <div class="image-container">
-                    <img src="data/trebuchet (0.1).jpg" alt="Project Main Image" class="hover-close">
+                    <img src="data/trebuchet (0.1).webp"
+                         alt="Project Main Image"
+                         class="hover-close"
+                         loading="lazy">
                     <div class="image-caption">Me releasing the trebuchet</div>
                 </div>
                 <div class="text-container">
                     <p>
-                        I designed and built a physics-optimized trebuchet that can launch an apple 20 meters using only the weight of a 5-gallon bucket filled with water. What makes this project unique is that instead of using a traditional counterweight-on-arm design, I built a pulley mechanism that provides better energy transfer and eliminates the pendulum oscillation that typically happens after the projectile is released.
+                        I designed and built a physics-optimized trebuchet that can launch an apple 20 meters using only the weight of a 5-gallon bucket filled with water. What makes this project unique is that instead of using a traditional counter weight-on-arm design, I built a pulley mechanism that provides better energy transfer and eliminates the pendulum oscillation that typically happens after the projectile is released.
                     </p>
                     <p>
-                        The entire design was optimized using the Euler-Lagrange method to derive the equations of motion for the system, then simulated and optimized in Python. I used numerical optimization to find the ideal parameters for arm length, sling length, pulley radius, counterweight mass, and release angle. Once I had the optimized design, I fabricated it using wood working for the frame and 3D printing for the custom pulley assembly.
+                        The entire design was optimized using the Euler-Lagrange method to derive the equations of motion for the system, then simulated and optimized in Python. I used numerical optimization to find the ideal parameters for arm length, sling length, pulley radius, counter weight mass, and release angle. Once I had the optimized design, I fabricated it using wood working for the frame and 3D printing for the custom pulley assembly.
                     </p>
                     <p>
                         The system was designed to be transportable, the vertical beams fold down so the entire trebuchet fits in the back of my car. After several rounds of tuning and testing, the real-world performance matched closely with the simulation, successfully throwing apples the target distance while smoothly coming to rest without oscillation.
@@ -30,6 +33,7 @@
                 <h3>Technologies Used</h3>
                 <div class="tech-badges">
                     <span class="tech-badge hover-close">Euler-Lagrange Method</span>
+                    <span class="tech-badge hover-close">Kinematics</span>
                     <span class="tech-badge hover-close">Python</span>
                     <span class="tech-badge hover-close">Wood Working</span>
                     <span class="tech-badge hover-close">3D Printing</span>
@@ -37,20 +41,14 @@
             </div>
 
             <!-- Optional Project Links Section -->
-            <!-- <div class="project-links">
+            <div class="project-links">
                 <h3>Project Links</h3>
                 <div class="links">
-                    <a href="[github-url]" target="_blank" class="project-btn hover-close">
+                    <a href="https://github.com/mitchellvanwagoner/trebuchet-simulator" target="_blank" class="project-btn hover-close">
                         View on GitHub
                     </a>
-                    <a href="[documentation-url]" target="_blank" class="project-btn hover-close">
-                        Documentation
-                    </a>
-                    <a href="[demo-url]" target="_blank" class="project-btn hover-close">
-                        Live Demo
-                    </a>
                 </div>
-            </div> -->
+            </div>
 
             <div class="challenges-list">
                 <h3>Challenges & Solutions</h3>
@@ -66,6 +64,16 @@
                         <strong>Solution:</strong> After building the trebuchet, I found that the leather basket was pulled too tightly around the apple due to the tension in the sling. To fix this, I had to remove some of the supporting strings around the leather basket. This solved the grip issue, but now the apple doesn't sit securely while the trebuchet is stationary. I'll be redesigning this part from scratch for version two.
                 </ul>
             </div>
+
+            <div class="video-container" style="max-width: 30em; height: 10em;">
+                <iframe
+                    src="https://www.youtube.com/embed/3Q519VdKkRo"
+                    title="Trebuchet Video"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div> 
 
             <br>
 
@@ -88,7 +96,10 @@
             
             <div class="image-text-block image-left size-xl">
                 <div class="image-container">
-                    <img src="data/trebuchet_eq (1).jpg" alt="System Diagram and Overview" class="zoomable-image">
+                    <img src="data/trebuchet_eq (1).webp"
+                         alt="System Diagram and Overview"
+                         class="zoomable-image"
+                         loading="lazy">
                     <div class="image-caption">System Diagram and Overview</div>
                 </div>
                 <div class="text-container">
@@ -96,14 +107,17 @@
                         To start the project, I first drew a diagram of the system and stated my assumptions. My biggest assumption was that the sling would stay taught throughout the throw. This turned out to be not quite correct, but it still led to a good enough simulation.
                     </p>
                     <p>
-                        I then wrote out the kinematic equations for each component of the system and identified the degrees of freedom I'd need to solve for. I split the system into three major components: the counterweight, the pulley and arm assembly, and the projectile.
+                        I then wrote out the kinematic equations for each component of the system and identified the degrees of freedom I'd need to solve for. I split the system into three major components: the counter weight, the pulley and arm assembly, and the projectile.
                     </p>
                 </div>
             </div>
 
             <div class="image-text-block image-left size-xl">
                 <div class="image-container">
-                    <img src="data/trebuchet_eq (2).jpg" alt="Energy Analysis of the System" class="zoomable-image">
+                    <img src="data/trebuchet_eq (2).webp"
+                         alt="Energy Analysis of the System"
+                         class="zoomable-image"
+                         loading="lazy">
                     <div class="image-caption">Energy Analysis of the System</div>
                 </div>
                 <div class="text-container">
@@ -115,7 +129,10 @@
 
             <div class="image-text-block image-left size-xl">
                 <div class="image-container">
-                    <img src="data/trebuchet_eq (3).jpg" alt="Euler-Lagrange equations" class="zoomable-image">
+                    <img src="data/trebuchet_eq (3).webp"
+                         alt="Euler-Lagrange equations"
+                         class="zoomable-image"
+                         loading="lazy">
                     <div class="image-caption">Euler-Lagrange equations</div>
                 </div>
                 <div class="text-container">
@@ -130,7 +147,10 @@
 
             <div class="image-text-block image-left size-xl">
                 <div class="image-container">
-                    <img src="data/trebuchet_eq (4).jpg" alt="Equations of Motion" class="zoomable-image">
+                    <img src="data/trebuchet_eq (4).webp"
+                         alt="Equations of Motion"
+                         class="zoomable-image"
+                         loading="lazy">
                     <div class="image-caption">Equations of Motion</div>
                 </div>
                 <div class="text-container">
@@ -148,12 +168,15 @@
 
             <div class="image-text-block image-right size-xl">
                 <div class="image-container">
-                    <img src="data/trebuchet_eq (5).png" alt="Euler-Lagrange equations" class="hover-close">
+                    <img src="data/trebuchet_eq (5).webp"
+                         alt="Euler-Lagrange equations"
+                         class="hover-close"
+                         loading="lazy">
                     <div class="image-caption">Energy of the System During Operation</div>
                 </div>
                 <div class="text-container">
                     <p>
-                        After finding the equations of motion, I wrote a Python simulator and optimizer using the solve_ivp and differential_evolution functions from the scipy library. I needed to find the optimal values for the length of the arm, length of the sling, radius of the pulley, mass of the counterweight, and the release angle.
+                        After finding the equations of motion, I wrote a Python simulator and optimizer using the solve_ivp and differential_evolution functions from the scipy library. I needed to find the optimal values for the length of the arm, length of the sling, radius of the pulley, mass of the counter weight, and the release angle.
                     </p>
                     <p>
                         To program the optimizer, I needed to create costs for three key parameters: distance from target, total mass of the system, and efficiency of energy transfer. Once I created those costs, I adjusted how much each one fed back into the total loss function to get the optimizer working properly.
@@ -172,7 +195,10 @@
 
             <div class="image-text-block image-right size-xl">
                 <div class="image-container">
-                    <img src="data/trebuchet_eq (6).gif" alt="Equations of Motion" class="hover-close">
+                    <img src="data/trebuchet_eq (6).webp"
+                         alt="Equations of Motion"
+                         class="hover-close"
+                         loading="lazy">
                     <div class="image-caption">Animation of the Trebuchet System and Trajectory of the Projectile</div>
                 </div>
                 <div class="text-container">
@@ -180,10 +206,10 @@
                         The animation to the right shows the operation of the trebuchet system as well as the ballistic trajectory of the projectile after release. You can see the smooth transition from rotational energy of the arm and sling into the linear kinetic energy of the projectile.
                     </p>
                     <p>
-                        The key insight here, which can be easily seen in the energies plot above, is that the potential energy of the counterweight drives the rotating system until its moment of inertia is at its peak. This happens when the projectile is at its maximum distance from the pivot. At this point the projectile has the greatest linear speed.
+                        The key insight here, which can be easily seen in the energies plot above, is that the potential energy of the counter weight drives the rotating system until its moment of inertia is at its peak. This happens when the projectile is at its maximum distance from the pivot. At this point the projectile has the greatest linear speed.
                     </p>
                     <p>
-                        The mass of the counterweight and radius of the pulley are tuned to match this moment of inertia. This results in the best transfer of energy while utilizing the smallest counterweight mass required.
+                        The mass of the counter weight and radius of the pulley are tuned to match this moment of inertia. This results in the best transfer of energy while utilizing the smallest counter weight mass required.
                     </p>
                 </div>
             </div>
@@ -197,10 +223,13 @@
             <h3>Fabrication and Assembly</h3>
             <hr>
 
-            <div class="image-text-block image-right size-md">
+            <div class="image-text-block image-right size-lg">
                 <div class="image-container">
-                    <img src="data/Trebuchet (2).jpg" alt="Trebuchet fabrication step 2" class="hover-close">
-                    <div class="image-caption">[Caption for image 2]</div>
+                    <img src="data/trebuchet (2).webp"
+                         alt="Trebuchet fabrication step 2"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Frame with lateral support wings</div>
                 </div>
                 <div class="text-container">
                     <p>
@@ -215,10 +244,13 @@
                 </div>
             </div>
 
-            <div class="image-text-block image-right size-md">
+            <div class="image-text-block image-right size-lg">
                 <div class="image-container">
-                    <img src="data/Trebuchet (3).jpg" alt="Trebuchet fabrication step 3" class="hover-close">
-                    <div class="image-caption">[Caption for image 3]</div>
+                    <img src="data/trebuchet (3).webp"
+                         alt="Trebuchet fabrication step 3"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">3D printed PETG pulley stopped part way through</div>
                 </div>
                 <div class="text-container">
                     <p>
@@ -228,18 +260,21 @@
                         The design utilized clamping sections on each end that I could bolt to clamp onto the shaft. This mostly worked, but I couldn't apply enough force to the clamps without snapping the plastic. To combat this, I simply drilled through each clamping section and through the shaft in a radial manner, then dropped a long bolt through the hole.
                     </p>
                     <p>
-                        The only other function of the pulley, besides translating the counterweight motion to rotation, was to act as a trigger to release the trebuchet from its starting position. To accomplish this, I designed a bump-out tab that would be held in place by a trigger mechanism mounted to one of the vertical beams.
+                        The only other function of the pulley, besides translating the counter weight motion to rotation, was to act as a trigger to release the trebuchet from its starting position. To accomplish this, I designed a bump-out tab that would be held in place by a trigger mechanism mounted to one of the vertical beams.
                     </p>
                     <p>
-                        However, the counterweight proved too much for the trigger mechanism, and I had to simply hold the arm in place and release it manually. This is something I'll reconsider when I design the second version.
+                        However, the counter weight proved too much for the trigger mechanism, and I had to simply hold the arm in place and release it manually. This is something I'll reconsider when I design the second version.
                     </p>
                 </div>
             </div>
 
-            <div class="image-text-block image-left size-md">
+            <div class="image-text-block image-left size-lg">
                 <div class="image-container">
-                    <img src="data/Trebuchet (4).jpg" alt="Trebuchet fabrication step 4" class="hover-close">
-                    <div class="image-caption">[Caption for image 4]</div>
+                    <img src="data/trebuchet (4).webp"
+                         alt="Trebuchet fabrication step 4"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Pulley repair after power outage during 30-hour print</div>
                 </div>
                 <div class="text-container">
                     <p>
@@ -251,32 +286,26 @@
                 </div>
             </div>
 
-            <div class="image-text-block image-left size-md">
+            <div class="image-text-block image-left size-lg">
                 <div class="image-container">
-                    <img src="data/Trebuchet (5).jpg" alt="Trebuchet fabrication step 5" class="hover-close">
-                    <div class="image-caption">[Caption for image 5]</div>
-                </div>
-                <div class="text-container">
-                    <p>
-                        Here I've put the pulley on the shaft and one of the bearing blocks on.
-                    </p>
-                </div>
-            </div>
-
-            <div class="image-text-block image-left size-md">
-                <div class="image-container">
-                    <img src="data/Trebuchet (6).jpg" alt="Trebuchet fabrication step 6" class="hover-close">
-                    <div class="image-caption">[Caption for image 6]</div>
+                    <img src="data/trebuchet (6).webp"
+                         alt="Trebuchet fabrication step 6"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Drilling counter-sunk bolt holes for folding mechanism</div>
                 </div>
                 <div class="text-container">
                     <p>In order to get the vertical beam to rotate and bolt into the frame, it needs two holes drilled and counter sunk so I can fit the bolt through without the head of the bolt interfering with the arm of the trebuchet.</p>
                 </div>
             </div>
 
-            <div class="image-text-block image-right size-md">
+            <div class="image-text-block image-right size-lg">
                 <div class="image-container">
-                    <img src="data/Trebuchet (7).jpg" alt="Trebuchet fabrication step 7" class="hover-close">
-                    <div class="image-caption">[Caption for image 7]</div>
+                    <img src="data/trebuchet (7).webp"
+                         alt="Trebuchet fabrication step 7"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Completed pivot assembly</div>
                 </div>
                 <div class="text-container">
                     <p>
@@ -288,10 +317,13 @@
                 </div>
             </div>
 
-            <div class="image-text-block image-right size-md">
+            <div class="image-text-block image-right size-lg">
                 <div class="image-container">
-                    <img src="data/Trebuchet (9).jpg" alt="Trebuchet fabrication step 9" class="hover-close">
-                    <div class="image-caption">[Caption for image 9]</div>
+                    <img src="data/trebuchet (9).webp"
+                         alt="Trebuchet fabrication step 9"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Close-up of pulley assembly showing trigger tab</div>
                 </div>
                 <div class="text-container">
                     <p>
@@ -303,10 +335,13 @@
                 </div>
             </div>
 
-            <div class="image-text-block image-right size-md">
+            <div class="image-text-block image-right size-lg">
                 <div class="image-container">
-                    <img src="data/Trebuchet (11).jpg" alt="Trebuchet fabrication step 11" class="hover-close">
-                    <div class="image-caption">[Caption for image 11]</div>
+                    <img src="data/trebuchet (11).webp"
+                         alt="Trebuchet fabrication step 11"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Completed trebuchet assembly</div>
                 </div>
                 <div class="text-container">
                     <p>
@@ -362,10 +397,10 @@
                         Here is the final video of the system working. The projectile is launched, and the system smoothly comes to a rest as the energy was effectively transferred into the projectile.
                     </p>
                     <p>
-                        This is one of the reasons why I wanted to build a pulley mechanism. A traditional mechanism with the counterweight on the other end of the arm would cause the system to oscillate like a pendulum after the projectile is launched.
+                        This is one of the reasons why I wanted to build a pulley mechanism. A traditional mechanism with the counter weight on the other end of the arm would cause the system to oscillate like a pendulum after the projectile is launched.
                     </p>
                     <p>
-                        However, my mechanism is tuned such that the potential energy is spent by the counterweight by the time it reaches the ground, and the input into the system stops when the projectile is released.
+                        However, my mechanism is tuned such that the potential energy is spent by the counter weight by the time it reaches the ground, and the input into the system stops when the projectile is released.
                     </p>
                 </div>
             </div>

@@ -1,12 +1,412 @@
 <div class="project-container">
-
-    <div class="project-gallery carousel-compact" id="capstone-project">
-        <h3>Project Gallery</h3>
-        <div class="carousel-container hover-far"></div>
+    <h1>Comedy Robot - Capstone Project</h1>
+    <div class="project-header">
+        <p class="project-date">2024 - 2025</p>
+        <p class="project-team">Team: Kevin Sabbe, Daniel Eastman, Mitchell Van Wagoner</p>
+        <p class="project-sponsor">Project Sponsor: Professor Naomi Fitter | Instructor: Dr. Jayani Jayasuriya</p>
     </div>
 
-    <div class="coming-soon">
-        <h3>More Progress Coming Soon</h3>
-        <p>This project write up is still in progress. Check back soon for updates!</p>
+    <div class="project-content">
+        <section class="project-overview">
+            <h2>Overview</h2>
+
+            <div class="image-text-block image-left size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (46).webp"
+                         alt="Comedy Robot performing on table"
+                         class="hover-close"
+                         loading="eager">
+                    <div class="image-caption">NAO robot performing comedy on custom-built table</div>
+                </div>
+                <div class="text-container">
+                    <p>As robots become more integrated into our everyday lives, there exists the need for robots to be able to engage naturally with humans. Our team developed a robotic system capable of performing a comedy routine while interacting with its audience and adjusting its performance based on real-time reactions.</p>
+                    <p>This project extends Professor Naomi Fitter's previous work on robotic comedians, enhancing the NAO V6 robot's capability to interpret audience reactions through visual and auditory inputs dynamically using facial expression reading and Large Language Models (LLMs).</p>
+                </div>
+            </div>
+
+            <div class="tech-stack">
+                <h3>Technologies Used</h3>
+                <div class="tech-badges">
+                    <span class="tech-badge hover-close">NAO V6 Humanoid Robot</span>
+                    <span class="tech-badge hover-close">Raspberry Pi 5</span>
+                    <span class="tech-badge hover-close">DeepFace (Facial Recognition)</span>
+                    <span class="tech-badge hover-close">Llama 3.2-1b (LLM)</span>
+                    <span class="tech-badge hover-close">Vosk (Speech-to-Text)</span>
+                    <span class="tech-badge hover-close">Piper TTS</span>
+                    <span class="tech-badge hover-close">Python</span>
+                    <span class="tech-badge hover-close">3D Printing</span>
+                </div>
+            </div>
+
+            <div class="project-features">
+                <h3>Key Features</h3>
+                <ul>
+                    <li>Real-time facial expression analysis to gauge audience reactions</li>
+                    <li>Dynamic crowd-work using LLM-generated responses</li>
+                    <li>Offline speech-to-text processing for audience interaction</li>
+                    <li>Custom-built portable table housing all processing equipment</li>
+                    <li>Battery-powered system for complete portability</li>
+                    <li>Sub-5-second response time for natural conversational flow</li>
+                </ul>
+            </div>
+
+            <div class="challenges-list">
+                <h3>Challenges & Solutions</h3>
+                <ul>
+                    <li>
+                        <strong>Challenge:</strong> NAO robot's limited computational power (Intel Atom from 2013)<br>
+                        <strong>Solution:</strong> Designed external Raspberry Pi 5 co-processor with wireless communication
+                    </li>
+                    <li>
+                        <strong>Challenge:</strong> Running LLM on resource-constrained hardware<br>
+                        <strong>Solution:</strong> Implemented Llama 3.2-1b with pre-loading, batch processing, and buffer phrases to maintain 4.3-second average response time
+                    </li>
+                    <li>
+                        <strong>Challenge:</strong> Needed to be portable and easily setup<br>
+                        <strong>Solution:</strong> Integrated processing into custom table design with incorporated battery and charging solutions, along with easily assembled screw-on table legs
+                    </li>
+                </ul>
+            </div>
+
+            <div class="project-video" style="margin: 2em 0;">
+                <h3>Showcase Video</h3>
+                <div class="video-container">
+                    <iframe
+                        src="https://www.youtube.com/embed/JUW971972gY"
+                        title="Showcase Video"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <div class="project-gallery carousel-compact" id="capstone-project">
+                <h3>Project Gallery</h3>
+                <div class="carousel-container hover-far"></div>
+            </div>
+
+        </section>
+
+        <section class="project-report">
+            <h2>Final Report</h2>
+
+            <h3>Abstract</h3>
+            <hr>
+            <p>As robots become more integrated into our everyday lives, there exists the need for robots to be able to engage naturally with humans. To advance this aim, our team has worked on developing a robotic system capable of performing a comedy routine while interacting with its audience and adjusting its performance based on the reactions of the crowd. We also sought to incorporate a Large Language Model (LLM) to generate responses to audience input in a crowd-work-like manner.</p>
+
+            <p>To accomplish these goals, we incorporated cameras, microphones, and an external processing unit to capture and process the audience's reactions. The extra hardware was kept separate from the NAO robot to not interfere with its stability and to keep the whole system portable. A table was constructed to house the extra hardware and provide a stable platform for the robot to perform on. The design of this table was kept discrete and painted black, keeping the audience's attention on the robot itself. A Raspberry Pi 5 was chosen as our external processor so that the system could be powered from a battery to keep the system portable.</p>
+
+            <p>The main challenge of this project arose from the limitations of the Raspberry Pi while trying to run an LLM. We largely achieved these goals with some challenges, mainly with the facial reading portion. The industry as a whole has a hard time accurately determining the affect of a person based solely on their facial expressions, so this part of our project was reduced to focus on the LLM implementation. With the current state of LLM research being performed on massive multi-million dollar supercomputers, the ability for this project to provide a convincing performance running on low-end hardware was a great success.</p>
+
+            <h3>Background & Introduction</h3>
+            <hr>
+            <div class="image-text-block image-right size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (1).webp"
+                         alt="NAO robot setup"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">NAO V6 robot by Aldebaran performing comedy</div>
+                </div>
+                <div class="text-container">
+                    <p>Robotic interaction continues to evolve, with comedy emerging as an impactful medium to foster human-robot rapport. Comedy has been a way for people to both entertain and connect closely for as long as we can remember. It is used as a way for others to get stories off their chest in a light-hearted way, as a form of relaxation to melt the stresses of the day away, and as a way to feel a little closer to their friends and audience through sharing a positive memory.</p>
+                    <p>Our project scope focuses on furthering research in the Human-Robot Interaction (HRI) field using a robotic stand-up comedian through adding facial expression reading and the use of LLMs to dynamically change its repertoire and repartee. The device used to perform the stand-up comedy routines is a NAO V6 humanoid robot, created by Aldebaran.</p>
+                </div>
+            </div>
+
+            <p>The current comedic capabilities of this robot were exclusively based on audio cues, through methods including audio thresholding and machine learning techniques to determine audience responses. Our goal was to increase the robots' existing capabilities by using visual input to determine the audience's facial expressions and to implement a large-language model (LLM) to create new repartee.</p>
+
+            <p>By benefiting Professor Fitter's work, we're providing advances to the HRI field by refining a way for robots to connect to others more naturally. With comedy being such an integral part of interhuman interaction, we hope to bring this form of connection to the interaction between humans and robots.</p>
+
+            <h3>Design Process</h3>
+            <hr>
+
+            <p>The current sensing capabilities of the NAO 6 robot were accomplished using an internal microphone and volume level monitoring. Using the built-in cameras was the next logical evolution; however, the computational power of this robot platform proved limited. Run by a low-power Intel Atom processor released in 2013, it simply was not performant enough. Our team identified that the additional sensing or language abilities we wanted would require an off-board coprocessor.</p>
+
+            <p>Dr. Naomi Fitter's requirements for this new device included a fool-proof design, where it would simply boot, rapidly pair, and send data to the NAO 6 robot for use. Speed was also a requirement. As previous research into the cadence of joke delivery presented, timing was key. Thus, the NAO 6 robot would need to know as quickly as possible how the audience reacted or responded to a given line.</p>
+
+            <div class="image-text-block image-left size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (2).webp"
+                         alt="Initial backpack prototype concept"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">First prototype idea: processing backpack for NAO robot</div>
+                </div>
+                <div class="text-container">
+                    <h4>Prototype 1: Backpack Design</h4>
+                    <p>Initial ideas for a co-processing unit included a pseudo "backpack" for the NAO 6 robot, which would house additional processing power while being physically tethered to the robot itself. This device would use onboard sensors and would make use of a high-speed network connection over a tether. Power would be provided from the robot—reducing the need to charge multiple devices.</p>
+                    <p>However, the NAO 6 robot proved to be extremely sensitive to changes in weight balance or center of gravity. Additionally, overall power consumption would need to be tested, as the NAO 6 robot only lasts one to two hours operating standalone.</p>
+                </div>
+            </div>
+
+            <div class="image-text-block image-right size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (3).webp"
+                         alt="External processing box concept"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Second prototype: external processing unit</div>
+                </div>
+                <div class="text-container">
+                    <h4>Prototype 2: External Box</h4>
+                    <p>Another option included an external processing unit completely separated from the NAO 6 robot, where power consumption limitations would be negated as it would connect to a power outlet. It also would not have space limitations, as it could be placed discretely on or off stage and wirelessly connect to the robot.</p>
+                    <p>However, this box would not be in an ideal location to provide its own sensing capabilities. Microphone audio is sensitive to proximity, and this device would be placed entirely away from a crowd. This design would also decrease the overall portability of the system.</p>
+                </div>
+            </div>
+
+            <div class="image-text-block image-left size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (4).webp"
+                         alt="Table design concept"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Final prototype: integrated table design</div>
+                </div>
+                <div class="text-container">
+                    <h4>Prototype 3: Integrated Table (Final Design)</h4>
+                    <p>Our team considered modifying the table (an IKEA LACK side table) the NAO 6 robot was often placed on top of. This design had the benefit of allowing sensors to be placed close to the robot, nearest to the crowd. It also directly replaces the existing table, minimizing the impact of portability to our client's process.</p>
+                    <p>For our intended application, we felt this was the best option for its ease to our client and future upgradability. The downsides could be engineered through in a straightforward manner.</p>
+                </div>
+            </div>
+
+            <h3>Design Proposal - First Term</h3>
+            <hr>
+
+            <p>Our initial term involved a detailed exploration and validation of multiple conceptual designs. Initially, a "backpack"-style coprocessor was considered but was quickly set aside due to significant balance and power management issues with the NAO robot. Next, an external standalone unit was evaluated, but concerns over sensor placement, response latency, and overall portability emerged. Ultimately, the concept of embedding processing and sensory equipment within a table was chosen.</p>
+
+            <p>Extensive prototyping of the table began, including fabricating the initial structure, designing discrete aesthetics, and ensuring adequate airflow and weather resistance to safeguard electronics during transportation and live performances. Initial software development was simultaneously conducted to integrate facial recognition and LLM functionalities.</p>
+
+            <p>During the design of the table, we considered several design options for the leg mechanism. The table needed to be entirely self-contained and enclosed to ensure weather-safe handling during transportation. Furthermore, for the system to be portable, one of the key requirements set by our client, the legs of the table would need to fold in or collapse in some way.</p>
+
+            <p>We researched several different mechanisms for this, which would allow the legs to fold underneath the table when not in use and then be easily set back into standing position. However, as we continued through the design phase, it became apparent that the simplest option would be the best. This was to use a screw-on system similar to how IKEA table legs attach to their desks. In fact, we found that simply buying legs from IKEA and cutting them to our specifications was the best way to implement this feature.</p>
+
+            <h3>Design Solution - Table Construction</h3>
+            <hr>
+
+            <p>We were confident with our design of the system based on all the research we had done in the first term of this project, and we set out to build it. Both aspects of the full system ended up taking longer than we had hoped. The table build ended up taking 6 weeks to complete with small issues arising that needed new parts to be manufactured. The software pipeline took longer as we spent time hunting down bugs, chased speed increases, and searched for better systems to integrate that would provide us with the features and timing we needed to provide a convincing performance.</p>
+
+            <div class="image-text-block image-right size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (5).webp"
+                         alt="Front of table with cameras and microphone"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Front panel with integrated cameras and microphone</div>
+                </div>
+                <div class="text-container">
+                    <p>The table was designed to completely house the cameras, microphone, Raspberry Pi 5, and battery. The front of the table hosts the cameras and a microphone. This placement made sure that the system would remain unobtrusive but still have full view of the audience in order to determine their reactions.</p>
+                    <p>We added vents on the sides of the table so that air would flow, ensuring the Raspberry Pi wouldn't overheat. We also made these vents larger than needed in the event that a future project might want to put a GPU in the table as well. The extra venting would support the substantial cooling required to run a desktop-class GPU.</p>
+                </div>
+            </div>
+
+            <div class="image-text-block image-left size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (6).webp"
+                         alt="Back panel with controls"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Rear panel with power controls and monitoring</div>
+                </div>
+                <div class="text-container">
+                    <p>On the back of the table, we added all the ports and switches required to turn the system on and monitor its status. The button panel accommodates the power switch, record switch, USB-C charging port, 2 status LEDs, and the battery screen. A cutout was necessary to allow the user to see the screen built into the battery, allowing them to have visual feedback on the charge percentage. This was a simple solution and negated the need to install another LED to show the charge status. The rear also includes a handle attached in the middle for easy carrying.</p>
+                </div>
+            </div>
+
+            <div class="image-text-block image-right size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (7).webp"
+                         alt="Bottom of table with leg mounting"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Bottom view showing collapsible leg system</div>
+                </div>
+                <div class="text-container">
+                    <p>The bottom of the table houses the legs during transportation. The method of using screw-on legs that snap into compliant mounts worked very well. The clips were carefully designed so the whole mount would flex when a leg was inserted without distorting the part and potentially breaking it. They needed to be manufactured in multiple pieces and clipped together, allowing the clip sections to move as a leg was inserted without distorting the flange that is screwed into the table.</p>
+                </div>
+            </div>
+
+            <div class="image-text-block image-left size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (8).webp"
+                         alt="Leg riser mechanism"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Custom risers for leg mounting system</div>
+                </div>
+                <div class="text-container">
+                    <p>Additional problems arose with the wood inserts that the legs would screw into. They were designed to screw into the wood and relied on a hex tool to do so, such that the threads didn't travel to the top of the insert. To solve this problem, we designed risers that would sit between the table and the threaded insert to extend them out from its face. The added benefit was that the legs would seat against the risers and not the table itself, reducing wear on easily replaceable parts.</p>
+                </div>
+            </div>
+
+            <div class="image-text-block image-right size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (9).webp"
+                         alt="Corner guards"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Protective corner guards for transport</div>
+                </div>
+                <div class="text-container">
+                    <p>Corner guards were installed along the table to protect it during transport as well as the front camera mount when the table was set down like a briefcase. The corner guards also served to cover up some of the misalignments in the wood sections.</p>
+                </div>
+            </div>
+
+            <h3>Software Architecture</h3>
+            <hr>
+
+            <p>The software pipeline for the Comedy Robot integrates multiple components to analyze audience reactions and generate dynamic comedic responses in real time. At the core of the system is a facial affect recognition module, which utilizes two visible-light cameras embedded in the table to capture audience expressions.</p>
+
+            <div class="image-text-block image-right size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (10).webp"
+                         alt="Software pipeline flowchart"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Crowd-work pipeline showing data flow</div>
+                </div>
+                <div class="text-container">
+                    <h4>Facial Affect Recognition</h4>
+                    <p>These images are processed using DeepFace, a machine learning framework that classifies facial expressions into positive, neutral, or negative categories. By analyzing audience sentiment over a brief time window—approximately two seconds after a joke is delivered—the system determines whether the response was favorable and adjusts the performance accordingly.</p>
+                    <p>Given the limitations of facial affect reading, particularly with the challenges of classifying nuanced emotions, the system achieved an overall accuracy of 61.3%, with minor misclassifications in 26.5% of cases and critical errors in 12.2% of cases. While effective in many scenarios, future improvements, such as integrating infrared cameras for better low-light performance or refining the emotion classification model, could enhance detection reliability.</p>
+                </div>
+            </div>
+
+            <div class="image-text-block image-left size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (11).webp"
+                         alt="LLM processing setup"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Raspberry Pi 5 running Llama 3.2-1b</div>
+                </div>
+                <div class="text-container">
+                    <h4>Crowd-Work Response Pipeline</h4>
+                    <p>Beyond passive audience sentiment analysis, the Comedy Robot actively engages with the audience through a crowd-work response pipeline that enables it to generate personalized jokes. The interaction begins with the robot posing a simple question, such as "Where are you from?" or "What's your favorite hobby?"</p>
+                    <p>Audience responses are captured through a microphone and processed using Vosk, an offline speech-to-text (STT) engine. The transcribed text is passed to Llama 3.2-1b, which generates a contextually relevant comedic response. Unlike a basic joke database, this model dynamically tailors its humor based on the audience's response.</p>
+                </div>
+            </div>
+
+            <div class="image-text-block image-right size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (12).webp"
+                         alt="Text-to-speech system"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Piper TTS synthesis for natural robot voice</div>
+                </div>
+                <div class="text-container">
+                    <h4>Real-Time Response Optimization</h4>
+                    <p>Once the joke is generated, it is passed to Piper TTS, a lightweight text-to-speech synthesis engine, which converts the response into spoken dialogue for the NAO robot.</p>
+                    <p>A crucial challenge was ensuring real-time responsiveness to maintain comedic timing. The system implements pre-loaded language models, batch processing, and a buffer phrase system allowing the robot to output pre-recorded filler lines while waiting for the LLM to generate the joke. These optimizations ensured that the complete pipeline averaged 4.3 seconds from audience input to joke delivery.</p>
+                </div>
+            </div>
+
+            <p>Despite these optimizations, occasional delays and inaccuracies in speech-to-text transcription remain areas for improvement, especially when dealing with background noise or responses containing proper nouns. Future iterations may explore enhanced noise filtering, more powerful speech-recognition software, or cloud-based processing for faster response times. Nevertheless, the current system, within the project's constraints of no internet communication, represents a significant advancement in human-robot interaction (HRI), demonstrating how robots can adapt their humor dynamically based on audience engagement.</p>
+
+            <h3>Assembly & Integration</h3>
+            <hr>
+
+            <div class="image-text-block image-left size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (15).webp"
+                         alt="Internal electronics layout"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Internal component layout and wiring</div>
+                </div>
+                <div class="text-container">
+                    <p>The system is completely self-contained and enclosed to ensure weather-safe handling during transportation. A DIN rail was installed on the opposite side of the table from the Raspberry Pi to allow for future installation of a desktop GPU if needed, with access to an air vent to facilitate cooling needs.</p>
+                    <p>The currently installed battery is capable of delivering 100W, with roughly 25W required by the Raspberry Pi itself. This provides several hours of runtime for performances without requiring external power.</p>
+                </div>
+            </div>
+
+            <h3>Testing & Results</h3>
+            <hr>
+
+            <div class="image-text-block image-right size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (20).webp"
+                         alt="Robot performing for live audience"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Live performance testing with audience</div>
+                </div>
+                <div class="text-container">
+                    <p>During the final evaluation, comprehensive testing was conducted both in a controlled laboratory environment and several times during live public performances. The primary objective was to assess the robot's capability to monitor and dynamically adapt its performance based on real-time audience feedback.</p>
+                    <p>Overall, the system performed successfully, effectively interpreting and responding to visual and auditory cues from audience members. This resulted in an engaging and interactive experience, significantly enhancing audience involvement.</p>
+                </div>
+            </div>
+
+            <div class="image-text-block image-left size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (21).webp"
+                         alt="Audience engagement"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Positive audience reactions during testing</div>
+                </div>
+                <div class="text-container">
+                    <p>The table was largely a success and performs the requirements set by our client well. It is a solid enclosure for the electrical equipment and provides a stable platform for the robot to stand on during its performances. It is also highly portable and energy efficient, with the battery lasting for several hours while running a performance.</p>
+                    <p>The leg mechanism works very well and makes collapsing the system easy for transport. With both the battery and leg collapsing systems in place, the system can be transported easily and even potentially taken on a plane if required.</p>
+                </div>
+            </div>
+
+            <p>However, some intermittent performance issues arose with the Large Language Model (LLM) component, particularly in maintaining consistent real-time conversational responsiveness. Despite these occasional setbacks, when fully operational, the LLM convincingly engaged with audience members, delivering contextually appropriate and entertaining responses. The tests ultimately validated the design's potential and highlighted specific areas for further refinement and improvement.</p>
+
+            <h3>Future Work</h3>
+            <hr>
+
+            <p>The future of this project will revolve around fine tuning of the software pipeline to increase the stability of the system's performance, and to integrate the features into the robot's set performances. Research into the timings of the connection interface between the Raspberry Pi and the NAO robot would help in understanding the hiccups experienced during test performances. Future work will require making this system more stable and fault tolerant as glitches during a live performance would not be acceptable.</p>
+
+            <div class="image-text-block image-right size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (25).webp"
+                         alt="Future improvements diagram"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Areas identified for future enhancement</div>
+                </div>
+                <div class="text-container">
+                    <h4>Facial Affect System Improvements</h4>
+                    <p>Further work could be done to improve sensitivity and accuracy. The system is currently only reliable enough to gauge an audience's reaction when there are many visible faces. This becomes problematic if the audience is small, thereby making the overall reading prone to noise and resulting in inaccurate responses.</p>
+                    <p>To fix this, a system capable of more accurately determining each individual's facial expressions, and filtering out any unwanted noise, should be built. We propose not taking the absolute emotion of the group, but rather tracking the baseline emotions on an individual level, and calculating when the audience is reacting by measuring when each person's emotion changes relative to their baseline.</p>
+                </div>
+            </div>
+
+            <div class="image-text-block image-left size-lg">
+                <div class="image-container">
+                    <img src="data/capstone (30).webp"
+                         alt="Hardware upgrade possibilities"
+                         class="hover-close"
+                         loading="lazy">
+                    <div class="image-caption">Potential for GPU integration</div>
+                </div>
+                <div class="text-container">
+                    <h4>Computational Power Upgrades</h4>
+                    <p>There is the possibility of increasing the computational power of the system which would allow for a more responsive and capable LLM system that could be leveraged for more unique responses during crowd work. To increase the computational power, either a different central processing board could be installed, or the current Raspberry Pi 5 could be augmented with a desktop GPU.</p>
+                    <p>There is currently work being done to allow Raspberry Pis to utilize desktop GPUs, but they are currently unreliable and prone to crashing. However, in the future, this could be a viable option. The power system would need to be heavily considered before performing this upgrade. With most GPUs requiring upwards of 200W, an upgrade to the battery would be required.</p>
+                </div>
+            </div>
+
+            <h3>Conclusion</h3>
+            <hr>
+
+            <p>Our team applied robust engineering design principles to develop a responsive robotic system specifically designed for effective human interaction. Our system incorporates audience emotion analysis and responsive communication, significantly enhancing user engagement and satisfaction. Additionally, we emphasized portability and ease of transport to ensure practical use in a variety of settings.</p>
+
+            <p>This project underscores the growing significance of Human-Robot Interaction (HRI) within entertainment, hospitality, and general service sectors. As robotic applications continue to expand in these fields, the importance of nuanced, thoughtful, and reliable human interactions will become increasingly central to their effectiveness and adoption.</p>
+
+            <p>Throughout the design process, we prioritized public health, user safety, environmental sustainability, and practical usability. By creating a system capable of effectively interpreting and engaging with audiences, we successfully achieved our goal and met the requirements set by our client. Looking forward, there are multiple avenues for further improvement and refinement, including enhancements to the software pipeline and increased computational capacity to optimize system stability and performance.</p>
+
+            <h3>Acknowledgements</h3>
+            <hr>
+
+            <p><strong>Professor Naomi Fitter</strong>, for their excellent guidance on our project trajectory, controlling scope creep, and assisting where needed on architecture design and joke writing.</p>
+
+            <p><strong>Graduate Student Aidan Beery</strong>, for their assistance in processing voice data and training of the Piper TTS model used on this device.</p>
+
+        </section>
+
     </div>
 </div>

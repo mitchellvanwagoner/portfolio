@@ -15,6 +15,8 @@ class CarouselGallery {
             autoPlayInterval: 5000,
             loop: true,
             onComplete: null, // Callback when carousel finishes loading
+            preloadLimit: 3, // Only preload first 3 images for faster initial load
+            smartExtensionDetection: true, // Stop testing extensions after first success
             ...config
         };
 
@@ -51,11 +53,121 @@ class CarouselGallery {
 
     loadImages() {
         let loadedCount = 0;
-        let attemptedCount = 0;
-        const totalAttempts = this.settings.maxImages * this.settings.extensions.length;
+        let preloadedCount = 0;
+        this.detectedExtension = null; // Cache the working extension
+
+        const checkPreloadComplete = () => {
+            if (preloadedCount >= this.settings.preloadLimit && loadedCount > 0) {
+                // Start background loading after preload is done
+                this.loadRemainingImages();
+            } else if (preloadedCount >= this.settings.preloadLimit && loadedCount === 0) {
+                this.container.innerHTML = '<div class="carousel-loading">No images found</div>';
+                if (this.settings.onComplete) this.settings.onComplete();
+            }
+        };
+
+        // First, load only the first few images for immediate display
+        for (let i = this.settings.startIndex; i < this.settings.startIndex + this.settings.preloadLimit; i++) {
+            this.loadSingleImage(i, (success) => {
+                preloadedCount++;
+                if (success) {
+                    loadedCount++;
+                    if (loadedCount === 1) {
+                        this.buildCarousel();
+                    } else {
+                        this.updateCarousel();
+                    }
+                }
+                checkPreloadComplete();
+            });
+        }
+    }
+
+    async loadSingleImage(index, callback) {
+        // If we already detected the extension, use it directly
+        if (this.detectedExtension && this.settings.smartExtensionDetection) {
+            const filename = this.generateFilename(index, this.detectedExtension);
+            // Remove trailing slash from directory to prevent double slashes
+            const cleanDir = this.settings.directory.replace(/\/+$/, '');
+            const imagePath = `${cleanDir}/${filename}`;
+
+            try {
+                const success = await this.tryLoadImage(imagePath, filename, index);
+                callback(success);
+                return;
+            } catch (error) {
+                // Extension might not work for this image, fall back to testing all
+            }
+        }
+
+        // Try extensions in order until we find one that works
+        let found = false;
+        for (const ext of this.settings.extensions) {
+            if (found) break;
+
+            const filename = this.generateFilename(index, ext);
+            // Remove trailing slash from directory to prevent double slashes
+            const cleanDir = this.settings.directory.replace(/\/+$/, '');
+            const imagePath = `${cleanDir}/${filename}`;
+
+            try {
+                const success = await this.tryLoadImage(imagePath, filename, index);
+                if (success) {
+                    found = true;
+                    // Cache the working extension for future images
+                    if (!this.detectedExtension) {
+                        this.detectedExtension = ext;
+                    }
+                    callback(true);
+                    return;
+                }
+            } catch (error) {
+                // Try next extension
+                continue;
+            }
+        }
+
+        // No extension worked for this image
+        callback(false);
+    }
+
+    tryLoadImage(imagePath, filename, index) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+
+            img.onload = () => {
+                this.images.push({
+                    src: imagePath,
+                    originalSrc: imagePath, // Store original path
+                    alt: `${this.settings.namePattern} Image ${index}`,
+                    filename: filename,
+                    index: index,
+                    width: img.naturalWidth,
+                    height: img.naturalHeight,
+                    aspectRatio: img.naturalWidth / img.naturalHeight
+                });
+
+                // Sort images by their index to maintain numerical order
+                this.images.sort((a, b) => a.index - b.index);
+                resolve(true);
+            };
+
+            img.onerror = () => {
+                reject(new Error('Image load failed'));
+            };
+
+            // Load the original image
+            img.src = imagePath;
+        });
+    }
+
+    loadRemainingImages() {
+        let loadedCount = this.images.length;
+        let processedCount = 0;
+        const totalToProcess = this.settings.maxImages - this.settings.preloadLimit;
 
         const checkComplete = () => {
-            if (attemptedCount >= totalAttempts) {
+            if (processedCount >= totalToProcess) {
                 this.isComplete = true;
                 if (this.settings.onComplete) {
                     this.settings.onComplete();
@@ -63,46 +175,15 @@ class CarouselGallery {
             }
         };
 
-        for (let i = this.settings.startIndex; i < this.settings.startIndex + this.settings.maxImages; i++) {
-            this.settings.extensions.forEach(ext => {
-                const img = new Image();
-                const filename = this.generateFilename(i, ext);
-                const imagePath = `${this.settings.directory}/${filename}`;
-
-                img.onload = () => {
+        // Load remaining images in background with smart extension detection
+        for (let i = this.settings.startIndex + this.settings.preloadLimit; i < this.settings.startIndex + this.settings.maxImages; i++) {
+            this.loadSingleImage(i, (success) => {
+                processedCount++;
+                if (success) {
                     loadedCount++;
-                    attemptedCount++;
-                    this.images.push({
-                        src: imagePath,
-                        alt: `${this.settings.namePattern} Image ${i}`,
-                        filename: filename,
-                        index: i, // Store the original index for sorting
-                        width: img.naturalWidth,
-                        height: img.naturalHeight,
-                        aspectRatio: img.naturalWidth / img.naturalHeight
-                    });
-
-                    // Sort images by their index to maintain numerical order
-                    this.images.sort((a, b) => a.index - b.index);
-
-                    if (loadedCount === 1) {
-                        this.buildCarousel();
-                    } else {
-                        this.updateCarousel();
-                    }
-
-                    checkComplete();
-                };
-
-                img.onerror = () => {
-                    attemptedCount++;
-                    if (attemptedCount === totalAttempts && loadedCount === 0) {
-                        this.container.innerHTML = '<div class="carousel-loading">No images found</div>';
-                    }
-                    checkComplete();
-                };
-
-                img.src = imagePath;
+                    this.updateCarousel();
+                }
+                checkComplete();
             });
         }
     }
@@ -185,17 +266,21 @@ class CarouselGallery {
 
         if (!track) return;
 
-        // Update slides
-        track.innerHTML = this.images.map(img => `
+        // Update slides with lazy loading
+        track.innerHTML = this.images.map((img, index) => {
+            return `
             <div class="carousel-slide">
-                <img src="${img.src}" alt="${img.alt}">
+                <img ${index === 0 ? `src="${img.src}"` : `data-src="${img.src}" loading="lazy"`}
+                     alt="${img.alt}"
+                     ${index !== 0 ? 'class="lazy-image"' : ''}>
             </div>
-        `).join('');
+        `;
+        }).join('');
 
         // Update dots
         if (dotsContainer) {
             dotsContainer.innerHTML = this.images.map((_, index) => `
-                <button class="carousel-dot ${index === this.currentIndex ? 'active' : ''}" 
+                <button class="carousel-dot ${index === this.currentIndex ? 'active' : ''}"
                         data-index="${index}" aria-label="Go to image ${index + 1}"></button>
             `).join('');
 
@@ -244,6 +329,9 @@ class CarouselGallery {
         // Update track position
         track.style.transform = `translateX(-${this.currentIndex * 100}%)`;
 
+        // Load current and adjacent images
+        this.loadAdjacentImages();
+
         // Update counter
         if (counter) {
             counter.textContent = `${this.currentIndex + 1} / ${this.images.length}`;
@@ -258,6 +346,31 @@ class CarouselGallery {
         // Update dots
         dots.forEach((dot, index) => {
             dot.classList.toggle('active', index === this.currentIndex);
+        });
+    }
+
+    loadAdjacentImages() {
+        const slides = this.container.querySelectorAll('.carousel-slide img.lazy-image');
+
+        // Load current image and adjacent ones for smooth navigation
+        const indicesToLoad = [
+            this.currentIndex - 1,
+            this.currentIndex,
+            this.currentIndex + 1
+        ].filter(index => index >= 0 && index < this.images.length);
+
+        indicesToLoad.forEach(index => {
+            const img = slides[index];
+            if (img && img.dataset.src && !img.src) {
+                img.src = img.dataset.src;
+                // Also load srcset if available
+                if (img.dataset.srcset) {
+                    img.srcset = img.dataset.srcset;
+                    img.removeAttribute('data-srcset');
+                }
+                img.classList.remove('lazy-image');
+                img.removeAttribute('data-src');
+            }
         });
     }
 
@@ -287,12 +400,15 @@ class CarouselGallery {
         const currentImage = this.images[this.currentIndex];
         if (!currentImage) return;
 
+        // Use full-size image for fullscreen
+        const fullscreenSrc = currentImage.src;
+
         // Create fullscreen overlay
         const overlay = document.createElement('div');
         overlay.className = 'carousel-fullscreen-overlay';
         overlay.innerHTML = `
             <div class="carousel-fullscreen-content">
-                <img src="${currentImage.src}" alt="${currentImage.alt}" class="carousel-fullscreen-image">
+                <img src="${fullscreenSrc}" alt="${currentImage.alt}" class="carousel-fullscreen-image">
                 <div class="carousel-fullscreen-controls">
                     <button class="carousel-fullscreen-nav prev" aria-label="Previous image">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -324,7 +440,7 @@ class CarouselGallery {
         closeBtn.addEventListener('click', () => this.exitFullscreen());
         prevBtn.addEventListener('click', () => this.fullscreenNavigate(-1));
         nextBtn.addEventListener('click', () => this.fullscreenNavigate(1));
-        
+
         overlay.addEventListener('click', (e) => {
             if (e.target === overlay) this.exitFullscreen();
         });
@@ -343,7 +459,7 @@ class CarouselGallery {
 
     fullscreenNavigate(direction) {
         this.navigate(direction);
-        
+
         // Update fullscreen image
         const overlay = document.querySelector('.carousel-fullscreen-overlay');
         const image = overlay?.querySelector('.carousel-fullscreen-image');

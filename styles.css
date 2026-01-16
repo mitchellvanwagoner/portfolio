@@ -198,7 +198,6 @@ body {
 
 ::-webkit-scrollbar-thumb {
     background: var(--border-color);
-    border-radius: var(--border-radius-sm);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -416,6 +415,7 @@ header h1 {
     min-height: 0;
     overflow: hidden;
     color: var(--text-dark);
+    border-radius: 0;
 }
 
 /* Cover Bar */
@@ -723,6 +723,7 @@ nav a:focus {
     border: 2px solid var(--border-color);
     margin-top: var(--space-xl);
     padding: var(--space-md);
+    width: fit-content;
 }
 
 .tech-badges {
@@ -730,7 +731,7 @@ nav a:focus {
     gap: var(--space-md);
     margin-top: var(--space-md);
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .tech-badge {
@@ -753,12 +754,10 @@ nav a:focus {
 
 /* Project Links */
 .project-links {
-    display: grid;
-    justify-self: center;
     border: 2px solid var(--border-color);
     margin-top: var(--space-xl);
     padding: var(--space-md);
-    max-width: 40rem;
+    width: fit-content;
 }
 
 .links {
@@ -766,7 +765,7 @@ nav a:focus {
     gap: var(--space-md);
     margin-top: var(--space-md);
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .links a {
@@ -987,6 +986,24 @@ nav a:focus {
     max-height: 100%;
     object-fit: contain;
     display: block;
+    transition: opacity 0.3s ease;
+}
+
+/* Lazy loading styles for performance optimization */
+.carousel-slide img.lazy-image {
+    opacity: 0.3;
+    background: linear-gradient(90deg, #f0f0f0 0%, #e0e0e0 50%, #f0f0f0 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.carousel-slide img:not(.lazy-image) {
+    opacity: 1;
 }
 
 /* Carousel Navigation */
@@ -1544,7 +1561,6 @@ nav a:focus {
     position: relative;
     width: 100%;
     max-width: 800px;
-    margin: auto;
     padding-bottom: 56.25%; /* 16:9 aspect ratio */
     height: 0;
     overflow: hidden;
@@ -1577,6 +1593,44 @@ nav a:focus {
 
     .sidebar {
         width: 7rem;
+    }
+
+    /* Tablet image-text-block responsive scaling */
+    .image-text-block {
+        flex-direction: column !important;
+        gap: var(--space-md);
+        margin: var(--space-md) 0;
+    }
+
+    /* Maintain left/right alignment in tablet stacked mode */
+    .image-text-block.image-left .image-container {
+        align-self: flex-start;
+    }
+
+    .image-text-block.image-right .image-container {
+        align-self: flex-end;
+    }
+
+    /* Scale down larger images for tablet screens */
+    .img-xl, .size-xl img {
+        max-width: min(25rem, 80vw); /* Further reduced for tablet stacking */
+    }
+    .img-lg, .size-lg img {
+        max-width: min(22rem, 75vw);
+    }
+    .img-md, .size-md img {
+        max-width: min(18.75rem, 70vw);
+    }
+    .img-sm, .size-sm img {
+        max-width: min(15.625rem, 65vw);
+    }
+
+    /* Legacy size classes for backward compatibility */
+    .image-text-block.size-large img {
+        max-width: min(22rem, 75vw);
+    }
+    .image-text-block.size-medium img {
+        max-width: min(18.75rem, 70vw);
     }
 }
 

@@ -10,21 +10,22 @@
     <meta name="author" content="Mitchell Van Wagoner">
     
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline' www.googletagmanager.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; frame-src https://www.youtube.com; connect-src 'self' www.google-analytics.com www.googletagmanager.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline' www.googletagmanager.com static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; frame-src https://www.youtube.com; connect-src 'self' www.google-analytics.com www.googletagmanager.com cloudflareinsights.com;">
+
     
     <!-- Open Graph Meta Tags for Social Sharing -->
     <meta property="og:title" content="Mitchell Van Wagoner - Engineering Portfolio">
     <meta property="og:description" content="Explore innovative engineering projects including custom keyboards, robotics, and professional development tools.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://portfolio.mvwengineering.org">
-    <meta property="og:image" content="https://portfolio.mvwengineering.org/data/keyboard%20(1).jpg">
+    <meta property="og:image" content="https://portfolio.mvwengineering.org/data/me.webp">
     
     <!-- DNS Prefetch for External Resources -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     
     <!-- Preload Critical Images -->
-    <link rel="preload" as="image" href="data/resume.jpg" type="image/jpeg">
+    <link rel="preload" href="data/resume.webp" as="image" type="image/webp">
     
     <!-- Preload Critical CSS and Fonts -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">

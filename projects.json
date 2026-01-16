@@ -30,11 +30,6 @@
         "folder": "trebuchet"
     },
     {
-        "id": "supercheesiLink",
-        "name": "Supercheesi",
-        "folder": "supercheesi"
-    },
-    {
         "id": "greenhouseLink",
         "name": "Greenhouse",
         "folder": "greenhouse"
@@ -54,6 +49,7 @@
             "rotary_encoder",
             "shave_stand",
             "silverware_tray",
+            "supercheesi",
             "underquilt"
         ]
     }

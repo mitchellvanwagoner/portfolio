@@ -5,6 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "devDependencies": {
+    "sharp": "^0.33.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mitchellvanwagoner/portfolio.git"
@@ -16,5 +19,5 @@
     "url": "https://github.com/mitchellvanwagoner/portfolio/issues"
   },
   "homepage": "https://github.com/mitchellvanwagoner/portfolio#readme",
-  "description": "",
+  "description": ""
 }
