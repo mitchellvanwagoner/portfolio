@@ -7,7 +7,16 @@
       "Bash(findstr:*)",
       "Bash(python convert_images.py:*)",
       "Bash(python:*)",
-      "Bash(pip install:*)"
+      "Bash(pip install:*)",
+      "Bash(npx create-next-app@latest:*)",
+      "Bash(npm install:*)",
+      "Bash(bash:*)",
+      "Bash(npm run build:*)",
+      "Bash(node -e:*)",
+      "Bash(for project in qatools capstone dogapult keyboard printer trebuchet greenhouse)",
+      "Bash(do echo \"=== $project ===\")",
+      "Bash(done)",
+      "Bash(ls \"C:\\\\Users\\\\Mitchell\\\\Documents\\\\GitHub\\\\portfolio\\\\next-portfolio\\\\public\\\\images\"\" 2>/dev/null || echo \"public/images not found \")"
     ],
     "deny": [],
     "ask": []

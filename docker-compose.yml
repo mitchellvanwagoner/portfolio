@@ -1,10 +1,10 @@
 services:
   portfolio:
+    container_name: 'portfolio'
+    image: 'ghcr.io/mitchellvanwagoner/portfolio:latest'
+    restart: 'unless-stopped'
     build: .
-    container_name: portfolio
-    restart: unless-stopped
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=production
-      - HOSTNAME=0.0.0.0
+      - 'NODE_ENV=production'
