@@ -1,0 +1,86 @@
+---
+title: "QA Checklist and Analytics"
+slug: qatools
+---
+
+<section>
+## Overview
+
+<ImageTextBlock src="/images/projects/qatools/qatools-1.webp" alt="QA Checklist Main Interface" caption="Main QA checklist interface with analytics" size="lg" position="left">
+
+To streamline the quality assurance process for my team, I developed a comprehensive QA checklist web application using Google Apps Script. This tool transforms the traditional QA workflow by providing real time analytics, historical feedback, and consistent reporting across all team members. The system integrates seamlessly with Google Sheets for data management while offering a clean frontend.
+
+</ImageTextBlock>
+
+</section>
+
+<section>
+## Project Report
+
+### Interface Design
+
+---
+
+<ImageTextBlock src="/images/projects/qatools/qatools-1.webp" alt="Analytics Dashboard" caption="Real-time analytics showing error rates by category" size="lg" position="left">
+
+The main QA interface features a clean, tabbed design where each section loads relevant checklist items. What sets this system apart is the contextual analytics displayed next to each item - three percentages showing error rates for the current Authority Having Jurisdiction (AHJ), Community, and Designer. This immediate feedback allows QA staff to focus on historically problematic areas before they become issues.
+
+The top section automatically pulls account information from our task scheduler, ensuring seamless integration with existing workflows. This eliminates manual data entry and reduces the chance of errors in project tracking.
+
+</ImageTextBlock>
+
+### Historical Feedback System
+
+---
+
+<ImageTextBlock src="/images/projects/qatools/qatools-2.webp" alt="Historical Comments Dialog" caption="Clickable percentages reveal detailed historical feedback" size="lg" position="right">
+
+Each percentage displayed in the interface is interactive - clicking reveals a detailed dialog showing all previous comments made on that specific item for the relevant AHJ, Community, or Designer. This feature was crucial in achieving my main goal: providing QA staff with immediate context about problem areas associated with each design.
+
+Previously, our team relied on simple checklists with no feedback mechanism, resulting in inconsistent QA reports. Different team members focused on different issues, creating an inconsistent quality assurance process. The contextual feedback system has dramatically improved consistency across all QA staff.
+
+</ImageTextBlock>
+
+### Automated Reporting and Communication
+
+---
+
+<ImageTextBlock src="/images/projects/qatools/qatools-3.webp" alt="QA Report Generation" caption="Automated report generation with email distribution" size="lg" position="left">
+
+Upon completion of a QA review, the system generates a comprehensive report that can be reviewed before submission. The Review QA button opens a popup allowing the QA staff to copy the report text for immediate use in other processes.
+
+When submitted, the system automatically emails the complete QA report to both the designer and their immediate supervisor, ensuring rapid communication of issues. Simultaneously, all QA data is published to the analytics database, feeding the performance tracking systems.
+
+</ImageTextBlock>
+
+### Performance Analytics and Data Intelligence
+
+---
+
+<DualImageBlock
+  primarySrc="/images/projects/qatools/qatools-5.webp"
+  primaryAlt="Designer Performance Dashboard"
+  primaryCaption="Designer performance tracking over time"
+  primarySize="xl"
+  secondarySrc="/images/projects/qatools/qatools-4.webp"
+  secondaryAlt="Team Analytics Overview"
+  secondaryCaption="Team-wide error analysis for process improvement"
+  secondarySize="xl"
+  primaryPosition="right"
+>
+
+The analytics dashboard provides detailed breakdowns of designer performance, showing progress over time and identifying areas for improvement. Each designer has their own scorecard tracking error rates across different QA categories, enabling targeted training and development.
+
+This system also monitors external contractor teams used during high-demand periods. Performance scores are integrated directly into contracts, ensuring quality standards are maintained even when scaling operations with external resources.
+
+</DualImageBlock>
+
+<ImageTextBlock src="/images/projects/qatools/qatools-6.webp" alt="Bi-weekly Review Charts" caption="Error trend analysis presented at team meetings" size="lg" position="right">
+
+The system generates comprehensive graphs showing total error scores for each QA item, which are reviewed during bi-weekly team meetings. This data-driven approach gives everyone visibility into emerging trends and helps both designers and QA staff understand what areas require additional attention moving forward.
+
+By transforming subjective quality assessments into quantifiable metrics, the tool has created a culture of continuous improvement where decisions are based on concrete data rather than perception.
+
+</ImageTextBlock>
+
+</section>

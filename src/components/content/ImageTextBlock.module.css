@@ -1,0 +1,37 @@
+.block {
+  margin: var(--mantine-spacing-lg) 0;
+}
+
+.imageContainer {
+  text-align: center;
+}
+
+.image {
+  border-radius: var(--mantine-radius-sm);
+  box-shadow: 6px 6px 4px rgba(0, 0, 0, 0.3);
+  border: 2px solid var(--mantine-color-dark-6);
+  transition: box-shadow 0.15s ease;
+  object-fit: contain;
+}
+
+.image:hover {
+  box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.4);
+}
+
+.textContainer {
+  flex: 1;
+  min-width: 0;
+}
+
+.textContainer p {
+  margin-bottom: 1em;
+  line-height: 1.5;
+  text-align: justify;
+}
+
+@media (max-width: 62em) {
+  .imageContainer {
+    align-self: center;
+    max-width: min(18.75rem, 100%) !important;
+  }
+}

@@ -1,47 +1,43 @@
-# Dependencies
-node_modules/
-package-lock.json
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-venv/
-env/
-ENV/
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+# testing
+/coverage
 
-# OS
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
 .DS_Store
-Thumbs.db
-desktop.ini
+*.pem
+*.mp4
 
-# Backups
-*.bak
-*.tmp
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
-# Working files
-*.txt
-!requirements.txt
+# env files (can opt-in for committing if needed)
+.env*
 
-# Build outputs
-dist/
-build/
+# vercel
+.vercel
 
-# Logs
-*.log
+# typescript
+*.tsbuildinfo
+next-env.d.ts
 
-# Environment variables
-.env
-.env.local
-
-# image store
-data/

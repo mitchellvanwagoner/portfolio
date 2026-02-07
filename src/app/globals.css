@@ -1,0 +1,111 @@
+/* Custom scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--mantine-color-dark-6) var(--mantine-color-cream-1);
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--mantine-color-cream-1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--mantine-color-dark-6);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--mantine-color-dark-4);
+}
+
+/* Body defaults */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Text defaults matching original site */
+p {
+  text-align: justify;
+}
+
+/* Links */
+a {
+  color: var(--mantine-color-rust-6);
+  text-decoration: underline;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--mantine-color-rust-4);
+}
+
+/* Strong text */
+strong, b {
+  font-weight: 800;
+}
+
+/* Blueprint header background pattern */
+.blueprint-header {
+  background-color: var(--mantine-color-navy-6);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.09) 1px, transparent 1px),
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 2px, transparent 2px),
+    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 2px, transparent 2px);
+  background-size:
+    40px 40px,
+    40px 40px,
+    10px 10px,
+    10px 10px,
+    80px 80px,
+    80px 80px;
+}
+
+/* Hover effects */
+.hover-close {
+  transition: box-shadow 0.15s ease;
+}
+.hover-close:hover {
+  box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.4);
+}
+
+.hover-far {
+  transition: all 0.15s ease;
+}
+.hover-far:hover {
+  transform: translateY(-1px) translateX(-1px) scale(1.01);
+  box-shadow: 16px 14px 14px rgba(0, 0, 0, 0.6);
+}
+
+/* Zoomable image */
+.zoomable-image {
+  cursor: zoom-in;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.zoomable-image:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

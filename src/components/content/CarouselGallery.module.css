@@ -1,0 +1,129 @@
+.carouselWrapper {
+  position: relative;
+  max-width: 58.3125rem;
+  margin: 0 auto;
+  background: var(--mantine-color-dark-6);
+  border: 2px solid var(--mantine-color-dark-6);
+  border-radius: var(--mantine-radius-sm);
+  box-shadow: 12px 10px 10px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.carousel {
+  aspect-ratio: 21/9;
+  max-height: 25rem;
+}
+
+.slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.slideButton {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.slideImage {
+  max-height: 25rem;
+  object-fit: contain;
+}
+
+.control {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.indicator {
+  background: var(--mantine-color-cream-0);
+  width: 0.625rem;
+  height: 0.625rem;
+}
+
+.counter {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 1.25rem;
+  font-size: 0.875rem;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.fullscreenBtn {
+  position: absolute;
+  bottom: 0.9375rem;
+  right: 0.9375rem;
+  z-index: 2;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.fullscreenBtn:hover {
+  opacity: 1;
+}
+
+.modalBody {
+  height: 100%;
+}
+
+.modalContent {
+  background: rgba(0, 0, 0, 0.95);
+}
+
+.fullscreenContainer {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fullscreenImage {
+  border-radius: var(--mantine-radius-sm);
+}
+
+.fullscreenNav {
+  z-index: 10;
+}
+
+.fullscreenCounter {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.5rem 1rem;
+  border-radius: 1.25rem;
+}
+
+@media (max-width: 48em) {
+  .carousel {
+    max-height: 15.625rem;
+  }
+
+  .slideImage {
+    max-height: 15.625rem;
+  }
+
+  .fullscreenBtn {
+    width: 2.1875rem;
+    height: 2.1875rem;
+    bottom: 0.625rem;
+    right: 0.625rem;
+  }
+}

@@ -1,0 +1,170 @@
+---
+title: "Trebuchet"
+slug: trebuchet
+---
+
+<section>
+## Overview
+
+<ImageTextBlock src="/images/projects/trebuchet/trebuchet-0.1.webp" alt="Project Main Image" caption="Me releasing the trebuchet" size="md" position="left">
+
+I designed and built a physics-optimized trebuchet that can launch an apple 20 meters using only the weight of a 5-gallon bucket filled with water. What makes this project unique is that instead of using a traditional counter weight-on-arm design, I built a pulley mechanism that provides better energy transfer and eliminates the pendulum oscillation that typically happens after the projectile is released.
+
+The entire design was optimized using the Euler-Lagrange method to derive the equations of motion for the system, then simulated and optimized in Python. I used numerical optimization to find the ideal parameters for arm length, sling length, pulley radius, counter weight mass, and release angle. Once I had the optimized design, I fabricated it using wood working for the frame and 3D printing for the custom pulley assembly.
+
+The system was designed to be transportable, the vertical beams fold down so the entire trebuchet fits in the back of my car. After several rounds of tuning and testing, the real-world performance matched closely with the simulation, successfully throwing apples the target distance while smoothly coming to rest without oscillation.
+
+</ImageTextBlock>
+
+<VideoEmbed src="https://www.youtube.com/embed/3Q519VdKkRo" title="Trebuchet Launch Video" />
+
+<CarouselGallery
+  title="Project Gallery"
+  images={[
+    { src: "/images/projects/trebuchet/trebuchet-0.1.webp", alt: "Trebuchet overview" },
+    { src: "/images/projects/trebuchet/trebuchet-2.webp", alt: "Frame with lateral support" },
+    { src: "/images/projects/trebuchet/trebuchet-3.webp", alt: "3D printed pulley" },
+    { src: "/images/projects/trebuchet/trebuchet-4.webp", alt: "Pulley repair" },
+    { src: "/images/projects/trebuchet/trebuchet-6.webp", alt: "Counter-sunk bolt holes" },
+    { src: "/images/projects/trebuchet/trebuchet-7.webp", alt: "Completed pivot assembly" },
+    { src: "/images/projects/trebuchet/trebuchet-9.webp", alt: "Pulley assembly close-up" },
+    { src: "/images/projects/trebuchet/trebuchet-11.webp", alt: "Completed assembly" },
+  ]}
+/>
+
+</section>
+
+<section>
+## Project Report
+
+### System Analysis and Optimization
+
+---
+
+<ImageTextBlock src="/images/projects/trebuchet/trebuchet_eq-1.webp" alt="System Diagram and Overview" caption="System Diagram and Overview" size="xl" position="left">
+
+To start the project, I first drew a diagram of the system and stated my assumptions. My biggest assumption was that the sling would stay taught throughout the throw. This turned out to be not quite correct, but it still led to a good enough simulation.
+
+I then wrote out the kinematic equations for each component of the system and identified the degrees of freedom I'd need to solve for. I split the system into three major components: the counter weight, the pulley and arm assembly, and the projectile.
+
+</ImageTextBlock>
+
+<ImageTextBlock src="/images/projects/trebuchet/trebuchet_eq-2.webp" alt="Energy Analysis of the System" caption="Energy Analysis of the System" size="xl" position="left">
+
+Then using the kinematic equations, I wrote the energetic equations, capturing both the kinetic and potential energies for each component.
+
+</ImageTextBlock>
+
+<ImageTextBlock src="/images/projects/trebuchet/trebuchet_eq-3.webp" alt="Euler-Lagrange equations" caption="Euler-Lagrange equations" size="xl" position="left">
+
+This is where the Euler-Lagrange method comes in. This method produces the equations of motion for a system by minimizing what's called the action, based on the energies of the system.
+
+It takes in the lagrangian for the system with respect to one of the degrees of freedom, in this case either the rotational speed of the arm or the rotational speed of the projectile, and finds the point where the lagrangian is minimized. This method comes from the calculus of variations, a branch of mathematics that deals with finding the extrema of functions.
+
+</ImageTextBlock>
+
+<ImageTextBlock src="/images/projects/trebuchet/trebuchet_eq-4.webp" alt="Equations of Motion" caption="Equations of Motion" size="xl" position="left">
+
+I found both equations, one for each degree of freedom, which together make up the equations of motion for this system. You'll notice each equation contains rotational acceleration terms for both DOFs, as well as multiple terms for the speed and position of each DOF.
+
+This is because the degrees of freedom are coupled, and one cannot be found without the other. This is part of what makes these systems so complicated and why they must be solved numerically instead of analytically.
+
+</ImageTextBlock>
+
+<ImageTextBlock src="/images/projects/trebuchet/trebuchet_eq-5.webp" alt="Energy of the System During Operation" caption="Energy of the System During Operation" size="xl" position="right">
+
+After finding the equations of motion, I wrote a Python simulator and optimizer using the solve_ivp and differential_evolution functions from the scipy library. I needed to find the optimal values for the length of the arm, length of the sling, radius of the pulley, mass of the counter weight, and the release angle.
+
+To program the optimizer, I needed to create costs for three key parameters: distance from target, total mass of the system, and efficiency of energy transfer. Once I created those costs, I adjusted how much each one fed back into the total loss function to get the optimizer working properly.
+
+However, I kept running into issues, the optimizer kept finding solutions that were not physically possible. This led me back to my physics equations where I discovered a sign error that was causing the total energy in my system to grow instead of decay. After fixing that and tuning the loss function weights, the optimizer quickly started finding valid solutions for my trebuchet.
+
+I chose to throw the projectile, in this case an apple, 20 meters using only the weight of a 5-gallon bucket filled with water. Using a bucket meant I could easily transport the system and precisely control the weight, since I'd have access to a garden hose to fill it.
+
+Once I found the final parameters, I recorded the energies of the trebuchet components during its throw and graphed the results, shown to the right. This graph shows the total energy slightly decreasing over time as some is lost to friction and drag, with the rest of the component energies being smoothly transferred into the kinetic energy of the projectile (shown as the solid red line).
+
+</ImageTextBlock>
+
+<ImageTextBlock src="/images/projects/trebuchet/trebuchet_eq-6.webp" alt="Animation of the Trebuchet System" caption="Animation of the Trebuchet System and Trajectory of the Projectile" size="xl" position="right">
+
+The animation to the right shows the operation of the trebuchet system as well as the ballistic trajectory of the projectile after release. You can see the smooth transition from rotational energy of the arm and sling into the linear kinetic energy of the projectile.
+
+The key insight here, which can be easily seen in the energies plot above, is that the potential energy of the counter weight drives the rotating system until its moment of inertia is at its peak. This happens when the projectile is at its maximum distance from the pivot. At this point the projectile has the greatest linear speed.
+
+The mass of the counter weight and radius of the pulley are tuned to match this moment of inertia. This results in the best transfer of energy while utilizing the smallest counter weight mass required.
+
+</ImageTextBlock>
+
+### Fabrication and Assembly
+
+---
+
+<ImageTextBlock src="/images/projects/trebuchet/trebuchet-2.webp" alt="Frame with lateral support wings" caption="Frame with lateral support wings" size="lg" position="right">
+
+The frame was built with 2x6s as the base and 2x4s for the supporting arms. I wanted the vertical beams that hold the pivot point to be rotatable so I could fold up the trebuchet for transport. I built a small support structure that would bolt into the vertical beam and also help resist lateral loads.
+
+This image shows the "wings", the lateral 2x6s, as fairly large, but I later cut those down so it would be easier to fit in the back of my car. In the corners I used construction brackets to add a little more stability and strength to the joints.
+
+</ImageTextBlock>
+
+<ImageTextBlock src="/images/projects/trebuchet/trebuchet-3.webp" alt="3D printed PETG pulley" caption="3D printed PETG pulley stopped part way through" size="lg" position="right">
+
+The next step was to design and build the pulley. I sized it to the radius found by the optimizer, then printed it out. I made sure to use 100% infill so the moment of inertia matched what I had used in the simulator. It was printed with PETG, which would be strong enough to take any impacts that might be transferred through the shaft from the arm.
+
+The design utilized clamping sections on each end that I could bolt to clamp onto the shaft. This mostly worked, but I couldn't apply enough force to the clamps without snapping the plastic. To combat this, I simply drilled through each clamping section and through the shaft in a radial manner, then dropped a long bolt through the hole.
+
+The only other function of the pulley, besides translating the counter weight motion to rotation, was to act as a trigger to release the trebuchet from its starting position. To accomplish this, I designed a bump-out tab that would be held in place by a trigger mechanism mounted to one of the vertical beams.
+
+However, the counter weight proved too much for the trigger mechanism, and I had to simply hold the arm in place and release it manually.
+
+</ImageTextBlock>
+
+<ImageTextBlock src="/images/projects/trebuchet/trebuchet-4.webp" alt="Pulley repair after power outage" caption="Pulley repair after power outage during 30-hour print" size="lg" position="left">
+
+In the last step you could see the pulley wasn't printed all the way. The power cut out during the 30-hour print, and at the time I didn't have my printer on a UPS, so I had to reprint the top part and glue them together with CA glue.
+
+This was a pain, but ultimately won't be much of an issue as the cable that wraps around the pulley will pull the two pieces together. There's little chance the bond will break.
+
+</ImageTextBlock>
+
+<ImageTextBlock src="/images/projects/trebuchet/trebuchet-6.webp" alt="Counter-sunk bolt holes" caption="Drilling counter-sunk bolt holes for folding mechanism" size="lg" position="left">
+
+In order to get the vertical beam to rotate and bolt into the frame, it needs two holes drilled and counter sunk so I can fit the bolt through without the head of the bolt interfering with the arm of the trebuchet.
+
+</ImageTextBlock>
+
+<ImageTextBlock src="/images/projects/trebuchet/trebuchet-7.webp" alt="Completed pivot assembly" caption="Completed pivot assembly" size="lg" position="right">
+
+Here you can see the whole assembly together, with the pulley, bearing blocks, and arm all mounted to the vertical beams. The arm is made from two 2x4s separated by an inch so the projectile can sit between them during loading.
+
+The arm is then attached to the shaft by clamping the ends around it. I had to really torque the bolts down to get enough pressure on the shaft so it wouldn't slip, but it worked.
+
+</ImageTextBlock>
+
+<ImageTextBlock src="/images/projects/trebuchet/trebuchet-9.webp" alt="Close-up of pulley assembly" caption="Close-up of pulley assembly showing trigger tab" size="lg" position="right">
+
+Here is a close-up of the pulley and pivot assembly. You can see the tab on the pulley that was supposed to index with the trigger mechanism.
+
+I did have to move the pulley further away from the assembly because the bucket was just barely too close to the arm and would get hit as it rotated around.
+
+</ImageTextBlock>
+
+<ImageTextBlock src="/images/projects/trebuchet/trebuchet-11.webp" alt="Completed trebuchet assembly" caption="Completed trebuchet assembly" size="lg" position="right">
+
+Here is the final assembly of the system. You can see the bucket is attached to the cable and it is then wrapped around the pulley. The sling is in place with the leather catch which is the orange string hanging in the middle of the arm.
+
+As I said earlier, I did have to shorten the wings on either side so I could fit it in my car, but this is the completed system.
+
+</ImageTextBlock>
+
+### Testing and Operation
+
+---
+
+<VideoEmbed src="https://www.youtube.com/embed/IAwEeweROlg" title="Trebuchet Slow Motion" />
+
+Here is a slow-motion shot of the trebuchet in action. This video was recorded after several attempts to tune in the system. Although all the parameters were specified by the optimizer, in the real world we still had to figure out what would work best. But after some time, we were able to get it working as expected.
+
+You can see that the sling doesn't actually stay taut throughout the throw. The projectile falls, then the sling gets whipped around. This still worked out mostly as expected, and the parameters found by the optimizer were very close to what ended up working.
+
+</section>
